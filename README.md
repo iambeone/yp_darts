@@ -5,7 +5,7 @@
 
 ### Инструкция по запуску dev mode
 - склонировать репозиторий
-- переименовать .env.example в .env , для запуска подойдут текущие настройки
+- в папке backend переименовать .env.example в .env , для запуска подойдут текущие настройки
 - создать docker container в папке backend: cd backend && docker compose up -d
 - установить зависимости в папке frontend: cd frontend && npm install
 - запуcтить frontend: npm run start
