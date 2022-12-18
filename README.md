@@ -1,4 +1,4 @@
-# Бэкенд проекта Darts
+# Monorepo проекта Darts
 
 ### ТЗ проекта
 - https://www.notion.so/Workspace-9bdd0c3a41534c66b40ef3af785ae21b
