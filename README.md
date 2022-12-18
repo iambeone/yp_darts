@@ -1,10 +1,11 @@
-# Бэкенд проекта Darts
+# Monorepo проекта Darts
 
 ### ТЗ проекта
 - https://www.notion.so/Workspace-9bdd0c3a41534c66b40ef3af785ae21b
 
 ### Инструкция по запуску dev mode
 - склонировать репозиторий
+- переименовать .env.example в .env , для запуска подойдут текущие настройки
 - создать docker container в папке backend: cd backend && docker compose up -d
 - установить зависимости в папке frontend: cd frontend && npm install
 - запуcтить frontend: npm run start
