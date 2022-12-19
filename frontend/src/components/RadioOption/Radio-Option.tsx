@@ -20,9 +20,11 @@ const theme = createTheme({
 function RadioOption({
   name = "Пол",
   values = ["Мужчина", "Женщина"],
+  isRequired = true,
 }: {
   name: string;
   values: string[];
+  isRequired: boolean;
 }) {
   const [value, setValue] = React.useState("female");
 
@@ -39,7 +41,8 @@ function RadioOption({
           focused
           color="info"
         >
-          {name} <span className={styles.requirement}>*</span>
+          {name}{" "}
+          {isRequired ? <span className={styles.requirement}>*</span> : <> </>}
         </FormLabel>
         <RadioGroup
           aria-labelledby="gender-radio-buttons-group"
