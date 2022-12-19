@@ -17,7 +17,13 @@ const theme = createTheme({
   },
 });
 
-function RadioOption() {
+function RadioOption({
+  name = "Пол",
+  values = ["Мужчина", "Женщина"],
+}: {
+  name: string;
+  values: string[];
+}) {
   const [value, setValue] = React.useState("female");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +39,7 @@ function RadioOption() {
           focused
           color="info"
         >
-          Пол <span className={styles.requirement}>*</span>
+          {name} <span className={styles.requirement}>*</span>
         </FormLabel>
         <RadioGroup
           aria-labelledby="gender-radio-buttons-group"
@@ -41,37 +47,27 @@ function RadioOption() {
           value={value}
           onChange={handleChange}
         >
-          <FormControlLabel
-            value="male"
-            control={
-              <Radio
-                color="success"
-                sx={{
-                  "& .MuiSvgIcon-root": {
-                    fontSize: 20,
-                  },
-                }}
+          {values.map((element) => {
+            return (
+              <FormControlLabel
+                value={element}
+                control={
+                  <Radio
+                    color="success"
+                    sx={{
+                      "&.MuiTypography-root": {
+                        letterSpacing: "0.15px",
+                      },
+                      "& .MuiSvgIcon-root": {
+                        fontSize: 20,
+                      },
+                    }}
+                  />
+                }
+                label={element}
               />
-            }
-            label="Мужчина"
-          />
-          <FormControlLabel
-            value="female"
-            control={
-              <Radio
-                color="success"
-                sx={{
-                  "&.MuiTypography-root": {
-                    letterSpacing: "0.15px",
-                  },
-                  "& .MuiSvgIcon-root": {
-                    fontSize: 20,
-                  },
-                }}
-              />
-            }
-            label="Женщина"
-          />
+            );
+          })}
         </RadioGroup>
       </FormControl>
     </ThemeProvider>
