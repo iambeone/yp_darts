@@ -9,7 +9,7 @@ import {
   SettingsPage,
   ProfilePage,
   NotFound404,
-} from "../pages";
+} from "../../pages";
 
 function ModalSwitch() {
   return (
