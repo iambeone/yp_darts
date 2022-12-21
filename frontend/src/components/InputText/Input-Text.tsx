@@ -51,10 +51,15 @@ function InputText({
   placeholder?: string;
   rows?: number;
   size?: "small" | "medium" | "large";
-  value?: any;
+  value?: string;
   onChange?: any;
   name?: "normal" | "snils" | "inn" | "passport" | "phone" | "police";
 }) {
+  const [valueState, setValueState] = React.useState(value);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValueState(event.target.value);
+  };
+
   return (
     <FormControl className={styles[size]}>
       <InputLabel
@@ -80,8 +85,8 @@ function InputText({
           maxRows="2"
           rows={rows}
           multiline={rows > 1}
-          value={value}
-          onChange={onChange}
+          value={value || valueState}
+          onChange={onChange || handleChange}
           name={name}
         />
       ) : (
