@@ -1,5 +1,4 @@
 import React from "react";
-
 import styles from "./Home-Page.module.css";
 
 export default function HomePage() {

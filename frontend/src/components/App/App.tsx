@@ -17,11 +17,12 @@ function ModalSwitch() {
       <Route path="/" element={<HomePage />} />
       <Route path="/signin" element={<LoginPage />} />
       <Route path="/tournaments" element={<TournamentsPage />} />
-      <Route path="/players" element={<PlayersPage />} />
+      {/* <Route path="/players" element={<PlayersPage />} /> */}
       <Route path="/protocols" element={<ProtocolsPage />} />
       <Route path="/settings" element={<SettingsPage />} />
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="*" element={<NotFound404 />} />
+      <Route path="/players/:pageNumber" element={<PlayersPage />} />
     </Routes>
   );
 }
