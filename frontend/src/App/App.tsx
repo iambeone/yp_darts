@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import NavigationBar from "./components/NavigationBar/Navigation-Bar";
 import {
   HomePage,
   LoginPage,
@@ -10,12 +9,11 @@ import {
   SettingsPage,
   ProfilePage,
   NotFound404,
-} from "./pages";
+} from "../pages";
 
 function ModalSwitch() {
   return (
     <>
-      <NavigationBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/signin" element={<LoginPage />} />
