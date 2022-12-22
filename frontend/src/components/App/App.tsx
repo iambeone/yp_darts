@@ -6,9 +6,7 @@ function App() {
   return (
     <div className={styles.App}>
       <h1>Start App</h1>
-      <div className={styles.container}>
-        <SearchBar />
-      </div>
+      <SearchBar />
     </div>
   );
 }
