@@ -1,0 +1,10 @@
+.section {
+  width: 248px;
+  height: 100vh;
+  background-color: #003200;
+}
+
+.img {
+    display: block;
+  margin: 64px auto 0;
+}
