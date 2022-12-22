@@ -17,7 +17,7 @@ export default function GamersTable({
 }: {
   data: { name: string; email: string; id: number }[];
 }) {
-  const USER_PATH = "/players";
+  const PATH = "/players";
   const ROWS_PER_PAGE = 10;
   const { pageNumber = 1 } = useParams();
 
@@ -67,15 +67,12 @@ export default function GamersTable({
       <Pagination
         page={Number(pageNumber)}
         count={Math.ceil(data.length / ROWS_PER_PAGE)}
-        shape="rounded"
-        color="primary"
-        showFirstButton
-        showLastButton
+        variant="outlined"
         boundaryCount={2}
         renderItem={(item) => (
           <PaginationItem
             component={Link}
-            to={`${USER_PATH}/${item.page}`}
+            to={`${PATH}/${item.page}`}
             {...item}
           />
         )}
@@ -83,3 +80,5 @@ export default function GamersTable({
     </>
   );
 }
+
+// https://github.com/ankitasingh170190/Pagination_Demo
