@@ -11,7 +11,7 @@ import {
   ProfilePage,
   NotFound404,
 } from "../../pages";
-import Sidebar from "../sidebar/sidebar";
+import Sidebar from "../Sidebar/Sidebar";
 
 function ModalSwitch() {
   return (
