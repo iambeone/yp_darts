@@ -1,0 +1,45 @@
+.inputLabelSpan {
+    color: #D32F2F;
+    display: inline;
+}
+
+.inputLabelSpanHide {
+    display: none;
+}
+
+.small {
+    width: 156px;
+}
+
+.medium {
+    width: 92.2%;
+    max-width: 328px;
+}
+
+.large {
+    width: 92.2%;
+    max-width: 328px;
+}
+
+@media (min-width: 1194px) {
+    .small {
+        width: 144px;
+    }
+
+    .medium {
+        max-width: 308px;
+    }
+
+    .large {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1440px) {
+    .medium {
+        max-width: 355px;
+    }
+}
+
+/* турнир 260 макс, 1194 и 360: 226 */
+/* 1194:390, 450 макс */
