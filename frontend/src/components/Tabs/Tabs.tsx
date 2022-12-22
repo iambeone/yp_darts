@@ -51,20 +51,26 @@ function Tabs() {
         >
           <li className={styles.li} key={tab.title}>
             {active === tab && <div className={styles.border} />}
-            <img
-              className={styles.img}
-              src={active === tab ? tab.imgActive : tab.img}
-              alt="Иконка"
-              style={{ paddingLeft: active !== tab ? "4px" : "0" }}
-            />
-            <p
-              className={styles.title}
+            <div
+              className={styles.group}
               style={{
-                color: active === tab ? "#FFF" : "rgba(255, 255, 255, 0.5)",
+                paddingLeft: active !== tab ? "4px" : "0",
               }}
             >
-              {tab.title}
-            </p>
+              <img
+                className={styles.img}
+                src={active === tab ? tab.imgActive : tab.img}
+                alt="Иконка"
+              />
+              <p
+                className={styles.title}
+                style={{
+                  color: active === tab ? "#FFF" : "rgba(255, 255, 255, 0.5)",
+                }}
+              >
+                {tab.title}
+              </p>
+            </div>
           </li>
         </Link>
       ))}
