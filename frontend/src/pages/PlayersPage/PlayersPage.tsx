@@ -1,5 +1,6 @@
 import React from "react";
 import GamersTable from "../../components/DataTable/GamersTable";
+import styles from "./PlayersPage.module.css";
 
 export default function PlayersPage() {
   const gamers = [
@@ -19,7 +20,7 @@ export default function PlayersPage() {
     { name: "Henk", email: "Henk@ya.ru", id: 14 },
   ];
   return (
-    <div>
+    <div className={styles.page}>
       <h1>PlayersPage</h1>
       <GamersTable data={gamers} />
     </div>
