@@ -7,7 +7,11 @@
     "@emotion/styled": "^11.10.5",
     "@fontsource/podkova": "^4.5.12",
     "@fontsource/roboto": "^4.5.8",
+<<<<<<< HEAD
+    "@material-ui/icons": "^4.11.3",
+=======
     "@mui/icons-material": "^5.11.0",
+>>>>>>> bbf1ca706f926930f89972bca7ee4b64f7ac8287
     "@mui/material": "^5.11.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
