@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 export default function TournamentsPage() {
   return (
     <div>
-      <h1>Tournaments</h1>
+      <h4>Tournaments</h4>
       <ul>
         <li>
           <NavLink to="1">1</NavLink>
