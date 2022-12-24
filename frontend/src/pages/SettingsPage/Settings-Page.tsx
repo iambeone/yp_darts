@@ -3,7 +3,7 @@ import React from "react";
 export default function SettingsPage() {
   return (
     <div>
-      <p>SettingsPage</p>
+      <h4>SettingsPage</h4>
     </div>
   );
 }
