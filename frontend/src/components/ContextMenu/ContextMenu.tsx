@@ -15,7 +15,7 @@ type TContextMenuProps = {
     value: string;
     callback: () => void;
   }[];
-  extraClass: string;
+  extraClass?: string;
 };
 
 function ContextMenu({
@@ -56,5 +56,9 @@ function ContextMenu({
     </List>
   );
 }
+
+ContextMenu.defaultProps = {
+  extraClass: "",
+};
 
 export default ContextMenu;
