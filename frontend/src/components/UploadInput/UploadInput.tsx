@@ -6,7 +6,7 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Typography from "@mui/material/Typography";
-import styles from "./upload-input.module.css";
+import styles from "./UploadInput.module.module.css";
 
 interface UploadInputProps {
   inputRef: RefObject<HTMLInputElement>;
