@@ -7,9 +7,7 @@ function Sidebar() {
   return (
     <section className={styles.section}>
       <img className={styles.img} src={Logo} alt="Лого" />
-      <div className={styles.tab}>
-        <Tabs />
-      </div>
+      <Tabs />
     </section>
   );
 }
