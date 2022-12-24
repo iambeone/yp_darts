@@ -1,3 +1,4 @@
 .page {
-  width: 100%;
+  flex-grow: 1;
+  padding-bottom: 70px;
 }

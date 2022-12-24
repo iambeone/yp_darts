@@ -3,7 +3,7 @@ import React from "react";
 export default function ProtocolsPage() {
   return (
     <div>
-      <h1>ProtocolsPage</h1>
+      <h4>ProtocolsPage</h4>
     </div>
   );
 }

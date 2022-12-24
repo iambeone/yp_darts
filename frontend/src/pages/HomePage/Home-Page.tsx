@@ -4,7 +4,7 @@ import styles from "./Home-Page.module.css";
 export default function HomePage() {
   return (
     <div className={styles.App}>
-      <h1>Start App</h1>
+      <h4>Start App</h4>
     </div>
   );
 }

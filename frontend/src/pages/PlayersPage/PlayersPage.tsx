@@ -21,7 +21,7 @@ export default function PlayersPage() {
   ];
   return (
     <div className={styles.page}>
-      <h1>PlayersPage</h1>
+      <h4>PlayersPage</h4>
       <GamersTable data={gamers} />
     </div>
   );
