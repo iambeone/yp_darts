@@ -5,7 +5,7 @@ import {
   FormGroup,
   FormLabel,
 } from "@mui/material";
-import styles from "./style.module.css";
+import styles from "./Checkbox.module.css";
 
 export default function CheckboxesGroup({
   name,
@@ -38,6 +38,7 @@ export default function CheckboxesGroup({
         {values.map((item) => {
           return (
             <FormControlLabel
+              sx={{ flexDirection: `${direction}` }}
               value={item}
               control={<Checkbox />}
               label={item}
