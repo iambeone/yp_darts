@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Sidebar.module.css";
-import Logo from "../../images/Logo.png";
+import Logo from "../../images/Logo.svg";
 import Tabs from "../Tabs/Tabs";
 
 function Sidebar() {
