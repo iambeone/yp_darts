@@ -3,11 +3,12 @@
   width: 248px;
   height: 100vh;
   background-color: #003200;
+  padding-top: 64px;
 }
 
 .img {
   display: block;
-  margin: 64px auto 0;
+  margin: 0 auto 0;
 }
 
 @media (max-width: 900px) {
