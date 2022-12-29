@@ -7,7 +7,7 @@ import styles from "./Input-Text.module.css";
 
 interface CustomProps {
   onChange: (event: { target: { name: string; value: string } }) => void;
-  name: "snils" | "inn" | "passport" | "phone" | "police" | "date";
+  name: "snils" | "inn" | "passport" | "phone" | "police";
 }
 
 const TextMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
@@ -19,7 +19,6 @@ const TextMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
       police: "000-000",
       inn: "000000000000",
       snils: "000-000-000 00",
-      date: "00/00/0000",
     };
     return (
       <IMaskInput
@@ -54,7 +53,7 @@ function InputText({
   size?: "small" | "medium" | "large";
   value?: string;
   onChange?: any;
-  name?: "normal" | "snils" | "inn" | "passport" | "phone" | "police" | "date";
+  name?: "normal" | "snils" | "inn" | "passport" | "phone" | "police";
 }) {
   const [valueState, setValueState] = React.useState(value);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
