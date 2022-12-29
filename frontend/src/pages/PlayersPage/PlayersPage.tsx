@@ -1,5 +1,7 @@
 import React from "react";
 import GamersTable from "../../components/DataTable/GamersTable";
+import FiltersModal from "../../components/modals/FiltersModal";
+import SearchBar from "../../components/SearchBar/SearchBar";
 import styles from "./PlayersPage.module.css";
 
 export default function PlayersPage() {
@@ -22,7 +24,9 @@ export default function PlayersPage() {
   return (
     <div className={styles.page}>
       <h4>PlayersPage</h4>
+      <SearchBar />
       <GamersTable data={gamers} />
+      <FiltersModal />
     </div>
   );
 }

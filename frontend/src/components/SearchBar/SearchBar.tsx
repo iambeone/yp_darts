@@ -3,6 +3,8 @@ import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import Button from "@mui/material/Button";
 import { Badge, Box, Chip, Container, Icon, Stack } from "@mui/material";
+import { useDispatch } from "../../utils/hooks";
+import { setModalOpen } from "../../services/actions";
 
 const tablet = window.innerWidth < 1200;
 const mobile = window.innerWidth < 500;
@@ -23,6 +25,8 @@ function SearchBar(): ReactElement {
     return "cоздать\u00A0турнир";
   };
 
+  const dispatch = useDispatch();
+
   const searchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // eslint-disable-next-line no-console
@@ -39,8 +43,7 @@ function SearchBar(): ReactElement {
   };
 
   const handleFilter = () => {
-    // eslint-disable-next-line no-console
-    console.log("filters");
+    dispatch(setModalOpen(true));
   };
 
   const handleCreateTournament = () => {
@@ -114,6 +117,7 @@ function SearchBar(): ReactElement {
           variant="outlined"
           color="success"
           size="large"
+          disableRipple
           onClick={handleFilter}
           startIcon={<Icon sx={{ width: 24, height: 24 }}>filter_list</Icon>}
           endIcon={
@@ -145,6 +149,7 @@ function SearchBar(): ReactElement {
           color="error"
           variant="contained"
           size="large"
+          disableRipple
           endIcon={tablet ? <Icon>person_add</Icon> : null}
           onClick={handleCreateTournament}
         >
