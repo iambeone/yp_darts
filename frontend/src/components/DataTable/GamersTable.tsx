@@ -1,4 +1,5 @@
 import * as React from "react";
+import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,8 +10,95 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
-import styles from "./GamersTable.module.css";
 import verticalDots from "../../images/vertical-dots.svg";
+
+const TableWithPagination = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-grow: 1;
+  margin: 0 40px;
+  @media (max-width: 1200px) {
+    margin: 0 24px;
+  }
+  @media (max-width: 768px) {
+    margin: 0 16px;
+  }
+`;
+
+const TableStyle = {
+  width: "auto",
+  boxShadow: "none",
+  marginTop: { xs: "16px", sm: "0" },
+};
+
+const CountText = styled.p`
+  padding: 0;
+  margin: 32px 0 16px 0;
+  @media (max-width: 1200px) {
+    margin: 24px 0 16px 0;
+  }
+  @media (max-width: 500px) {
+    display: none;
+  }
+`;
+
+const ColumnTitle = styled.span`
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.17px;
+`;
+
+const NameSpan = styled.span`
+  font-size: 16px;
+  line-height: 26px;
+  color: rgba(0, 0, 0, 0.87);
+`;
+
+const EmailSpan = styled.span`
+  font-size: 12px;
+  line-height: 166%;
+  letter-spacing: 0.4px;
+  color: rgba(0, 0, 0, 0.6);
+`;
+
+const LinkSpan = styled.span`
+  font-size: 15px;
+  line-height: 26px;
+  letter-spacing: 0.46px;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.87);
+  cursor: pointer;
+`;
+
+const ChangeCell = {
+  width: "80px",
+  padding: "16px 20px",
+  display: { xs: "none", lg: "table-cell" },
+};
+
+const AddCell = {
+  width: "180px",
+  padding: "16px 20px",
+  display: { xs: "none", lg: "table-cell" },
+};
+
+const IconCell = {
+  width: "5px",
+  padding: "16px 20px",
+};
+
+const ButtonIcon = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+`;
+
+const PaginationContainer = styled.div`
+  margin: 0 auto;
+  margin-top: auto;
+  padding: 40px 0 32px 0;
+`;
 
 export default function GamersTable({
   data,
@@ -20,29 +108,6 @@ export default function GamersTable({
   const PATH = "/players";
   const ROWS_PER_PAGE = 10;
   const { pageNumber = 1 } = useParams();
-
-  const table = {
-    width: "auto",
-    margin: { lg: "0 40px", sm: "0 24px", xs: "0 16px" },
-    boxShadow: "none",
-  };
-
-  const changeCell = {
-    width: "80px",
-    padding: "16px 20px",
-    display: { xs: "none", lg: "table-cell" },
-  };
-
-  const addCell = {
-    width: "180px",
-    padding: "16px 20px",
-    display: { xs: "none", lg: "table-cell" },
-  };
-
-  const iconCell = {
-    width: "5px",
-    padding: "16px 20px",
-  };
 
   const openModal = () => {
     console.log(1);
@@ -60,16 +125,17 @@ export default function GamersTable({
   };
 
   return (
-    <div className={styles.tableContainer}>
-      <TableContainer component={Paper} sx={table}>
+    <TableWithPagination>
+      <CountText>Показано игроков: 4</CountText>
+      <TableContainer component={Paper} sx={TableStyle}>
         <Table aria-label="gamers table">
           <TableHead>
             <TableRow>
               <TableCell>
-                <span className={styles.columnTitle}>Имя</span>
+                <ColumnTitle>Имя</ColumnTitle>
               </TableCell>
-              <TableCell sx={addCell} />
-              <TableCell sx={changeCell} />
+              <TableCell sx={AddCell} />
+              <TableCell sx={ChangeCell} />
               <TableCell />
             </TableRow>
           </TableHead>
@@ -83,34 +149,34 @@ export default function GamersTable({
             ).map((item) => (
               <TableRow key={item.id}>
                 <TableCell>
-                  <span className={styles.name}>{item.name}</span> <br />
-                  <span className={styles.email}>{item.email}</span>
+                  <NameSpan>{item.name}</NameSpan> <br />
+                  <EmailSpan>{item.email}</EmailSpan>
                 </TableCell>
-                <TableCell align="right" sx={addCell} onClick={openModal}>
-                  <span className={styles.link}>ДОБАВИТЬ В ТУРНИР</span>
+                <TableCell align="right" sx={AddCell} onClick={openModal}>
+                  <LinkSpan>ДОБАВИТЬ В ТУРНИР</LinkSpan>
                 </TableCell>
                 <TableCell
                   align="right"
-                  sx={changeCell}
+                  sx={ChangeCell}
                   onClick={linkToChangePage}
                 >
-                  <span className={styles.link}>ИЗМЕНИТЬ</span>
+                  <LinkSpan>ИЗМЕНИТЬ</LinkSpan>
                 </TableCell>
                 <TableCell
                   align="right"
-                  sx={iconCell}
+                  sx={IconCell}
                   onClick={openContextMenu}
                 >
-                  <button type="button" className={styles.btnIcon}>
+                  <ButtonIcon type="button">
                     <img src={verticalDots} alt="Добавить в турнир" />
-                  </button>
+                  </ButtonIcon>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <div className={styles.pagination}>
+      <PaginationContainer>
         <Pagination
           page={Number(pageNumber)}
           count={Math.ceil(data.length / ROWS_PER_PAGE)}
@@ -124,8 +190,8 @@ export default function GamersTable({
             />
           )}
         />
-      </div>
-    </div>
+      </PaginationContainer>
+    </TableWithPagination>
   );
 }
 

@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "../../utils/hooks";
 import GamersTable from "../../components/DataTable/GamersTable";
 import FiltersModal from "../../components/modals/FiltersModal";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import styles from "./PlayersPage.module.css";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 export default function PlayersPage() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // dispatch(getPlayers());
+  }, [dispatch]);
   const gamers = [
     { name: "Sam", email: "sam@ya.ru", id: 1 },
     { name: "Sam", email: "sam@ya.ru", id: 2 },
@@ -21,12 +26,18 @@ export default function PlayersPage() {
     { name: "Henk", email: "Henk@ya.ru", id: 13 },
     { name: "Henk", email: "Henk@ya.ru", id: 14 },
   ];
+  // const gamers = [
+  //   { name: "Sam", email: "sam@ya.ru", id: 1 },
+  //   { name: "Sam", email: "sam@ya.ru", id: 2 },
+  //   { name: "Sam", email: "sam@ya.ru", id: 3 },
+  //   { name: "Sam", email: "sam@ya.ru", id: 4 },
+  // ];
   return (
-    <div className={styles.page}>
-      <h4>PlayersPage</h4>
+    <>
+      <PageTitle title="Игроки" />
       <SearchBar />
       <GamersTable data={gamers} />
       <FiltersModal />
-    </div>
+    </>
   );
 }

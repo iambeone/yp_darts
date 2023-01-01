@@ -9,7 +9,7 @@ import Settings from "../images/settings.svg";
 import ElseActive from "../images/else-active.svg";
 import Else from "../images/else.svg";
 
-const tabs = [
+export const tabs = [
   {
     id: 1,
     title: "Турниры",
@@ -47,4 +47,11 @@ const tabs = [
   },
 ];
 
-export default tabs;
+export function checkResponse(res: Response) {
+  if (!res.ok) {
+    return Promise.reject(new Error(`Ошибка ${res.status}`));
+  }
+  return res.json();
+}
+
+export const baseUrl = "https://localhost:3000";
