@@ -1,7 +1,7 @@
 .section  {
     display: grid;
     grid-template-columns: minmax(min-content, max-content) 1fr;
-    grid-template-rows: repeat(2, max-content) 1fr;
+    grid-template-rows: auto 1fr;
     gap: 0;
 }
 .section__item {

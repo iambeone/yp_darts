@@ -26,7 +26,7 @@ const closeIcon = {
 };
 
 export default function FiltersModal() {
-  const { filtersModalOpen } = useSelector((store) => store.commonReducer);
+  const { filtersModalOpen } = useSelector((store) => store.common);
   const dispatch = useDispatch();
 
   const handleClose = () => dispatch(setModalOpen(false));

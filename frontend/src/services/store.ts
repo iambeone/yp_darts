@@ -1,21 +1,21 @@
 import {
-  legacy_createStore as createStore,
-  compose,
-  applyMiddleware,
-} from "redux";
+  Action,
+  configureStore,
+  ThunkAction,
+  ActionCreator,
+} from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers";
 
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  }
-}
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: [thunk],
+});
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const enhancers = composeEnhancers(applyMiddleware(thunk));
-
-const store = createStore(rootReducer, enhancers);
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, RootState, unknown, Action>
+>;
 
 export default store;
