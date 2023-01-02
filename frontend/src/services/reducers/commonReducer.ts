@@ -10,7 +10,6 @@ const initialState = {
 };
 
 export const commonReducer = (
-  // eslint-disable-next-line @typescript-eslint/default-param-last
   state: TCommonState = initialState,
   action: TCommonActions,
 ) => {
