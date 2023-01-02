@@ -3,9 +3,14 @@ import {
   GET_PLAYERS_SUCCESS,
   GET_PLAYERS_FAILED,
 } from "./actionsTypes";
-import { baseUrl, checkResponse } from "../../utils/constants";
+import {
+  baseUrl,
+  tokenRequestOptions,
+  checkResponse,
+} from "../../utils/constants";
 import type { IApplicationActions } from ".";
 import type { AppThunk, AppDispatch } from "../store";
+import { Tplayers } from "../types";
 
 interface IfetchPlayersRequest {
   readonly type: typeof GET_PLAYERS_REQUEST;
@@ -13,7 +18,7 @@ interface IfetchPlayersRequest {
 
 interface IfetchPlayersSuccess {
   readonly type: typeof GET_PLAYERS_SUCCESS;
-  readonly payload: { data: { data: [] } };
+  readonly payload: { data: Tplayers[] };
 }
 
 interface IfetchPlayersFailed {
@@ -30,7 +35,7 @@ export const fetchPlayersRequest = (): TPlayersActions => ({
   type: GET_PLAYERS_REQUEST,
 });
 
-export const fetchPlayersSuccess = (data: { data: [] }): TPlayersActions => ({
+export const fetchPlayersSuccess = (data: Tplayers[]): TPlayersActions => ({
   type: GET_PLAYERS_SUCCESS,
   payload: { data },
 });
@@ -43,7 +48,7 @@ export const fetchPlayersFailed = (error: {}): TPlayersActions => ({
 export const getPlayers: AppThunk<Promise<IApplicationActions>> =
   () => (dispatch: AppDispatch) => {
     dispatch(fetchPlayersRequest());
-    return fetch(`${baseUrl} + /ingredients`)
+    return fetch(`${baseUrl}/participants`, tokenRequestOptions("GET"))
       .then(checkResponse)
       .then((json) => {
         dispatch(fetchPlayersSuccess(json));

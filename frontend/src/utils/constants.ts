@@ -54,4 +54,22 @@ export function checkResponse(res: Response) {
   return res.json();
 }
 
-export const baseUrl = "https://localhost:3000";
+export const baseUrl = "http://localhost:3000";
+
+export const tokenRequestOptions = (method: string) => {
+  // использовать после подключения авторизации
+  // const accessToken = localStorage.getItem("accessToken");
+
+  // убрать после подключения авторизации. Залогинится через postman и вставить полученный токен
+  const accessToken =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTY3MjU2NDY3MCwiZXhwIjoxNjcyNjUxMDcwfQ.OjGKexdZsiLzMKg8GEACfNJybD-hLbWG0s4P4Jzj5TI";
+
+  const requestOptions = {
+    method: `${method}`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+  return requestOptions;
+};

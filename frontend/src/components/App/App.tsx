@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useDispatch } from "../../utils/hooks";
+import { getPlayers } from "../../services/actions";
 import styles from "./App.module.css";
 import {
   HomePage,
@@ -28,8 +30,7 @@ function ModalSwitch() {
           <Route path="/" element={<HomePage />} />
           <Route path="/signin" element={<LoginPage />} />
           <Route path="/tournaments" element={<TournamentsPage />} />
-          {/* <Route path="/players/:pageNumber" element={<PlayersPage />} /> вариант для просмотра таблицы */}
-          <Route path="/players" element={<PlayersPage />} />
+          <Route path="/players/:pageNumber" element={<PlayersPage />} />
           <Route path="/protocols" element={<ProtocolsPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
@@ -41,6 +42,10 @@ function ModalSwitch() {
 }
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getPlayers());
+  }, [dispatch]);
   return (
     <BrowserRouter>
       <ModalSwitch />

@@ -8,7 +8,7 @@ import {
   IsString,
   Length,
 } from 'class-validator';
-import { GenderEnum } from 'src/config/events.enum';
+import { GenderEnum, LeadHandEnum } from 'src/config/events.enum';
 
 export class CreateParticipantDto {
   @IsNotEmpty()
@@ -85,8 +85,8 @@ export class CreateParticipantDto {
   public nameOfTrainer?: string;
 
   @IsOptional()
-  @IsString()
-  public leadingHand?: string;
+  @IsEnum(LeadHandEnum)
+  public leadingHand?: LeadHandEnum;
 
   @IsOptional()
   @IsString()

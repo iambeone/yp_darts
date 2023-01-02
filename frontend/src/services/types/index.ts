@@ -13,7 +13,7 @@ export type Tplayers = {
   surname: string;
   name: string;
   patronymic?: string;
-  dateOfBirth: Date;
+  dateOfBirth?: Date;
   gender: GenderEnum;
   address?: string;
   email: string;
@@ -42,5 +42,5 @@ export type Tplayers = {
   educationLevel?: string;
   speciality?: string;
   image?: string;
-  events: Event[];
+  events?: Event[];
 };

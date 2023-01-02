@@ -11,6 +11,7 @@ import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import verticalDots from "../../images/vertical-dots.svg";
+import { Tplayers } from "../../services/types";
 
 const TableWithPagination = styled.div`
   display: flex;
@@ -100,11 +101,7 @@ const PaginationContainer = styled.div`
   padding: 40px 0 32px 0;
 `;
 
-export default function GamersTable({
-  data,
-}: {
-  data: { name: string; email: string; id: number }[];
-}) {
+export default function GamersTable({ data }: { data: Tplayers[] }) {
   const PATH = "/players";
   const ROWS_PER_PAGE = 10;
   const { pageNumber = 1 } = useParams();
@@ -123,10 +120,9 @@ export default function GamersTable({
     console.log(3);
     return null;
   };
-
   return (
     <TableWithPagination>
-      <CountText>Показано игроков: 4</CountText>
+      <CountText>Показано игроков: {data.length}</CountText>
       <TableContainer component={Paper} sx={TableStyle}>
         <Table aria-label="gamers table">
           <TableHead>
