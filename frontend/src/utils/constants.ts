@@ -47,6 +47,24 @@ export const tabs = [
   },
 ];
 
+export const customSizesInputText = {
+  small: {
+    width: 156,
+    "@media (min-width: 1194px)": { width: 144 },
+  },
+  medium: {
+    width: "92.2%",
+    maxWidth: 328,
+    "@media (min-width: 1194px)": { maxWidth: 308 },
+    "@media (min-width: 1440px)": { width: 355 },
+  },
+  large: {
+    width: "92.2%",
+    maxWidth: 328,
+    "@media (min-width: 1194px)": { width: "100%", maxWidth: "100%" },
+  },
+};
+
 export function checkResponse(res: Response) {
   if (!res.ok) {
     return Promise.reject(new Error(`Ошибка ${res.status}`));
