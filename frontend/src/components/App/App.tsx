@@ -12,9 +12,18 @@ import {
   SettingsPage,
   ProfilePage,
   NotFound404,
+  AddPlayerPage,
+  EditPlayerPage,
+  PlayerInfoPage,
 } from "../../pages";
 import Sidebar from "../Sidebar/Sidebar";
 import Header from "../Header/Header";
+import {
+  MainForm,
+  DocumentsForm,
+  GameInfoForm,
+  AdditionalForm,
+} from "../Forms";
 
 function ModalSwitch() {
   return (
@@ -31,6 +40,19 @@ function ModalSwitch() {
           <Route path="/signin" element={<LoginPage />} />
           <Route path="/tournaments" element={<TournamentsPage />} />
           <Route path="/players/:pageNumber" element={<PlayersPage />} />
+          <Route path="/players/add-player" element={<AddPlayerPage />}>
+            <Route path="main" element={<MainForm />} />
+            <Route path="documents" element={<DocumentsForm />} />
+            <Route path="game-info" element={<GameInfoForm />} />
+            <Route path="additional" element={<AdditionalForm />} />
+          </Route>
+          <Route path="/players/edit-player/:id" element={<EditPlayerPage />}>
+            <Route path="main" element={<MainForm />} />
+            <Route path="documents" element={<DocumentsForm />} />
+            <Route path="game-info" element={<GameInfoForm />} />
+            <Route path="additional" element={<AdditionalForm />} />
+          </Route>
+          <Route path="/players/:id" element={<PlayerInfoPage />} />
           <Route path="/protocols" element={<ProtocolsPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
