@@ -22,7 +22,7 @@ export const tabs = [
     title: "Игроки",
     img: Players,
     imgActive: PlayersActive,
-    path: "/players",
+    path: "/players/1",
   },
   {
     id: 3,

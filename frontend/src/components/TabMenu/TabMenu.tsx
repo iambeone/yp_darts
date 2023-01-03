@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -8,26 +9,12 @@ import Tab from "@mui/material/Tab";
 // * href - ссылка на нужную страницу, роутинг
 // ? disabled на всякий слусай
 
-// const tabs = [
-//   { label: "Основные параметры", href: "/params", disabled: false },
-//   { label: "Структура турнира", href: "/structure", disabled: false },
-//   { label: "Участники", href: "/participants", disabled: false },
-//   { label: "Группы", href: "/groups", disabled: false },
-//   { label: "Игры", href: "/games", disabled: true },
-//   { label: "Результаты", href: "/results", disabled: true },
-// ];
-
-type TLinkTabProps = {
-  label: string;
-  href: string;
-  disabled: boolean;
-};
-
 type TTabMenuProps = {
   tabs: {
     label: string;
     href: string;
     disabled: boolean;
+    id: number;
   }[];
 };
 
@@ -48,19 +35,6 @@ const sxTabs = {
   minHeight: "42px",
 };
 
-function LinkTab(props: TLinkTabProps) {
-  return (
-    <Tab
-      sx={sxLink}
-      component="a"
-      onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        event.preventDefault();
-      }}
-      {...props} // eslint-disable-line
-    />
-  );
-}
-
 function TabMenu({ tabs }: TTabMenuProps) {
   const [value, setValue] = React.useState(0);
 
@@ -78,8 +52,17 @@ function TabMenu({ tabs }: TTabMenuProps) {
         scrollButtons="auto"
         aria-label="scrollable auto tabs example"
       >
-        {tabs.map((e, i) => {
-          return <LinkTab key={i} label={e.label} href={e.href} disabled={e.disabled}/>; // eslint-disable-line
+        {tabs.map((e) => {
+          return (
+            <Tab
+              sx={sxLink}
+              key={e.id}
+              label={e.label}
+              to={e.href}
+              disabled={e.disabled}
+              component={Link}
+            />
+          );
         })}
       </Tabs>
     </Box>

@@ -6,6 +6,9 @@ import ProtocolsPage from "./ProtocolsPage/Protocols-Page";
 import SettingsPage from "./SettingsPage/Settings-Page";
 import ProfilePage from "./ProfilePage/Profile-Page";
 import NotFound404 from "./NotFound404/NotFound-Page";
+import AddPlayerPage from "./AddPlayerPage/AddPlayerPage";
+import EditPlayerPage from "./EditPlayerPage/EditPlayerPage";
+import PlayerInfoPage from "./PlayerInfoPage/PlayerInfoPage";
 
 export {
   HomePage,
@@ -16,4 +19,7 @@ export {
   SettingsPage,
   ProfilePage,
   NotFound404,
+  AddPlayerPage,
+  EditPlayerPage,
+  PlayerInfoPage,
 };
