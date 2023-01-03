@@ -2,8 +2,13 @@
 import React from "react";
 import { FormControl, InputLabel, OutlinedInput } from "@mui/material";
 import { IMaskInput } from "react-imask";
+import styled from "styled-components";
+import { customSizesInputText } from "../../utils/constants";
 
-import styles from "./Input-Text.module.css";
+const AsteriskSpan = styled.span`
+  color: #d32f2f;
+  display: inline;
+`;
 
 interface CustomProps {
   onChange: (event: { target: { name: string; value: string } }) => void;
@@ -61,21 +66,10 @@ function InputText({
   };
 
   return (
-    <FormControl className={styles[size]}>
-      <InputLabel
-        shrink
-        className={styles.inputLabel}
-        sx={{ top: -14, left: -14 }}
-      >
+    <FormControl sx={customSizesInputText[size]}>
+      <InputLabel shrink sx={{ top: -14, left: -14 }}>
         {label}
-        <span
-          className={
-            (required && styles.inputLabelSpan) || styles.inputLabelSpanHide
-          }
-        >
-          {" "}
-          *
-        </span>
+        {required && <AsteriskSpan> *</AsteriskSpan>}
       </InputLabel>
       {name === "normal" ? (
         <OutlinedInput
