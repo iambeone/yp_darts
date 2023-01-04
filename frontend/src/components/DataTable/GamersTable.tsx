@@ -9,8 +9,16 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
-import styles from "./GamersTable.module.css";
-import verticalDots from "../../images/vertical-dots.svg";
+import {
+  GamersTableContainer,
+  ColumnTitle,
+  Name,
+  Email,
+  StyledIcon,
+  ButtonIcon,
+  StyledLink,
+  PaginationContainer,
+} from "./GamersTableStyles";
 
 export default function GamersTable({
   data,
@@ -60,13 +68,13 @@ export default function GamersTable({
   };
 
   return (
-    <div className={styles.tableContainer}>
+    <GamersTableContainer>
       <TableContainer component={Paper} sx={table}>
         <Table aria-label="gamers table">
           <TableHead>
             <TableRow>
               <TableCell>
-                <span className={styles.columnTitle}>Имя</span>
+                <ColumnTitle>Имя</ColumnTitle>
               </TableCell>
               <TableCell sx={addCell} />
               <TableCell sx={changeCell} />
@@ -83,34 +91,34 @@ export default function GamersTable({
             ).map((item) => (
               <TableRow key={item.id}>
                 <TableCell>
-                  <span className={styles.name}>{item.name}</span> <br />
-                  <span className={styles.email}>{item.email}</span>
+                  <Name>{item.name}</Name> <br />
+                  <Email>{item.email}</Email>
                 </TableCell>
                 <TableCell align="right" sx={addCell} onClick={openModal}>
-                  <span className={styles.link}>ДОБАВИТЬ В ТУРНИР</span>
+                  <StyledLink>ДОБАВИТЬ В ТУРНИР</StyledLink>
                 </TableCell>
                 <TableCell
                   align="right"
                   sx={changeCell}
                   onClick={linkToChangePage}
                 >
-                  <span className={styles.link}>ИЗМЕНИТЬ</span>
+                  <StyledLink>ИЗМЕНИТЬ</StyledLink>
                 </TableCell>
                 <TableCell
                   align="right"
                   sx={iconCell}
                   onClick={openContextMenu}
                 >
-                  <button type="button" className={styles.btnIcon}>
-                    <img src={verticalDots} alt="Добавить в турнир" />
-                  </button>
+                  <ButtonIcon type="button">
+                    <StyledIcon>more_vert</StyledIcon>
+                  </ButtonIcon>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <div className={styles.pagination}>
+      <PaginationContainer>
         <Pagination
           page={Number(pageNumber)}
           count={Math.ceil(data.length / ROWS_PER_PAGE)}
@@ -124,8 +132,8 @@ export default function GamersTable({
             />
           )}
         />
-      </div>
-    </div>
+      </PaginationContainer>
+    </GamersTableContainer>
   );
 }
 

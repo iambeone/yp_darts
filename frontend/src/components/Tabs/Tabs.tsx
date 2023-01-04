@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import tabs from "../../utils/constants";
-import styles from "./Tabs.module.css";
+import {
+  TabList,
+  TabLink,
+  TabItem,
+  TabBorder,
+  Group,
+  Image,
+  Title,
+} from "./TabsStyles";
 
 type Ttab = {
   id: number;
@@ -35,22 +42,18 @@ function Tabs() {
   }, [filteredTabs, arr, setActive]);
 
   return (
-    <ul className={styles.ul}>
+    <TabList>
       {arr.map((tab) => {
         return (
-          <Link
-            className={styles.link}
+          <TabLink
             to={tab.path}
             onClick={() => onClick(tab)}
             onKeyPress={() => onClick(tab)}
             key={tab.id}
           >
-            <li className={styles.li}>
-              {JSON.stringify(active) === JSON.stringify(tab) && (
-                <div className={styles.border} />
-              )}
-              <div
-                className={styles.group}
+            <TabItem>
+              {JSON.stringify(active) === JSON.stringify(tab) && <TabBorder />}
+              <Group
                 style={{
                   paddingLeft:
                     JSON.stringify(active) !== JSON.stringify(tab) &&
@@ -64,8 +67,7 @@ function Tabs() {
                       : "0",
                 }}
               >
-                <img
-                  className={styles.img}
+                <Image
                   src={
                     JSON.stringify(active) === JSON.stringify(tab)
                       ? tab.imgActive
@@ -73,8 +75,7 @@ function Tabs() {
                   }
                   alt="Иконка"
                 />
-                <p
-                  className={styles.title}
+                <Title
                   style={{
                     color:
                       JSON.stringify(active) === JSON.stringify(tab)
@@ -83,13 +84,13 @@ function Tabs() {
                   }}
                 >
                   {tab.title}
-                </p>
-              </div>
-            </li>
-          </Link>
+                </Title>
+              </Group>
+            </TabItem>
+          </TabLink>
         );
       })}
-    </ul>
+    </TabList>
   );
 }
 export default Tabs;

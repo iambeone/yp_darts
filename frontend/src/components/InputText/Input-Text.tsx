@@ -1,9 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading, react/require-default-props */
 import React from "react";
-import { FormControl, InputLabel, OutlinedInput } from "@mui/material";
+import { InputLabel, OutlinedInput } from "@mui/material";
 import { IMaskInput } from "react-imask";
-
-import styles from "./Input-Text.module.css";
+import { InputLabelSpan, StyledFormControl } from "./InputTextStyles";
 
 interface CustomProps {
   onChange: (event: { target: { name: string; value: string } }) => void;
@@ -61,21 +60,10 @@ function InputText({
   };
 
   return (
-    <FormControl className={styles[size]}>
-      <InputLabel
-        shrink
-        className={styles.inputLabel}
-        sx={{ top: -14, left: -14 }}
-      >
+    <StyledFormControl formSize={size}>
+      <InputLabel shrink sx={{ top: -14, left: -14 }}>
         {label}
-        <span
-          className={
-            (required && styles.inputLabelSpan) || styles.inputLabelSpanHide
-          }
-        >
-          {" "}
-          *
-        </span>
+        {required && <InputLabelSpan> *</InputLabelSpan>}
       </InputLabel>
       {name === "normal" ? (
         <OutlinedInput
@@ -99,7 +87,7 @@ function InputText({
           inputComponent={TextMaskCustom as any}
         />
       )}
-    </FormControl>
+    </StyledFormControl>
   );
 }
 
