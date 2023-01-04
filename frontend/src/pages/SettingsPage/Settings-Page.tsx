@@ -1,9 +1,10 @@
 import React from "react";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 export default function SettingsPage() {
   return (
     <div>
-      <h4>SettingsPage</h4>
+      <PageTitle title="SettingsPage" />
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import React from "react";
-import styles from "./Home-Page.module.css";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 export default function HomePage() {
   return (
-    <div className={styles.App}>
-      <h4>Start App</h4>
+    <div>
+      <PageTitle title="Start App" />
     </div>
   );
 }

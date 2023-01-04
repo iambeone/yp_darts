@@ -1,9 +1,10 @@
 import React from "react";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 export default function LoginPage() {
   return (
     <div>
-      <h4>LoginPage</h4>
+      <PageTitle title="LoginPage" />
     </div>
   );
 }

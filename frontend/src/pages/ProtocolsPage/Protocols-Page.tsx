@@ -1,11 +1,10 @@
 import React from "react";
-import MainForm from "../../components/MainForm/MainForm";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 export default function ProtocolsPage() {
   return (
     <div>
-      {/* <h4>ProtocolsPage</h4> */}
-      <MainForm />
+      <PageTitle title="ProtocolsPage" />
     </div>
   );
 }
