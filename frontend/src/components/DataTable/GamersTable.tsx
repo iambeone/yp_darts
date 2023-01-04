@@ -10,6 +10,16 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
+import {
+  GamersTableContainer,
+  ColumnTitle,
+  Name,
+  Email,
+  StyledIcon,
+  ButtonIcon,
+  StyledLink,
+  PaginationContainer,
+} from "./GamersTableStyles";
 import verticalDots from "../../images/vertical-dots.svg";
 import { Tplayers } from "../../services/types";
 
@@ -164,7 +174,7 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
                   onClick={openContextMenu}
                 >
                   <ButtonIcon type="button">
-                    <img src={verticalDots} alt="Добавить в турнир" />
+                    <StyledIcon>more_vert</StyledIcon>
                   </ButtonIcon>
                 </TableCell>
               </TableRow>

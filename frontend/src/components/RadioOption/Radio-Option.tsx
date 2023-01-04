@@ -2,12 +2,11 @@ import React from "react";
 import {
   FormControl,
   FormControlLabel,
-  FormLabel,
   Radio,
   RadioGroup,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import styles from "./Radio-Option.module.css";
+import { GroupName, Requirement } from "./RadioButtonStyles";
 
 const theme = createTheme({
   palette: {
@@ -24,7 +23,7 @@ function RadioOption({
 }: {
   name: string;
   values: string[];
-  isRequired: boolean;
+  isRequired?: boolean;
 }) {
   const [value, setValue] = React.useState("female");
 
@@ -35,15 +34,9 @@ function RadioOption({
   return (
     <ThemeProvider theme={theme}>
       <FormControl>
-        <FormLabel
-          id="gender-radio-buttons-group"
-          className={styles.radioGruopName}
-          focused
-          color="info"
-        >
-          {name}{" "}
-          {isRequired ? <span className={styles.requirement}>*</span> : <> </>}
-        </FormLabel>
+        <GroupName id="gender-radio-buttons-group" focused color="info">
+          {name} {isRequired && <Requirement>*</Requirement>}
+        </GroupName>
         <RadioGroup
           aria-labelledby="gender-radio-buttons-group"
           name="controlled-radio-buttons-group"
@@ -76,5 +69,9 @@ function RadioOption({
     </ThemeProvider>
   );
 }
+
+RadioOption.defaultProps = {
+  isRequired: false,
+};
 
 export default RadioOption;

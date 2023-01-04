@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Logo from "../../images/Logo.svg";
 import Tabs from "../Tabs/Tabs";
+import { SidebarContainer, Image } from "./SidebarStyles";
 
 const Section = styled.section`
   position: relative;

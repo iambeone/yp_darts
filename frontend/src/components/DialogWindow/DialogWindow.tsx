@@ -5,8 +5,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import CheckIcon from "@mui/icons-material/Check";
+import Icon from "@mui/material/Icon";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 
@@ -61,13 +60,17 @@ function DialogWindow({
 
   const getIcon = () => {
     if (type === "success") {
-      return <CheckIcon color="success" sx={{ fontSize: 32 }} />;
+      return (
+        <Icon color="success" sx={{ fontSize: 32 }}>
+          check
+        </Icon>
+      );
     }
     if (type === "error") {
-      return <InfoOutlinedIcon sx={{ fontSize: 32, color: red[700] }} />;
+      return <Icon sx={{ fontSize: 32, color: red[700] }}>info_outline</Icon>;
     }
     if (type === "accept") {
-      return <InfoOutlinedIcon sx={{ fontSize: 32 }} />;
+      return <Icon sx={{ fontSize: 32 }}>info_outline</Icon>;
     }
     return "";
   };

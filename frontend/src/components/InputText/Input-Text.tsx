@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading, react/require-default-props */
 import React from "react";
-import { FormControl, InputLabel, OutlinedInput } from "@mui/material";
+import { InputLabel, OutlinedInput } from "@mui/material";
 import { IMaskInput } from "react-imask";
+import { InputLabelSpan, StyledFormControl } from "./InputTextStyles";
 import styled from "styled-components";
 import { customSizesInputText } from "../../utils/constants";
 
@@ -66,10 +67,10 @@ function InputText({
   };
 
   return (
-    <FormControl sx={customSizesInputText[size]}>
+    <StyledFormControl formSize={size}>
       <InputLabel shrink sx={{ top: -14, left: -14 }}>
         {label}
-        {required && <AsteriskSpan> *</AsteriskSpan>}
+        {required && <InputLabelSpan> *</InputLabelSpan>}
       </InputLabel>
       {name === "normal" ? (
         <OutlinedInput
@@ -93,7 +94,7 @@ function InputText({
           inputComponent={TextMaskCustom as any}
         />
       )}
-    </FormControl>
+    </StyledFormControl>
   );
 }
 

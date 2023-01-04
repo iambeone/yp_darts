@@ -4,9 +4,9 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
-import UploadFileIcon from "@mui/icons-material/UploadFile";
+import Icon from "@mui/material/Icon";
 import Typography from "@mui/material/Typography";
-import styles from "./UploadInput.module.module.css";
+import { ImageWrapper, UploadLink, AdditionalText } from "./UploadInputStyles";
 
 interface UploadInputProps {
   inputRef: RefObject<HTMLInputElement>;
@@ -45,15 +45,15 @@ function UploadInput({ inputRef }: UploadInputProps) {
       <input id="avatarImage" ref={inputRef} {...getInputProps()} />
       <Stack alignItems="center" spacing={1}>
         <Tooltip title="Выбор файла">
-          <label htmlFor="avatarImage" className={styles.imgWrapper}>
+          <ImageWrapper htmlFor="avatarImage">
             <IconButton
               color="primary"
               aria-label="upload picture"
               component="span"
             >
-              <UploadFileIcon color="primary" />
+              <Icon color="primary">upload_file</Icon>
             </IconButton>
-          </label>
+          </ImageWrapper>
         </Tooltip>
 
         <label htmlFor="avatarImage">
@@ -61,16 +61,13 @@ function UploadInput({ inputRef }: UploadInputProps) {
             <Typography variant="subtitle1">{fileName}</Typography>
           ) : (
             <Typography variant="subtitle1">
-              <span className={styles.link}>Нажмите для выбора файла</span>
-              <span className={styles.additionalText}>
-                {" "}
-                или перетащите сюда
-              </span>
+              <UploadLink>Нажмите для выбора файла</UploadLink>
+              <AdditionalText> или перетащите сюда</AdditionalText>
             </Typography>
           )}
         </label>
 
-        <Typography variant="body2" className={styles.format}>
+        <Typography variant="body2" sx={{ color: "rgba(0, 0, 0, 0.54)" }}>
           Допустимый формат: JPG, PNG
         </Typography>
       </Stack>

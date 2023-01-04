@@ -1,4 +1,14 @@
 import React, { useEffect, useState } from "react";
+import tabs from "../../utils/constants";
+import {
+  TabList,
+  TabLink,
+  TabItem,
+  TabBorder,
+  Group,
+  Image,
+  Title,
+} from "./TabsStyles";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { tabs } from "../../utils/constants";
@@ -167,17 +177,17 @@ function Tabs() {
   };
 
   return (
-    <Ul>
+    <TabList>
       {arr.map((tab) => {
         return (
-          <Links
+          <TabLink
             to={tab.path}
             onClick={() => onClick(tab)}
             onKeyPress={() => onClick(tab)}
             key={tab.id}
           >
-            <Li>
-              {checkObject(active, tab) && <Border />}
+            <TabItem>
+              {JSON.stringify(active) === JSON.stringify(tab) && <TabBorder />}
               <Group
                 style={{
                   paddingLeft:
@@ -190,8 +200,12 @@ function Tabs() {
                       : "0",
                 }}
               >
-                <Img
-                  src={checkObject(active, tab) ? tab.imgActive : tab.img}
+                <Image
+                  src={
+                    JSON.stringify(active) === JSON.stringify(tab)
+                      ? tab.imgActive
+                      : tab.img
+                  }
                   alt="Иконка"
                 />
                 <Title
@@ -204,11 +218,11 @@ function Tabs() {
                   {tab.title}
                 </Title>
               </Group>
-            </Li>
-          </Links>
+            </TabItem>
+          </TabLink>
         );
       })}
-    </Ul>
+    </TabList>
   );
 }
 export default Tabs;
