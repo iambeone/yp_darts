@@ -18,7 +18,6 @@
 
 .large {
     width: 92.2%;
-    max-width: 328px;
 }
 
 @media (min-width: 1194px) {
@@ -38,6 +37,12 @@
 @media (min-width: 1440px) {
     .medium {
         max-width: 355px;
+    }
+}
+
+@media (max-width: 500px) {
+    .large {
+        max-width: 328px;
     }
 }
 
