@@ -3,6 +3,11 @@ export enum GenderEnum {
   FEMALE = 'female',
 }
 
+export enum LeadHandEnum {
+  LEFT = 'left',
+  RIGHT = 'right',
+}
+
 export enum AgeEnum {
   CHILDREN = 'children',
   TEENAGERS = 'teenagers',

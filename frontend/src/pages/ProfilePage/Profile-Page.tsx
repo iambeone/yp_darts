@@ -1,9 +1,10 @@
 import React from "react";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 export default function ProfilePage() {
   return (
     <div>
-      <h4>ProfilePage</h4>
+      <PageTitle title="ProfilePage" />
     </div>
   );
 }

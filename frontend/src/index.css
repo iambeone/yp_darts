@@ -6,15 +6,3 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-h4 {
-  font-family: "Podkova";
-  font-weight: 600;
-  font-size: 34px;
-}
-
-@media (max-width: 600px) {
-  h4 {    
-    font-size: 28px;
-  }
-}

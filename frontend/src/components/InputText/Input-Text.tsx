@@ -3,6 +3,13 @@ import React from "react";
 import { InputLabel, OutlinedInput } from "@mui/material";
 import { IMaskInput } from "react-imask";
 import { InputLabelSpan, StyledFormControl } from "./InputTextStyles";
+import styled from "styled-components";
+import { customSizesInputText } from "../../utils/constants";
+
+const AsteriskSpan = styled.span`
+  color: #d32f2f;
+  display: inline;
+`;
 
 interface CustomProps {
   onChange: (event: { target: { name: string; value: string } }) => void;

@@ -1,9 +1,10 @@
 import React from "react";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 export default function ProtocolsPage() {
   return (
     <div>
-      <h4>ProtocolsPage</h4>
+      <PageTitle title="ProtocolsPage" />
     </div>
   );
 }

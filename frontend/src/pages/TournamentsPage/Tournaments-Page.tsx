@@ -1,10 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 export default function TournamentsPage() {
   return (
     <div>
-      <h4>Tournaments</h4>
+      <PageTitle title="Tournaments" />
       <ul>
         <li>
           <NavLink to="1">1</NavLink>
