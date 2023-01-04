@@ -1,15 +1,13 @@
 import styled from "styled-components";
 
-const SidebarContainer = styled.section`
+const Section = styled.section`
   position: relative;
   width: 248px;
-  height: 100vh;
+  height: 100%;
   background-color: #003200;
-
   @media (max-width: 900px) {
     width: 150px;
   }
-
   @media (max-width: 500px) {
     position: fixed;
     left: 0;
@@ -21,17 +19,17 @@ const SidebarContainer = styled.section`
   }
 `;
 
-const Image = styled.img`
+const Img = styled.img`
   display: block;
-  margin: 64px auto 0;
+  margin: 0 auto 0;
+  padding-top: 64px;
 
   @media (max-width: 900px) {
-    margin-top: 32px;
+    padding-top: 32px;
   }
-
   @media (max-width: 500px) {
     display: none;
   }
 `;
 
-export { SidebarContainer, Image };
+export { Section, Img };

@@ -1,5 +1,4 @@
 import * as React from "react";
-import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,76 +10,23 @@ import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import {
-  GamersTableContainer,
+  TableWithPagination,
   ColumnTitle,
-  Name,
-  Email,
+  NameSpan,
+  EmailSpan,
   StyledIcon,
   ButtonIcon,
-  StyledLink,
+  LinkSpan,
   PaginationContainer,
+  CountText,
 } from "./GamersTableStyles";
-import verticalDots from "../../images/vertical-dots.svg";
 import { Tplayers } from "../../services/types";
-
-const TableWithPagination = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  flex-grow: 1;
-  margin: 0 40px;
-  @media (max-width: 1200px) {
-    margin: 0 24px;
-  }
-  @media (max-width: 768px) {
-    margin: 0 16px;
-  }
-`;
 
 const TableStyle = {
   width: "auto",
   boxShadow: "none",
   marginTop: { xs: "16px", sm: "0" },
 };
-
-const CountText = styled.p`
-  padding: 0;
-  margin: 32px 0 16px 0;
-  @media (max-width: 1200px) {
-    margin: 24px 0 16px 0;
-  }
-  @media (max-width: 500px) {
-    display: none;
-  }
-`;
-
-const ColumnTitle = styled.span`
-  font-size: 14px;
-  line-height: 24px;
-  letter-spacing: 0.17px;
-`;
-
-const NameSpan = styled.span`
-  font-size: 16px;
-  line-height: 26px;
-  color: rgba(0, 0, 0, 0.87);
-`;
-
-const EmailSpan = styled.span`
-  font-size: 12px;
-  line-height: 166%;
-  letter-spacing: 0.4px;
-  color: rgba(0, 0, 0, 0.6);
-`;
-
-const LinkSpan = styled.span`
-  font-size: 15px;
-  line-height: 26px;
-  letter-spacing: 0.46px;
-  text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.87);
-  cursor: pointer;
-`;
 
 const ChangeCell = {
   width: "80px",
@@ -98,18 +44,6 @@ const IconCell = {
   width: "5px",
   padding: "16px 20px",
 };
-
-const ButtonIcon = styled.button`
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-`;
-
-const PaginationContainer = styled.div`
-  margin: 0 auto;
-  margin-top: auto;
-  padding: 40px 0 32px 0;
-`;
 
 export default function GamersTable({ data }: { data: Tplayers[] }) {
   const PATH = "/players";
