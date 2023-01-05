@@ -22,13 +22,14 @@ function DateSelector({
   label = "Дата рождения",
 }: IDateSelector) {
   const [valueState, setValueState] = React.useState<Dayjs | null>(value);
+  const locale = "ru";
 
   const Span = styled.span`
     color: red;
   `;
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
       <DatePicker
         disableFuture
         openTo="year"
