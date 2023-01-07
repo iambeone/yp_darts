@@ -17,7 +17,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Event } from 'src/resources/events/entities/event.entity';
-import { GenderEnum } from 'src/config/events.enum';
+import { GenderEnum, LeadHandEnum } from 'src/config/events.enum';
 
 @Entity()
 export class Participant {
@@ -110,9 +110,13 @@ export class Participant {
   @IsString()
   public nameOfTrainer: string;
 
-  @Column({ nullable: true })
+  @Column({ 
+    type: 'enum',
+    enum: LeadHandEnum,
+    nullable: true,
+  })
   @IsString()
-  public leadingHand: string;
+  public leadingHand: LeadHandEnum;
 
   @Column({ nullable: true })
   @IsString()

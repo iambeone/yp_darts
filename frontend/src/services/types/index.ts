@@ -1,16 +1,46 @@
-import { ActionCreator } from "redux";
-import { ThunkAction, ThunkDispatch } from "redux-thunk";
-import store from "../store";
-import { TCommonActions } from "../actions";
+enum GenderEnum {
+  MALE = "male",
+  FEMALE = "female",
+}
 
-export type AppDispatch = typeof store.dispatch;
+enum LeadHandEnum {
+  LEFT = "left",
+  RIGHT = "right",
+}
 
-type AppActions = TCommonActions;
-
-export type ActionThunk = ActionCreator<
-  ThunkAction<void, RootState, unknown, AppActions>
->;
-
-export type DispatchThunk = ThunkDispatch<RootState, void, AppActions>;
-
-export type RootState = ReturnType<typeof store.getState>;
+export type Tplayers = {
+  id: number;
+  surname: string;
+  name: string;
+  patronymic?: string;
+  dateOfBirth?: Date;
+  gender: GenderEnum;
+  address?: string;
+  email: string;
+  phone?: number;
+  seriesAndNumber?: number;
+  dateOfIssue?: Date;
+  issuedBy?: string;
+  divisionCode?: string;
+  snils?: string;
+  INN?: string;
+  subjectRF?: string;
+  category?: string;
+  аssigned?: Date;
+  nameOfTrainer?: string;
+  leadingHand?: LeadHandEnum;
+  producerOfDart?: string;
+  weightOfDart?: number;
+  policyNumber?: number;
+  startOfAction?: Date;
+  endOfAction?: Date;
+  weightOfPlayer?: number;
+  heightOfPlayer?: number;
+  hobby?: string;
+  educationalInstitution?: string;
+  endOfEducation?: Date;
+  educationLevel?: string;
+  speciality?: string;
+  image?: string;
+  events?: Event[];
+};

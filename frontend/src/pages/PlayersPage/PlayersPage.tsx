@@ -1,32 +1,20 @@
 import React from "react";
+import { useSelector } from "../../utils/hooks";
 import GamersTable from "../../components/DataTable/GamersTable";
 import FiltersModal from "../../components/modals/FiltersModal";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import styles from "./PlayersPage.module.css";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 export default function PlayersPage() {
-  const gamers = [
-    { name: "Sam", email: "sam@ya.ru", id: 1 },
-    { name: "Sam", email: "sam@ya.ru", id: 2 },
-    { name: "Sam", email: "sam@ya.ru", id: 3 },
-    { name: "Sam", email: "sam@ya.ru", id: 4 },
-    { name: "Sam", email: "sam@ya.ru", id: 5 },
-    { name: "Sam", email: "sam@ya.ru", id: 6 },
-    { name: "Sam", email: "sam@ya.ru", id: 7 },
-    { name: "Sam", email: "sam@ya.ru", id: 8 },
-    { name: "Sam", email: "sam@ya.ru", id: 9 },
-    { name: "Sam", email: "sam@ya.ru", id: 10 },
-    { name: "Sam", email: "sam@ya.ru", id: 11 },
-    { name: "Sam", email: "sam@ya.ru", id: 12 },
-    { name: "Henk", email: "Henk@ya.ru", id: 13 },
-    { name: "Henk", email: "Henk@ya.ru", id: 14 },
-  ];
+  const players = useSelector((state) => state.players.playersData);
   return (
-    <div className={styles.page}>
-      <h4>PlayersPage</h4>
+    <>
+      <PageTitle title="Игроки" />
       <SearchBar />
-      <GamersTable data={gamers} />
+      {players && <GamersTable data={players} />}
       <FiltersModal />
-    </div>
+    </>
   );
 }
+
+// рутинг не доделан, чтобы открыть, добавить в урл /1

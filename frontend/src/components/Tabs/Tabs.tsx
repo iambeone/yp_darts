@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import tabs from "../../utils/constants";
-import styles from "./Tabs.module.css";
+import { tabs } from "../../utils/constants";
+import {
+  TabList,
+  TabLink,
+  TabItem,
+  TabBorder,
+  Group,
+  Image,
+  Title,
+} from "./TabsStyles";
 
 type Ttab = {
   id: number;
@@ -15,7 +22,7 @@ function Tabs() {
   const activeTab = JSON.parse(localStorage.getItem("activeTab")!);
   const [active, setActive] = useState<Ttab>(activeTab);
 
-  const filteredTabs = tabs.filter((tab) => {
+  const filteredTabs = tabs.filter((tab: Ttab) => {
     if (window.innerWidth > 500) {
       return tab.title !== "Еще";
     }
@@ -34,38 +41,35 @@ function Tabs() {
     };
   }, [filteredTabs, arr, setActive]);
 
+  const checkObject = (activeObj: Ttab, obj: Ttab) => {
+    return JSON.stringify(activeObj) === JSON.stringify(obj);
+  };
+
   return (
-    <ul className={styles.ul}>
+    <TabList>
       {arr.map((tab) => {
         return (
-          <Link
-            className={styles.link}
+          <TabLink
             to={tab.path}
             onClick={() => onClick(tab)}
             onKeyPress={() => onClick(tab)}
             key={tab.id}
           >
-            <li className={styles.li}>
-              {JSON.stringify(active) === JSON.stringify(tab) && (
-                <div className={styles.border} />
-              )}
-              <div
-                className={styles.group}
+            <TabItem>
+              {JSON.stringify(active) === JSON.stringify(tab) && <TabBorder />}
+              <Group
                 style={{
                   paddingLeft:
-                    JSON.stringify(active) !== JSON.stringify(tab) &&
-                    window.innerWidth > 500
+                    !checkObject(active, tab) && window.innerWidth > 500
                       ? "4px"
                       : "0",
                   paddingBottom:
-                    JSON.stringify(active) !== JSON.stringify(tab) &&
-                    window.innerWidth < 500
+                    !checkObject(active, tab) && window.innerWidth < 500
                       ? "4px"
                       : "0",
                 }}
               >
-                <img
-                  className={styles.img}
+                <Image
                   src={
                     JSON.stringify(active) === JSON.stringify(tab)
                       ? tab.imgActive
@@ -73,23 +77,21 @@ function Tabs() {
                   }
                   alt="Иконка"
                 />
-                <p
-                  className={styles.title}
+                <Title
                   style={{
-                    color:
-                      JSON.stringify(active) === JSON.stringify(tab)
-                        ? "#FFF"
-                        : "rgba(255, 255, 255, 0.5)",
+                    color: checkObject(active, tab)
+                      ? "#FFF"
+                      : "rgba(255, 255, 255, 0.5)",
                   }}
                 >
                   {tab.title}
-                </p>
-              </div>
-            </li>
-          </Link>
+                </Title>
+              </Group>
+            </TabItem>
+          </TabLink>
         );
       })}
-    </ul>
+    </TabList>
   );
 }
 export default Tabs;

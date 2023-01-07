@@ -9,40 +9,46 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
-import styles from "./GamersTable.module.css";
-import verticalDots from "../../images/vertical-dots.svg";
+import {
+  TableWithPagination,
+  ColumnTitle,
+  NameSpan,
+  EmailSpan,
+  StyledIcon,
+  ButtonIcon,
+  LinkSpan,
+  PaginationContainer,
+  CountText,
+} from "./GamersTableStyles";
+import { Tplayers } from "../../services/types";
 
-export default function GamersTable({
-  data,
-}: {
-  data: { name: string; email: string; id: number }[];
-}) {
+const TableStyle = {
+  width: "auto",
+  boxShadow: "none",
+  marginTop: { xs: "16px", sm: "0" },
+};
+
+const ChangeCell = {
+  width: "80px",
+  padding: "16px 20px",
+  display: { xs: "none", lg: "table-cell" },
+};
+
+const AddCell = {
+  width: "180px",
+  padding: "16px 20px",
+  display: { xs: "none", lg: "table-cell" },
+};
+
+const IconCell = {
+  width: "5px",
+  padding: "16px 20px",
+};
+
+export default function GamersTable({ data }: { data: Tplayers[] }) {
   const PATH = "/players";
   const ROWS_PER_PAGE = 10;
   const { pageNumber = 1 } = useParams();
-
-  const table = {
-    width: "auto",
-    margin: { lg: "0 40px", sm: "0 24px", xs: "0 16px" },
-    boxShadow: "none",
-  };
-
-  const changeCell = {
-    width: "80px",
-    padding: "16px 20px",
-    display: { xs: "none", lg: "table-cell" },
-  };
-
-  const addCell = {
-    width: "180px",
-    padding: "16px 20px",
-    display: { xs: "none", lg: "table-cell" },
-  };
-
-  const iconCell = {
-    width: "5px",
-    padding: "16px 20px",
-  };
 
   const openModal = () => {
     console.log(1);
@@ -58,18 +64,18 @@ export default function GamersTable({
     console.log(3);
     return null;
   };
-
   return (
-    <div className={styles.tableContainer}>
-      <TableContainer component={Paper} sx={table}>
+    <TableWithPagination>
+      <CountText>Показано игроков: {data.length}</CountText>
+      <TableContainer component={Paper} sx={TableStyle}>
         <Table aria-label="gamers table">
           <TableHead>
             <TableRow>
               <TableCell>
-                <span className={styles.columnTitle}>Имя</span>
+                <ColumnTitle>Имя</ColumnTitle>
               </TableCell>
-              <TableCell sx={addCell} />
-              <TableCell sx={changeCell} />
+              <TableCell sx={AddCell} />
+              <TableCell sx={ChangeCell} />
               <TableCell />
             </TableRow>
           </TableHead>
@@ -83,34 +89,34 @@ export default function GamersTable({
             ).map((item) => (
               <TableRow key={item.id}>
                 <TableCell>
-                  <span className={styles.name}>{item.name}</span> <br />
-                  <span className={styles.email}>{item.email}</span>
+                  <NameSpan>{item.name}</NameSpan> <br />
+                  <EmailSpan>{item.email}</EmailSpan>
                 </TableCell>
-                <TableCell align="right" sx={addCell} onClick={openModal}>
-                  <span className={styles.link}>ДОБАВИТЬ В ТУРНИР</span>
+                <TableCell align="right" sx={AddCell} onClick={openModal}>
+                  <LinkSpan>ДОБАВИТЬ В ТУРНИР</LinkSpan>
                 </TableCell>
                 <TableCell
                   align="right"
-                  sx={changeCell}
+                  sx={ChangeCell}
                   onClick={linkToChangePage}
                 >
-                  <span className={styles.link}>ИЗМЕНИТЬ</span>
+                  <LinkSpan>ИЗМЕНИТЬ</LinkSpan>
                 </TableCell>
                 <TableCell
                   align="right"
-                  sx={iconCell}
+                  sx={IconCell}
                   onClick={openContextMenu}
                 >
-                  <button type="button" className={styles.btnIcon}>
-                    <img src={verticalDots} alt="Добавить в турнир" />
-                  </button>
+                  <ButtonIcon type="button">
+                    <StyledIcon>more_vert</StyledIcon>
+                  </ButtonIcon>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <div className={styles.pagination}>
+      <PaginationContainer>
         <Pagination
           page={Number(pageNumber)}
           count={Math.ceil(data.length / ROWS_PER_PAGE)}
@@ -124,8 +130,8 @@ export default function GamersTable({
             />
           )}
         />
-      </div>
-    </div>
+      </PaginationContainer>
+    </TableWithPagination>
   );
 }
 
