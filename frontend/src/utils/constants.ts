@@ -47,6 +47,15 @@ export const tabs = [
   },
 ];
 
+export const subjectsRF = [
+  { value: "Московская область", text: "Московская область" },
+  { value: "Республика Удмуртия", text: "Республика Удмуртия" },
+  {
+    value: "Еврейский автономный округ",
+    text: "Еврейский автономный округ",
+  },
+];
+
 export const customSizesInputText = {
   small: {
     width: 156,
@@ -80,7 +89,7 @@ export const tokenRequestOptions = (method: string) => {
 
   // убрать после подключения авторизации. Залогинится через postman и вставить полученный токен
   const accessToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTY3MjU2NDY3MCwiZXhwIjoxNjcyNjUxMDcwfQ.OjGKexdZsiLzMKg8GEACfNJybD-hLbWG0s4P4Jzj5TI";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTY3MzE1NjE0OSwiZXhwIjoxNjczMjQyNTQ5fQ.aLhQbKjQzda15Oi60q77vlLIn3GVZTq_42o_IPNklvY";
 
   const requestOptions = {
     method: `${method}`,

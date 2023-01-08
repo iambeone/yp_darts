@@ -46,9 +46,12 @@ export const fetchPlayersFailed = (error: {}): TPlayersActions => ({
 });
 
 export const getPlayers: AppThunk<Promise<IApplicationActions>> =
-  () => (dispatch: AppDispatch) => {
+  (payload: string) => (dispatch: AppDispatch) => {
     dispatch(fetchPlayersRequest());
-    return fetch(`${baseUrl}/participants`, tokenRequestOptions("GET"))
+    return fetch(
+      `${baseUrl}/participants${payload}`,
+      tokenRequestOptions("GET"),
+    )
       .then(checkResponse)
       .then((json) => {
         dispatch(fetchPlayersSuccess(json));
