@@ -1,12 +1,12 @@
-import { SET_FILTERS_MODAL_OPEN } from "../actions/actionsTypes";
+import { SET_MODAL_OPEN } from "../actions/actionsTypes";
 import { TCommonActions } from "../actions/commonActions";
 
 export type TCommonState = {
-  filtersModalOpen: boolean;
+  modalOpen: boolean;
 };
 
 const initialState = {
-  filtersModalOpen: false,
+  modalOpen: false,
 };
 
 export const commonReducer = (
@@ -14,10 +14,10 @@ export const commonReducer = (
   action: TCommonActions,
 ) => {
   switch (action.type) {
-    case SET_FILTERS_MODAL_OPEN:
+    case SET_MODAL_OPEN:
       return {
         ...state,
-        filtersModalOpen: action.payload,
+        modalOpen: action.payload,
       };
 
     default:
