@@ -56,7 +56,7 @@ function Tabs() {
             key={tab.id}
           >
             <TabItem>
-              {JSON.stringify(active) === JSON.stringify(tab) && <TabBorder />}
+              {checkObject(active, tab) && <TabBorder />}
               <Group
                 style={{
                   paddingLeft:
@@ -70,11 +70,7 @@ function Tabs() {
                 }}
               >
                 <Image
-                  src={
-                    JSON.stringify(active) === JSON.stringify(tab)
-                      ? tab.imgActive
-                      : tab.img
-                  }
+                  src={checkObject(active, tab) ? tab.imgActive : tab.img}
                   alt="Иконка"
                 />
                 <Title
