@@ -1,13 +1,7 @@
 import React, { ReactElement } from "react";
 import Icon from "@mui/material/Icon";
-import {
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
-import styles from "./ContextMenu.module.css";
+import { List, ListItem, ListItemButton, ListItemIcon } from "@mui/material";
+import StyledListItemText from "./ContextMenuStyles";
 
 type TContextMenuProps = {
   itemsData: {
@@ -15,16 +9,13 @@ type TContextMenuProps = {
     value: string;
     callback: () => void;
   }[];
-  extraClass?: string;
 };
 
 function ContextMenu({
   itemsData,
-  extraClass,
 }: TContextMenuProps): ReactElement<TContextMenuProps> {
   return (
     <List
-      className={extraClass}
       sx={{
         width: 294,
         borderRadius: 1,
@@ -46,19 +37,12 @@ function ContextMenu({
               <Icon sx={{ fontSize: 22 }}>{item.icon}</Icon>
             </ListItemIcon>
 
-            <ListItemText
-              primary={item.value}
-              className={styles.contextMenuText}
-            />
+            <StyledListItemText primary={item.value} />
           </ListItemButton>
         </ListItem>
       ))}
     </List>
   );
 }
-
-ContextMenu.defaultProps = {
-  extraClass: "",
-};
 
 export default ContextMenu;

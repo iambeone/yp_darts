@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { styled } from "@mui/material/styles";
-import styles from "./RadioButtons.module.css";
+import { RadioButtonsContainer, Label } from "./RadioButtonsStyles";
 
 export default function RadioButtons({
   name,
@@ -47,8 +47,8 @@ export default function RadioButtons({
   }));
 
   return (
-    <div className={styles.container}>
-      <label className={styles.label}>{name}</label>
+    <RadioButtonsContainer>
+      <Label>{name}</Label>
       <StyledButtonsGroup
         value={value}
         exclusive
@@ -63,6 +63,6 @@ export default function RadioButtons({
           );
         })}
       </StyledButtonsGroup>
-    </div>
+    </RadioButtonsContainer>
   );
 }
