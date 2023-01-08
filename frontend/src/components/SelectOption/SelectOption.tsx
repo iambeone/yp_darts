@@ -3,7 +3,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 
-// Для использования необходимо передать компоненту props "label" и "options" с массивом
+// Для использования необходимо передать компоненту props "inputWidth" и "options" с массивом
 // эелементов для выпадающего списка
 
 // Пример использования компонента:

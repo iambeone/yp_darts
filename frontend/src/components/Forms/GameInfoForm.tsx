@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { subjectRF } from "../../utils/constants";
-import DateTextField from "../DateTextField/DateTextField";
+// import DateTextField from "../DateTextField/DateTextField";
 import InputText from "../InputText/Input-Text";
 // import PageTitle from "../PageTitle/PageTitle";
 import SelectOptions from "../SelectOption/SelectOption";
@@ -32,7 +32,7 @@ export default function GameInfoForm() {
       <Caption>Регион, за который играет спортсмен</Caption>
       <Group>
         {/* <SelectOptions label="Спортивный разряд" options={subjectRF} /> */}
-        <DateTextField />
+        {/* <DateTextField /> */}
       </Group>
       <InputText />
     </Section>
