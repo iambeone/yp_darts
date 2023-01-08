@@ -107,7 +107,6 @@ const Image = styled.img`
   margin: 0 20px 0 28px;
 
   @media (max-width: 900px) {
-    width: 100%;
     flex-direction: column;
     align-items: center;
   }

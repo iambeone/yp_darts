@@ -4,7 +4,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 
-// Для использования необходимо передать компоненту props "label"(опционально), "inputWidth" и "options" с массивом
+// Для использования необходимо передать компоненту props "label"(опционально), "inputWidth", "inputHeight" и "options" с массивом
 // эелементов для выпадающего списка
 
 // Пример использования компонента:
@@ -25,6 +25,7 @@ type TSelect = {
   label?: string;
   options: TOptions[];
   inputWidth: number;
+  inputHeight: number;
 };
 
 const Label = styled.p`
@@ -39,9 +40,9 @@ const Label = styled.p`
 `;
 
 export default function SelectOption(props: TSelect) {
-  const { label, options, inputWidth } = props;
+  const { label, options, inputWidth, inputHeight } = props;
   return (
-    <Stack sx={{ width: inputWidth }}>
+    <Stack>
       <Label>{label}</Label>
       <Autocomplete
         onChange={(event, value) => console.log(value)}
@@ -49,7 +50,11 @@ export default function SelectOption(props: TSelect) {
         options={options}
         getOptionLabel={(option) => option.title}
         renderInput={(params) => (
-          <TextField {...params} placeholder="Выбрать" />
+          <TextField
+            {...params}
+            placeholder="Выбрать"
+            sx={{ width: inputWidth, height: inputHeight }}
+          />
         )}
       />
     </Stack>

@@ -40,7 +40,12 @@ const Group = styled.div`
 export default function GameInfoForm() {
   return (
     <Section>
-      <SelectOptions options={subjectRF} inputWidth={390} label="Субъект РФ" />
+      <SelectOptions
+        options={subjectRF}
+        inputWidth={390}
+        inputHeight={56}
+        label="Субъект РФ"
+      />
       <Caption>Регион, за который играет спортсмен</Caption>
 
       <Group>
@@ -48,6 +53,7 @@ export default function GameInfoForm() {
           <SelectOptions
             options={subjectRF}
             inputWidth={308}
+            inputHeight={56}
             label="Спортивный разряд"
           />
         </div>
