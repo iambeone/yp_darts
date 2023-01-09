@@ -1,19 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading, react/require-default-props */
 import React from "react";
-import { InputLabel, OutlinedInput } from "@mui/material";
+import { InputLabel, OutlinedInput, FormHelperText } from "@mui/material";
 import { IMaskInput } from "react-imask";
-// import styled from "styled-components";
 import { InputLabelSpan, StyledFormControl } from "./InputTextStyles";
-// import { customSizesInputText } from "../../utils/constants";
-
-// const AsteriskSpan = styled.span`
-//   color: #d32f2f;
-//   display: inline;
-// `;
 
 interface CustomProps {
   onChange: (event: { target: { name: string; value: string } }) => void;
-  name: "snils" | "inn" | "passport" | "phone" | "police";
+  name: "snils" | "inn" | "passport" | "phone" | "police" | "birth";
 }
 
 const TextMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
@@ -25,11 +18,16 @@ const TextMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
       police: "000-000",
       inn: "000000000000",
       snils: "000-000-000 00",
+      birth: "#-## 000000",
     };
     return (
       <IMaskInput
         {...other}
         mask={maskFormat[name]}
+        definitions={{
+          "#": /[А-Я]/,
+        }}
+        prepare={(value: any) => value.toUpperCase()}
         inputRef={
           ref as React.RefCallback<HTMLTextAreaElement | HTMLInputElement>
         }
@@ -51,6 +49,8 @@ function InputText({
   value = "",
   onChange,
   name = "normal",
+  error = false,
+  helperText = "",
 }: {
   required?: boolean;
   label?: string;
@@ -59,7 +59,9 @@ function InputText({
   size?: "small" | "medium" | "large";
   value?: string;
   onChange?: any;
-  name?: "normal" | "snils" | "inn" | "passport" | "phone" | "police";
+  name?: "normal" | "snils" | "inn" | "passport" | "phone" | "police" | "birth";
+  error?: boolean;
+  helperText?: string;
 }) {
   const [valueState, setValueState] = React.useState(value);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +69,7 @@ function InputText({
   };
 
   return (
-    <StyledFormControl formSize={size}>
+    <StyledFormControl formSize={size} error={error}>
       <InputLabel shrink sx={{ top: -14, left: -14 }}>
         {label}
         {required && <InputLabelSpan> *</InputLabelSpan>}
@@ -94,6 +96,7 @@ function InputText({
           inputComponent={TextMaskCustom as any}
         />
       )}
+      {error && <FormHelperText>{helperText}</FormHelperText>}
     </StyledFormControl>
   );
 }
