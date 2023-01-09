@@ -74,6 +74,12 @@ export const customSizesInputText = {
   },
 };
 
+export const contextMenuPlayersTable = [
+  { icon: "person_add", value: "Добавить в турнир" },
+  { icon: "edit", value: "Изменить" },
+  { icon: "delete", value: "Удалить" },
+];
+
 export function checkResponse(res: Response) {
   if (!res.ok) {
     return Promise.reject(new Error(`Ошибка ${res.status}`));
@@ -89,7 +95,7 @@ export const tokenRequestOptions = (method: string) => {
 
   // убрать после подключения авторизации. Залогинится через postman и вставить полученный токен
   const accessToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTY3MzE1NjE0OSwiZXhwIjoxNjczMjQyNTQ5fQ.aLhQbKjQzda15Oi60q77vlLIn3GVZTq_42o_IPNklvY";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTY3MzE4NTg2MSwiZXhwIjoxNjczMjcyMjYxfQ.aSjV9CjTUoP3MzOkw13QrxObK__yWUtKti9astW_BLc";
 
   const requestOptions = {
     method: `${method}`,

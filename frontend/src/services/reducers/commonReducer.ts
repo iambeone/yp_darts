@@ -1,12 +1,21 @@
-import { SET_MODAL_OPEN } from "../actions/actionsTypes";
+import {
+  SET_MODAL_OPEN,
+  SET_CONTEXT_MENU_OPEN,
+  SET_CONTEXT_MENU_CLOSE,
+} from "../actions/actionsTypes";
 import { TCommonActions } from "../actions/commonActions";
+import type { TContextMenuProps } from "../types";
 
 export type TCommonState = {
   modalOpen: boolean;
+  contextMenuOpen: boolean;
+  contextMenuData: TContextMenuProps[];
 };
 
 const initialState = {
   modalOpen: false,
+  contextMenuOpen: false,
+  contextMenuData: [],
 };
 
 export const commonReducer = (
@@ -18,6 +27,20 @@ export const commonReducer = (
       return {
         ...state,
         modalOpen: action.payload,
+      };
+
+    case SET_CONTEXT_MENU_OPEN:
+      return {
+        ...state,
+        contextMenuOpen: true,
+        contextMenuData: action.payload.data,
+      };
+
+    case SET_CONTEXT_MENU_CLOSE:
+      return {
+        ...state,
+        contextMenuOpen: false,
+        contextMenuData: [],
       };
 
     default:

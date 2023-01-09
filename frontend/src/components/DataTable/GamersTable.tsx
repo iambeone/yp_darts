@@ -16,10 +16,16 @@ import {
   EmailSpan,
   StyledIcon,
   ButtonIcon,
-  LinkSpan,
+  BtnSpan,
   PaginationContainer,
   CountText,
+  LinkStyled,
+  LinkSpan,
 } from "./GamersTableStyles";
+import ContextMenu from "../ContextMenu/ContextMenu";
+import { useDispatch, useSelector } from "../../utils/hooks";
+import { setContextMenuOpen } from "../../services/actions";
+import { contextMenuPlayersTable } from "../../utils/constants";
 import { Tplayers } from "../../services/types";
 
 const TableStyle = {
@@ -49,21 +55,18 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
   const PATH = "/players";
   const ROWS_PER_PAGE = 10;
   const { pageNumber = 1 } = useParams();
+  const dispatch = useDispatch();
+  const { contextMenuOpen } = useSelector((store) => store.common);
 
   const openModal = () => {
     console.log(1);
     return null;
   };
 
-  const linkToChangePage = () => {
-    console.log(2);
-    return null;
+  const openContextMenu = () => {
+    dispatch(setContextMenuOpen(contextMenuPlayersTable));
   };
 
-  const openContextMenu = () => {
-    console.log(3);
-    return null;
-  };
   return (
     <TableWithPagination>
       <CountText>Показано игроков: {data.length}</CountText>
@@ -89,18 +92,18 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
             ).map((item) => (
               <TableRow key={item.id}>
                 <TableCell>
-                  <NameSpan>{item.name}</NameSpan> <br />
-                  <EmailSpan>{item.email}</EmailSpan>
+                  <LinkStyled to={`/player/:${item.id}`}>
+                    <NameSpan>{item.name}</NameSpan> <br />
+                    <EmailSpan>{item.email}</EmailSpan>
+                  </LinkStyled>
                 </TableCell>
                 <TableCell align="right" sx={AddCell} onClick={openModal}>
-                  <LinkSpan>ДОБАВИТЬ В ТУРНИР</LinkSpan>
+                  <BtnSpan>ДОБАВИТЬ В ТУРНИР</BtnSpan>
                 </TableCell>
-                <TableCell
-                  align="right"
-                  sx={ChangeCell}
-                  onClick={linkToChangePage}
-                >
-                  <LinkSpan>ИЗМЕНИТЬ</LinkSpan>
+                <TableCell align="right" sx={ChangeCell}>
+                  <LinkSpan to={`/players/edit-player/:${item.id}`}>
+                    ИЗМЕНИТЬ
+                  </LinkSpan>
                 </TableCell>
                 <TableCell
                   align="right"
@@ -115,6 +118,7 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
             ))}
           </TableBody>
         </Table>
+        {contextMenuOpen && <ContextMenu />}
       </TableContainer>
       <PaginationContainer>
         <Pagination

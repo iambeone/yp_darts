@@ -41,18 +41,20 @@ function ModalSwitch() {
           <Route path="/tournaments" element={<TournamentsPage />} />
           <Route path="/players/:pageNumber" element={<PlayersPage />} />
           <Route path="/players/add-player" element={<AddPlayerPage />}>
+            <Route index element={<MainForm />} />
             <Route path="main" element={<MainForm />} />
             <Route path="documents" element={<DocumentsForm />} />
             <Route path="game-info" element={<GameInfoForm />} />
             <Route path="additional" element={<AdditionalForm />} />
           </Route>
           <Route path="/players/edit-player/:id" element={<EditPlayerPage />}>
+            <Route index element={<MainForm />} />
             <Route path="main" element={<MainForm />} />
             <Route path="documents" element={<DocumentsForm />} />
             <Route path="game-info" element={<GameInfoForm />} />
             <Route path="additional" element={<AdditionalForm />} />
           </Route>
-          <Route path="/players/:id" element={<PlayerInfoPage />} />
+          <Route path="/player/:id" element={<PlayerInfoPage />} />
           <Route path="/protocols" element={<ProtocolsPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
