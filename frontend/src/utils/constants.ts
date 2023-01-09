@@ -74,9 +74,13 @@ export const customSizesInputText = {
   },
 };
 
-export const contextMenuPlayersTable = [
+export const contextMenuPlayersTableFull = [
   { icon: "person_add", value: "Добавить в турнир" },
   { icon: "edit", value: "Изменить" },
+  { icon: "delete", value: "Удалить" },
+];
+
+export const contextMenuPlayersTableDelete = [
   { icon: "delete", value: "Удалить" },
 ];
 

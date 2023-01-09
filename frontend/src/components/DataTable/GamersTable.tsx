@@ -24,8 +24,14 @@ import {
 } from "./GamersTableStyles";
 import ContextMenu from "../ContextMenu/ContextMenu";
 import { useDispatch, useSelector } from "../../utils/hooks";
-import { setContextMenuOpen } from "../../services/actions";
-import { contextMenuPlayersTable } from "../../utils/constants";
+import {
+  setContextMenuClose,
+  setContextMenuOpen,
+} from "../../services/actions";
+import {
+  contextMenuPlayersTableDelete,
+  contextMenuPlayersTableFull,
+} from "../../utils/constants";
 import { Tplayers } from "../../services/types";
 
 const TableStyle = {
@@ -57,14 +63,44 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
   const { pageNumber = 1 } = useParams();
   const dispatch = useDispatch();
   const { contextMenuOpen } = useSelector((store) => store.common);
+  const [anchor, setAnchor] = React.useState<HTMLButtonElement | null>(null);
+  const [windowWidth, setWindowWidth] = React.useState(0);
+
+  React.useEffect(() => {
+    function handleResize() {
+      setWindowWidth(window.innerWidth);
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [windowWidth]);
 
   const openModal = () => {
     console.log(1);
     return null;
   };
 
-  const openContextMenu = () => {
-    dispatch(setContextMenuOpen(contextMenuPlayersTable));
+  const openContextMenu = (
+    evt: React.MouseEvent<HTMLButtonElement>,
+    itemId: number,
+  ) => {
+    const contextMenuProps = {
+      id: itemId,
+      items: [{ icon: "", value: "" }],
+    };
+    if (windowWidth < 1200) {
+      contextMenuProps.items = contextMenuPlayersTableFull;
+    } else {
+      contextMenuProps.items = contextMenuPlayersTableDelete;
+    }
+    setAnchor(anchor ? null : evt.currentTarget);
+    dispatch(setContextMenuOpen(contextMenuProps));
+  };
+
+  // не работает, разобраться
+  const closeContextMenu = () => {
+    console.log("close");
+    setAnchor(null);
+    dispatch(setContextMenuClose());
   };
 
   return (
@@ -105,12 +141,11 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
                     ИЗМЕНИТЬ
                   </LinkSpan>
                 </TableCell>
-                <TableCell
-                  align="right"
-                  sx={IconCell}
-                  onClick={openContextMenu}
-                >
-                  <ButtonIcon type="button">
+                <TableCell align="right" sx={IconCell}>
+                  <ButtonIcon
+                    onClick={(e) => openContextMenu(e, item.id)}
+                    type="button"
+                  >
                     <StyledIcon>more_vert</StyledIcon>
                   </ButtonIcon>
                 </TableCell>
@@ -118,7 +153,6 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
             ))}
           </TableBody>
         </Table>
-        {contextMenuOpen && <ContextMenu />}
       </TableContainer>
       <PaginationContainer>
         <Pagination
@@ -135,6 +169,9 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
           )}
         />
       </PaginationContainer>
+      {contextMenuOpen && (
+        <ContextMenu anchorEl={anchor} close={() => closeContextMenu()} />
+      )}
     </TableWithPagination>
   );
 }

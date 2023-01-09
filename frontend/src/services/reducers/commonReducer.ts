@@ -9,13 +9,13 @@ import type { TContextMenuProps } from "../types";
 export type TCommonState = {
   modalOpen: boolean;
   contextMenuOpen: boolean;
-  contextMenuData: TContextMenuProps[];
+  contextMenuData: TContextMenuProps | null;
 };
 
 const initialState = {
   modalOpen: false,
   contextMenuOpen: false,
-  contextMenuData: [],
+  contextMenuData: null,
 };
 
 export const commonReducer = (
@@ -40,7 +40,7 @@ export const commonReducer = (
       return {
         ...state,
         contextMenuOpen: false,
-        contextMenuData: [],
+        contextMenuData: null,
       };
 
     default:

@@ -45,8 +45,13 @@ export type Tplayers = {
   events?: Event[];
 };
 
-export type TContextMenuProps = {
+export type TContextMenuItem = {
   icon: string;
   value: string;
   callback?: () => void;
+};
+
+export type TContextMenuProps = {
+  id: number;
+  items: TContextMenuItem[];
 };

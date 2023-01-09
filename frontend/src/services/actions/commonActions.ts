@@ -12,7 +12,7 @@ export interface ISetModalOpen {
 
 export interface ISetContextMenuOpen {
   readonly type: typeof SET_CONTEXT_MENU_OPEN;
-  readonly payload: { data: TContextMenuProps[] };
+  readonly payload: { data: TContextMenuProps };
 }
 
 export interface ISetContextMenuClose {
@@ -30,7 +30,7 @@ export const setModalOpen = (payload: boolean): ISetModalOpen => ({
 });
 
 export const setContextMenuOpen = (
-  data: TContextMenuProps[],
+  data: TContextMenuProps,
 ): ISetContextMenuOpen => ({
   type: SET_CONTEXT_MENU_OPEN,
   payload: { data },
