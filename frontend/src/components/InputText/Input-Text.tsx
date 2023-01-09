@@ -1,14 +1,15 @@
 /* eslint-disable react/jsx-props-no-spreading, react/require-default-props */
 import React from "react";
-import { FormControl, InputLabel, OutlinedInput } from "@mui/material";
+import { InputLabel, OutlinedInput } from "@mui/material";
 import { IMaskInput } from "react-imask";
-import styled from "styled-components";
-import { customSizesInputText } from "../../utils/constants";
+// import styled from "styled-components";
+import { InputLabelSpan, StyledFormControl } from "./InputTextStyles";
+// import { customSizesInputText } from "../../utils/constants";
 
-const AsteriskSpan = styled.span`
-  color: #d32f2f;
-  display: inline;
-`;
+// const AsteriskSpan = styled.span`
+//   color: #d32f2f;
+//   display: inline;
+// `;
 
 interface CustomProps {
   onChange: (event: { target: { name: string; value: string } }) => void;
@@ -66,10 +67,10 @@ function InputText({
   };
 
   return (
-    <FormControl sx={customSizesInputText[size]}>
+    <StyledFormControl formSize={size}>
       <InputLabel shrink sx={{ top: -14, left: -14 }}>
         {label}
-        {required && <AsteriskSpan> *</AsteriskSpan>}
+        {required && <InputLabelSpan> *</InputLabelSpan>}
       </InputLabel>
       {name === "normal" ? (
         <OutlinedInput
@@ -93,7 +94,7 @@ function InputText({
           inputComponent={TextMaskCustom as any}
         />
       )}
-    </FormControl>
+    </StyledFormControl>
   );
 }
 

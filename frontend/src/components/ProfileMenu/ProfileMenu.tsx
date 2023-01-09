@@ -5,12 +5,11 @@ import {
   ListItem,
   ListItemButton,
   ListItemIcon,
-  ListItemText,
   ListSubheader,
   Typography,
   Divider,
 } from "@mui/material";
-import styles from "./ProfileMenu.module.css";
+import StyledListItemText from "./ProfileMenuStyles";
 
 function ContextMenu(): ReactElement {
   // После подключения стора брать из него
@@ -79,10 +78,7 @@ function ContextMenu(): ReactElement {
               <Icon sx={{ fontSize: 22 }}>{item.icon}</Icon>
             </ListItemIcon>
 
-            <ListItemText
-              primary={item.value}
-              className={styles.contextMenuText}
-            />
+            <StyledListItemText primary={item.value} />
           </ListItemButton>
         </ListItem>
       ))}

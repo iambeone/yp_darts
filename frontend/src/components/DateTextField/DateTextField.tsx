@@ -1,25 +1,35 @@
 import * as React from "react";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import TextField from "@mui/material/TextField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { FormLabel } from "@mui/material";
+import { CalendarPickerView } from "@mui/x-date-pickers/internals/models";
+import styles from "../Checkbox/Checkbox.module.css";
 
-// не доделан
-
-export default function DateTextField() {
-  const [value, setValue] = React.useState<Dayjs | null>(dayjs());
-  const locale = "ru";
-
+export default function DateTextField({
+  name,
+  view,
+}: {
+  name: string;
+  // eslint-disable-next-line react/require-default-props
+  view?: CalendarPickerView[];
+}) {
+  const [value, setValue] = React.useState(dayjs());
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
-      <DesktopDatePicker
-        inputFormat="дд/мм/гггг"
-        value={value}
-        onChange={(newValue) => setValue(newValue)}
-        renderInput={(params) => <TextField {...params} />}
-      />
-    </LocalizationProvider>
+    <div className={styles.container}>
+      <FormLabel component="legend">{name}</FormLabel>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker
+          views={view || undefined}
+          inputFormat={view ? "YYYY" : "DD/MM/YYYY"}
+          value={value}
+          onChange={(newValue) => setValue(dayjs(newValue))}
+          renderInput={(params) => <TextField {...params} />}
+        />
+      </LocalizationProvider>
+    </div>
   );
 }

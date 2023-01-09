@@ -1,50 +1,52 @@
-import React, { ReactElement, useState } from "react";
-import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
-import Button from "@mui/material/Button";
-import { Badge, Box, Chip, Container, Icon, Stack } from "@mui/material";
-import { useDispatch } from "../../utils/hooks";
-import { setModalOpen } from "../../services/actions";
+import React, { ReactElement } from "react";
+import {
+  Badge,
+  Box,
+  InputBase,
+  Paper,
+  Button,
+  Chip,
+  Container,
+  Icon,
+  Stack,
+} from "@mui/material";
+import { useDispatch, useSelector } from "../../utils/hooks";
+import {
+  setModalOpen,
+  clearFilters,
+  deleteFilter,
+  getPlayers,
+  setName,
+} from "../../services/actions";
+import { encodeQueryString } from "../../utils/helpers";
 
 const tablet = window.innerWidth < 1200;
 const mobile = window.innerWidth < 500;
 
 function SearchBar(): ReactElement {
-  const [search, setSearch] = useState("");
-  const [filters, setFilters] = useState([
-    { chip: "chip1", id: 1 },
-    { chip: "chip2", id: 2 },
-    { chip: "chip3", id: 3 },
-    { chip: "chip4", id: 4 },
-  ]);
+  const { gender, age, name, appliedFilters } = useSelector(
+    (store) => store.filters,
+  );
+  const dispatch = useDispatch();
 
-  const counter = !!filters.length;
+  const counter = !!appliedFilters.length;
   const createButtonText = () => {
     if (mobile) return "";
     if (tablet) return "cоздать";
     return "cоздать\u00A0турнир";
   };
 
-  const dispatch = useDispatch();
-
   const searchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // eslint-disable-next-line no-console
-    if (search) console.log(search);
-    setSearch("");
+    if (name) dispatch(getPlayers(encodeQueryString({ gender, age, name })));
+    dispatch(setName(""));
   };
 
-  const handleDeleteChip = (id: number) => {
-    setFilters(filters.filter((el) => el.id !== id));
-  };
+  const handleDeleteChip = (chip: string) => dispatch(deleteFilter(chip));
 
-  const handleClearFilter = () => {
-    setFilters([]);
-  };
+  const handleClearFilter = () => dispatch(clearFilters());
 
-  const handleFilter = () => {
-    dispatch(setModalOpen(true));
-  };
+  const handleFilter = () => dispatch(setModalOpen(true));
 
   const handleCreateTournament = () => {
     // eslint-disable-next-line no-console
@@ -123,7 +125,7 @@ function SearchBar(): ReactElement {
           endIcon={
             counter ? (
               <Badge
-                badgeContent={filters.length}
+                badgeContent={appliedFilters.length}
                 color="success"
                 sx={{ mr: "12px" }}
               />
@@ -138,10 +140,10 @@ function SearchBar(): ReactElement {
           </Icon>
           <InputBase
             sx={inputBase}
-            placeholder="Поиск по названию"
+            placeholder="Поиск по имени..."
             inputProps={{ "aria-label": "Поиск" }}
-            onChange={(e) => setSearch(e.target.value)}
-            value={search}
+            onChange={(e) => dispatch(setName(e.target.value))}
+            value={name}
           />
         </Paper>
         <Button
@@ -161,16 +163,17 @@ function SearchBar(): ReactElement {
           direction="row"
           spacing={1}
           sx={{
-            overflowY: "auto",
+            maxWidth: mobile ? "calc(100vw - 32px)" : "calc(100vw - 198px)",
+            overflowX: "auto",
             "&::-webkit-scrollbar": { display: "none" },
           }}
         >
-          {filters.map(({ chip, id }) => (
+          {appliedFilters.map((chip: string) => (
             <Chip
-              key={id}
+              key={chip}
               label={chip}
               color="success"
-              onDelete={() => handleDeleteChip(id)}
+              onDelete={() => handleDeleteChip(chip)}
             />
           ))}
           <Chip label="Очистить фильтр" onClick={handleClearFilter} />

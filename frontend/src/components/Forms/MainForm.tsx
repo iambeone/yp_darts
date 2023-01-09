@@ -61,7 +61,7 @@ export default function MainForm() {
       <Line>
         <DateSelector />
       </Line>
-      <RadioOption />
+      <RadioOption name="Пол" values={["Мужчина", "Женщина"]} />
       <Line>
         <InputText
           label="Адрес регистрации"

@@ -1,15 +1,12 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/require-default-props */
 import React from "react";
 import {
   FormControl,
   FormControlLabel,
-  InputLabel,
   Radio,
   RadioGroup,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import styled from "styled-components";
+import { GroupName, Requirement } from "./RadioButtonStyles";
 
 const theme = createTheme({
   palette: {
@@ -19,25 +16,17 @@ const theme = createTheme({
   },
 });
 
-const RadioContainer = styled(RadioGroup)`
-  margin-left: 15px;
-`;
-const Span = styled.span`
-  color: red;
-`;
-
 function RadioOption({
   name = "Пол",
   values = ["Мужчина", "Женщина"],
   isRequired = true,
-  onChange,
 }: {
-  name?: string;
-  values?: string[];
+  name: string;
+  values: string[];
   isRequired?: boolean;
-  onChange?: any;
 }) {
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState("female");
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
   };
@@ -45,26 +34,19 @@ function RadioOption({
   return (
     <ThemeProvider theme={theme}>
       <FormControl>
-        <InputLabel
-          shrink
-          id="gender-radio-buttons-group"
-          focused
-          color="info"
-          sx={{ top: -14, left: -14 }}
-        >
-          {name} {isRequired ? <Span>*</Span> : <> </>}
-        </InputLabel>
-        <RadioContainer
+        <GroupName id="gender-radio-buttons-group" focused color="info">
+          {name} {isRequired && <Requirement>*</Requirement>}
+        </GroupName>
+        <RadioGroup
           aria-labelledby="gender-radio-buttons-group"
           name="controlled-radio-buttons-group"
           value={value}
-          onChange={onChange || handleChange}
+          onChange={handleChange}
         >
-          {values.map((element, index) => {
+          {values.map((element) => {
             return (
               <FormControlLabel
                 value={element}
-                key={`${index}-radio-element`}
                 control={
                   <Radio
                     color="success"
@@ -82,10 +64,14 @@ function RadioOption({
               />
             );
           })}
-        </RadioContainer>
+        </RadioGroup>
       </FormControl>
     </ThemeProvider>
   );
 }
+
+RadioOption.defaultProps = {
+  isRequired: false,
+};
 
 export default RadioOption;

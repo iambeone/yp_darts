@@ -66,7 +66,7 @@ function ModalSwitch() {
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getPlayers());
+    dispatch(getPlayers(""));
   }, [dispatch]);
   return (
     <BrowserRouter>

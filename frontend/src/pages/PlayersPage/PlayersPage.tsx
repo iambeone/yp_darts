@@ -1,7 +1,8 @@
 import React from "react";
 import { useSelector } from "../../utils/hooks";
 import GamersTable from "../../components/DataTable/GamersTable";
-import FiltersModal from "../../components/modals/FiltersModal";
+import BasicModal from "../../components/modals/BasicModal";
+import Filters from "../../components/modals/Filters";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import PageTitle from "../../components/PageTitle/PageTitle";
 
@@ -12,7 +13,9 @@ export default function PlayersPage() {
       <PageTitle title="Игроки" />
       <SearchBar />
       {players && <GamersTable data={players} />}
-      <FiltersModal />
+      <BasicModal>
+        <Filters />
+      </BasicModal>
     </>
   );
 }
