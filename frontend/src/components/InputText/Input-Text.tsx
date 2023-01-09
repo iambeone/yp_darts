@@ -4,6 +4,13 @@ import { InputLabel, OutlinedInput, FormHelperText } from "@mui/material";
 import { IMaskInput } from "react-imask";
 import { InputLabelSpan, StyledFormControl } from "./InputTextStyles";
 
+// Описание
+// Обязательные пропсы отсутствуют, required, label, placeholder, value, onChange применяются в соответствии со своими названиями.
+// rows позволяет при необходимости увеличить число строк, по умолчанию 1
+// size отвечает за размеры ввода, на данном этапе есть 3 размера, закрывающие потребности параметров игрока (в турнирах добавятся ещё)
+// name отвечает за маску поля ввода, при normal маска отсутствует, 
+// error и helperText для отображения ошибки и её текста соответственно
+
 interface CustomProps {
   onChange: (event: { target: { name: string; value: string } }) => void;
   name: "snils" | "inn" | "passport" | "phone" | "police" | "birth";
