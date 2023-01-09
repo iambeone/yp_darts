@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Icon from "@mui/material/Icon";
+import { Link } from "react-router-dom";
 
 const TableWithPagination = styled.div`
   display: flex;
@@ -34,13 +35,26 @@ const EmailSpan = styled.span`
   color: rgba(0, 0, 0, 0.6);
 `;
 
-const LinkSpan = styled.span`
+const BtnSpan = styled.span`
   font-size: 15px;
   line-height: 26px;
   letter-spacing: 0.46px;
   text-transform: uppercase;
   color: rgba(0, 0, 0, 0.87);
   cursor: pointer;
+`;
+
+const LinkSpan = styled(Link)`
+  font-size: 15px;
+  line-height: 26px;
+  letter-spacing: 0.46px;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.87);
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+  &:focus, &:hover, &:visited, &:link, &:active {
+    text-decoration: none;
 `;
 
 const ButtonIcon = styled.button`
@@ -70,14 +84,23 @@ const CountText = styled.p`
   }
 `;
 
+const LinkStyled = styled(Link)`
+  color: inherit;
+  text-decoration: none;
+  &:focus, &:hover, &:visited, &:link, &:active {
+    text-decoration: none;
+`;
+
 export {
   TableWithPagination,
   ColumnTitle,
   NameSpan,
   EmailSpan,
-  LinkSpan,
+  BtnSpan,
   StyledIcon,
   ButtonIcon,
   PaginationContainer,
   CountText,
+  LinkStyled,
+  LinkSpan,
 };

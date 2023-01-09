@@ -1,11 +1,10 @@
 import React from "react";
 import { AppBar, Box } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useLocation } from "react-router-dom";
+import { useLocation, useMatch } from "react-router-dom";
 import HeaderTypeOne from "./header_types/header_type_1";
 import HeaderTypeTwo from "./header_types/header_type_2";
 import HeaderTypeThree from "./header_types/header_type_3";
-// import styles from "./Header.module.css";
 
 const theme = createTheme({
   palette: {
@@ -22,11 +21,12 @@ const theme = createTheme({
 function Header() {
   const mobile = window.innerWidth <= 500;
   const location = useLocation();
+  const matchPlayersTable = useMatch("/players/:pageNumber");
 
   const headerToolbar = (path: string) => {
     if (
       path === "/" ||
-      path === "/players" ||
+      path === matchPlayersTable?.pathname ||
       path === "/tournaments" ||
       path === "/settings"
     ) {
