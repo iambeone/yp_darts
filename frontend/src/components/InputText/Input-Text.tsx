@@ -58,6 +58,7 @@ function InputText({
   name = "normal",
   error = false,
   helperText = "",
+  sx,
 }: {
   required?: boolean;
   label?: string;
@@ -69,6 +70,7 @@ function InputText({
   name?: "normal" | "snils" | "inn" | "passport" | "phone" | "police" | "birth";
   error?: boolean;
   helperText?: string;
+  sx?: any;
 }) {
   const [valueState, setValueState] = React.useState(value);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +78,7 @@ function InputText({
   };
 
   return (
-    <StyledFormControl formSize={size} error={error}>
+    <StyledFormControl formSize={size} error={error} sx={sx}>
       <InputLabel shrink sx={{ top: -14, left: -14 }}>
         {label}
         {required && <InputLabelSpan> *</InputLabelSpan>}
