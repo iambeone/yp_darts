@@ -4,18 +4,6 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 
-// Для использования необходимо передать компоненту props "label"(опционально), "inputWidth", "inputHeight" и "options" с массивом
-// эелементов для выпадающего списка
-
-// Пример использования компонента:
-
-// export const options = [
-//     { id: 1, title: "Ten" },
-//     { id: 2, title: "Twenty" },
-//     { id: 3, title: "Thirty" },
-//   ];
-//     <SelectOption options={options} inputWidth={300} />
-
 type TOptions = {
   id: number;
   title: string;
@@ -26,6 +14,7 @@ type TSelect = {
   options: TOptions[];
   inputWidth: number;
   inputHeight: number;
+  onChangeOption: (value: TOptions | null) => void;
 };
 
 const Label = styled.p`
@@ -40,12 +29,14 @@ const Label = styled.p`
 `;
 
 export default function SelectOption(props: TSelect) {
-  const { label, options, inputWidth, inputHeight } = props;
+  const { label, options, inputWidth, inputHeight, onChangeOption } = props;
   return (
     <Stack>
       <Label>{label}</Label>
       <Autocomplete
-        onChange={(event, value) => console.log(value)}
+        onChange={(event, newValue) => {
+          onChangeOption(newValue);
+        }}
         id="tags-outlined"
         options={options}
         getOptionLabel={(option) => option.title}
