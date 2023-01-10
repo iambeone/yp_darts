@@ -1,11 +1,22 @@
+/* eslint-disable no-console */
 import React from "react";
+import { Controller, FormProvider, useForm } from "react-hook-form";
 import styled from "styled-components";
 import InputText from "../InputText/Input-Text";
 import RadioOption from "../RadioOption/Radio-Option";
 import DateSelector from "../DateSelector/DateSelector";
 
 export default function MainForm() {
-  const Form = styled.div`
+  const {
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm();
+  const methods = useForm();
+
+  console.log(errors);
+
+  const Form = styled.form`
     margin: 48px auto 35px;
     display: flex;
     flex-wrap: wrap;
@@ -32,62 +43,74 @@ export default function MainForm() {
   `;
 
   return (
-    <Form>
-      <InputText
-        required
-        label="Фамилия"
-        placeholder="Фамилия"
-        size="medium"
-        value=""
-        name="normal"
-      />
-      <InputText
-        required
-        label="Имя"
-        placeholder="Имя"
-        size="medium"
-        value=""
-        name="normal"
-      />
-      <Line>
+    <FormProvider {...methods}>
+      <Form
+        onSubmit={handleSubmit((data) => {
+          console.log(data);
+        })}
+      >
+        <Controller
+          name="lastName"
+          control={control}
+          rules={{ required: true, minLength: 2 }}
+          render={({ field: { onChange, value } }) => (
+            <InputText
+              label="Фамилия"
+              placeholder="Фамилия"
+              size="medium"
+              name="normal"
+              onChange={onChange}
+              value={value}
+            />
+          )}
+        />
         <InputText
-          label="Отчество"
-          placeholder="Отчество"
+          // {...register("firstName", { required: "Это обязательное поле" })}
+          label="Имя"
+          placeholder="Имя"
           size="medium"
-          value=""
           name="normal"
         />
-      </Line>
-      <Line>
-        <DateSelector />
-      </Line>
-      <RadioOption name="Пол" values={["Мужчина", "Женщина"]} />
-      <Line>
+        <Line>
+          <InputText
+            // {...register("last1Name")}
+            label="Отчество"
+            placeholder="Отчество"
+            size="medium"
+            name="normal"
+          />
+        </Line>
+        <Line>
+          <DateSelector />
+        </Line>
+        <RadioOption name="Пол" values={["Мужчина", "Женщина"]} />
+        <Line>
+          <InputText
+            // {...register("last2Name")}
+            label="Адрес регистрации"
+            placeholder="188800, г. Выборг, ул. Куйбышева, д 1, к 2"
+            size="large"
+            name="normal"
+          />
+        </Line>
+        <Line>
+          <InputText
+            // {...register("last3Name")}
+            label="Email"
+            placeholder="example@email.com"
+            size="medium"
+            name="normal"
+          />
+        </Line>
         <InputText
-          label="Адрес регистрации"
-          placeholder="188800, г. Выборг, ул. Куйбышева, д 1, к 2"
-          size="large"
-          value=""
-          name="normal"
-        />
-      </Line>
-      <Line>
-        <InputText
-          label="Email"
-          required
-          placeholder="example@email.com"
+          // {...register("last4Name")}
+          label="Контактный телефон"
+          placeholder="+7 (999) 123-45-67"
           size="medium"
-          value=""
-          name="normal"
+          name="phone"
         />
-      </Line>
-      <InputText
-        label="Контактный телефон"
-        placeholder="+7 (999) 123-45-67"
-        size="medium"
-        value=""
-        name="phone"
-      />
-    </Form>
+        <input type="submit" /> {/* only for tests */}
+      </Form>
+    </FormProvider>
   );
 }

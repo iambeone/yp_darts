@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from "react";
 import {
   FormControl,
@@ -43,10 +44,11 @@ function RadioOption({
           value={value}
           onChange={handleChange}
         >
-          {values.map((element) => {
+          {values.map((element, index) => {
             return (
               <FormControlLabel
                 value={element}
+                key={`-${index}-radio-option`}
                 control={
                   <Radio
                     color="success"
