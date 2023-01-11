@@ -2,6 +2,9 @@ import {
   GET_PLAYERS_REQUEST,
   GET_PLAYERS_SUCCESS,
   GET_PLAYERS_FAILED,
+  DELETE_PLAYER_REQUEST,
+  DELETE_PLAYER_SUCCESS,
+  DELETE_PLAYER_FAILED,
 } from "./actionsTypes";
 import {
   baseUrl,
@@ -26,10 +29,26 @@ interface IfetchPlayersFailed {
   readonly payload: { error: {} };
 }
 
+interface IdeletePlayerRequest {
+  readonly type: typeof DELETE_PLAYER_REQUEST;
+}
+
+interface IdeletePlayerSuccess {
+  readonly type: typeof DELETE_PLAYER_SUCCESS;
+}
+
+interface IdeletePlayerFailed {
+  readonly type: typeof DELETE_PLAYER_FAILED;
+  readonly payload: { error: {} };
+}
+
 export type TPlayersActions =
   | IfetchPlayersRequest
   | IfetchPlayersSuccess
-  | IfetchPlayersFailed;
+  | IfetchPlayersFailed
+  | IdeletePlayerRequest
+  | IdeletePlayerSuccess
+  | IdeletePlayerFailed;
 
 export const fetchPlayersRequest = (): TPlayersActions => ({
   type: GET_PLAYERS_REQUEST,
@@ -42,6 +61,19 @@ export const fetchPlayersSuccess = (data: Tplayers[]): TPlayersActions => ({
 
 export const fetchPlayersFailed = (error: {}): TPlayersActions => ({
   type: GET_PLAYERS_FAILED,
+  payload: { error },
+});
+
+export const deletePlayerRequest = (): TPlayersActions => ({
+  type: DELETE_PLAYER_REQUEST,
+});
+
+export const deletePlayerSuccess = (): TPlayersActions => ({
+  type: DELETE_PLAYER_SUCCESS,
+});
+
+export const deletePlayerFailed = (error: {}): TPlayersActions => ({
+  type: DELETE_PLAYER_FAILED,
   payload: { error },
 });
 
@@ -58,4 +90,17 @@ export const getPlayers: AppThunk<Promise<IApplicationActions>> =
         return json;
       })
       .catch((error) => dispatch(fetchPlayersFailed(error)));
+  };
+
+export const deletePlayer: AppThunk<Promise<IApplicationActions>> =
+  (id: number) => (dispatch: AppDispatch) => {
+    dispatch(deletePlayerRequest());
+    return fetch(`${baseUrl}/participants/${id}`, tokenRequestOptions("DELETE"))
+      .then(checkResponse)
+      .then((res) => {
+        dispatch(fetchPlayersSuccess(res));
+        getPlayers();
+        return res;
+      })
+      .catch((error) => dispatch(deletePlayerFailed(error)));
   };
