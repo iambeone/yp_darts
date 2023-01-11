@@ -1,12 +1,11 @@
 import * as React from "react";
-import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { CalendarPickerView } from "@mui/x-date-pickers/internals/models";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker/DesktopDatePicker";
 
 const Label = styled.p`
   margin: 0 0 4px 0;
@@ -21,29 +20,34 @@ const Label = styled.p`
 
 export default function DateTextField({
   name,
-  view,
   inputWidth,
   inputHeight,
+  onChangeDate,
 }: {
   name: string;
   view?: CalendarPickerView[];
   inputWidth?: number;
   inputHeight?: number;
+  onChangeDate: (value: any) => void;
 }) {
-  const [value, setValue] = React.useState(dayjs());
+  const [value] = React.useState(null);
   return (
     <div>
       <Label>{name}</Label>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker
-          views={view || undefined}
-          inputFormat={view ? "YYYY" : "DD/MM/YYYY"}
+        <DesktopDatePicker
           value={value}
-          onChange={(newValue) => setValue(dayjs(newValue))}
+          onChange={(newValue) => {
+            onChangeDate(newValue);
+          }}
           renderInput={(params) => (
             <TextField
               {...params}
               sx={{ width: inputWidth, height: inputHeight }}
+              inputProps={{
+                ...params.inputProps,
+                placeholder: "дд/мм/гггг",
+              }}
             />
           )}
         />

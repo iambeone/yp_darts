@@ -1,27 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { subjectRF } from "../../utils/constants";
+import { sportsCategory, subjectRF } from "../../utils/constants";
 import DateTextField from "../DateTextField/DateTextField";
 import InputText from "../InputText/Input-Text";
-// import RadioOption from "../RadioOption/Radio-Option";
+
 import RadioOptionHand from "../RadioOption/Radio-Option-Hand";
-// import PageTitle from "../PageTitle/PageTitle";
 import SelectOptions from "../SelectOption/SelectOption";
 
 const Section = styled.div`
   margin: 24px;
 `;
-
-// const Label = styled.p`
-//   margin: 0 0 4px 0;
-//   font-family: "Roboto";
-//   font-style: normal;
-//   font-weight: 400;
-//   font-size: 14px;
-//   line-height: 143%;
-//   letter-spacing: 0.17px;
-//   color: rgba(0, 0, 0, 0.87);
-// `;
 
 const Caption = styled.p`
   margin: 3px 0 24px 12px;
@@ -61,11 +49,15 @@ const H3 = styled.h3`
   color: #003200;
 `;
 
-// const radioOptions = ["Левая", "Правая"];
-
 export default function GameInfoForm() {
   const [subjectRf, setSubjectRF] = React.useState<any>(null);
+  const [sportCategory, setSportCategory] = React.useState<any>(null);
+  const [hand, setHand] = React.useState<any>("right");
+  const [dateAssignedCategory, setDateAssignedCategory] = React.useState<any>();
+  console.log(hand);
   console.log(subjectRf);
+  console.log(sportCategory);
+  console.log(dateAssignedCategory);
   return (
     <Section>
       <SelectOptions
@@ -80,22 +72,25 @@ export default function GameInfoForm() {
       <Group>
         <MarginRight>
           <SelectOptions
-            options={subjectRF}
+            options={sportsCategory}
             inputWidth={308}
             inputHeight={56}
             label="Спортивный разряд"
-            onChangeOption={setSubjectRF}
+            onChangeOption={setSportCategory}
           />
         </MarginRight>
-        <DateTextField name="Присвоен" inputWidth={226} inputHeight={56} />
+        <DateTextField
+          name="Присвоен"
+          inputWidth={226}
+          inputHeight={56}
+          onChangeDate={setDateAssignedCategory}
+        />
       </Group>
       <MarginTop>
         <InputText label="ФИО тренера" inputWidth={636} inputHeight={56} />
       </MarginTop>
-      {/* <Label>Ведущая рука</Label> */}
       <MarginTop>
-        {/* <RadioOption name="Ведущая рука" values={radioOptions} /> */}
-        <RadioOptionHand label="Ведущая рука" />
+        <RadioOptionHand label="Ведущая рука" onChangeInput={setHand} />
       </MarginTop>
       <H3>Дротики</H3>
       <Group>
@@ -113,12 +108,14 @@ export default function GameInfoForm() {
               name="Начало действия"
               inputWidth={226}
               inputHeight={56}
+              onChangeDate={setDateAssignedCategory}
             />
           </MarginRight>
           <DateTextField
             name="Конец действия"
             inputWidth={226}
             inputHeight={56}
+            onChangeDate={setDateAssignedCategory}
           />
         </Group>
       </MarginTop>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 // import PageTitle from "../PageTitle/PageTitle";
 import InputText from "../InputText/Input-Text";
 import ToggleTabs from "../ToggleTabs/Toggle-Tabs";
-import DateTextField from "../DateTextField/DateTextField";
+// import DateTextField from "../DateTextField/DateTextField";
 
 const DocumentsFormBlockTitle = styled.h6`
   font-family: "Roboto";
@@ -75,7 +75,7 @@ export default function DocumentsForm() {
             placeholder="00 00 000-000"
             sx={{ "@media(min-width: 1194px)": { alignSelf: "end" } }}
           />
-          <DateTextField name="Дата выдачи" />
+          {/* <DateTextField name="Дата выдачи" /> */}
         </InputBlock>
         <InputBlock>
           <InputText

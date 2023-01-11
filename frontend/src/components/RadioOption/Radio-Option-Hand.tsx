@@ -1,11 +1,9 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-// import styled from "styled-components";
 import Radio, { RadioProps } from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-// import FormLabel from "@mui/material/FormLabel";
 
 const BpIcon = styled("span")(({ theme }) => ({
   borderRadius: "2px",
@@ -37,27 +35,16 @@ const BpIcon = styled("span")(({ theme }) => ({
 }));
 
 const BpCheckedIcon = styled(BpIcon)({
-  //   borderColor: "#2E7D32",
   boxShadow: "inset 0 0 0 2px #2E7D32",
-  //   backgroundImage: "linear-gradient(180deg,hsla(0,0%,80%,.1),hsla(0,0%,80%,0))",
   "&:after": {
     background: "#2E7D32",
-    // borderRadius: "2px",
     width: "10px",
     height: "10px",
     position: "absolute",
     top: "13px",
     left: "13px",
-    // display: "block",
-    // width: 10,
-    // height: 10,
-    // backgroundImage:
-    //   "linear-gradient(180deg,hsla(0,0%,50%,.05),hsla(0,0%,50%,0))",
     content: '""',
   },
-  //   "input:hover ~ &": {
-  //     backgroundColor: "#2E7D32",
-  //   },
 });
 
 const Label = styled("p")`
@@ -75,17 +62,6 @@ const Group = styled("div")`
   display: flex;
 `;
 
-// const styleValue = {
-//   fontFamily: "Roboto",
-//   fontStyle: "normal",
-//   fontWeight: 400,
-//   fontSize: "16px",
-//   lineHeight: "150%",
-//   letterSpacing: "0.15px",
-//   color: "rgba(0, 0, 0, 0.87)",
-// };
-
-// Inspired by blueprintjs
 function BpRadio(props: RadioProps) {
   return (
     <Radio
@@ -100,6 +76,7 @@ function BpRadio(props: RadioProps) {
 
 type TRadioHand = {
   label: string;
+  onChangeInput: (value: string) => void;
 };
 
 const FormControlLabelCustom = styled(FormControlLabel)({
@@ -114,20 +91,8 @@ const FormControlLabelCustom = styled(FormControlLabel)({
   },
 });
 
-//     () => ({
-//   style: {
-//     fontFamily: "Roboto",
-//     fontStyle: "normal",
-//     fontWeight: 400,
-//     fontSize: "16px",
-//     lineHeight: "150%",
-//     letterSpacing: "0.15px",
-//     color: "rgba(0, 0, 0, 0.87)",
-//   },
-// }));
-
 export default function RadioOptionHand(props: TRadioHand) {
-  const { label } = props;
+  const { label, onChangeInput } = props;
   return (
     <FormControl>
       <Label>{label}</Label>
@@ -135,6 +100,9 @@ export default function RadioOptionHand(props: TRadioHand) {
         defaultValue="right"
         aria-labelledby="demo-customized-radios"
         name="customized-radios"
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          onChangeInput(event.target.value);
+        }}
       >
         <Group>
           <FormControlLabelCustom
