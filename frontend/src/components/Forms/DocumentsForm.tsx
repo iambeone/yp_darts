@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { TextField, Input } from "@mui/material";
 import { useForm, useController } from "react-hook-form";
 import InputText from "../InputText/Input-Text";
 import ToggleTabs from "../ToggleTabs/Toggle-Tabs";
@@ -117,7 +118,7 @@ export default function DocumentsForm() {
   const { field: issuedBy, fieldState: issuedByState } = useController({
     name: "issuedBy",
     control,
-    rules: { pattern: /[а-яА-Я]/ },
+    rules: { pattern: /[а-яА-Я0-9]/ },
   });
 
   const onChange = (event: any) => {
@@ -244,6 +245,9 @@ export default function DocumentsForm() {
           maskName="inn"
           inputRef={inn.ref}
         />
+        <TextField />
+        <Input />
+        <InputText />
       </OtherDocumentsBlock>
       <SubmitButtonBlock>
         <Button

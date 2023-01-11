@@ -74,13 +74,13 @@ const TextMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
 
 function InputText({
   required = false,
-  label = "",
-  placeholder = "",
+  label,
+  placeholder,
   rows = 1,
   size = "medium",
-  value = "",
+  value,
   onChange,
-  name = "normal",
+  name,
   inputWidth,
   inputHeight,
   error = false,
