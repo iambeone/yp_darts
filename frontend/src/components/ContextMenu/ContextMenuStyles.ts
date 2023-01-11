@@ -9,7 +9,7 @@ const StyledListItemText = styled(ListItemText)`
 `;
 
 const Popper = styled(PopperUnstyled)`
-  z-index: 100;
+  z-index: 1;
 `;
 
 export { StyledListItemText, Popper };

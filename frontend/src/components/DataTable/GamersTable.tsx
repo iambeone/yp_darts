@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -23,15 +23,6 @@ import {
   LinkSpan,
 } from "./GamersTableStyles";
 import ContextMenu from "../ContextMenu/ContextMenu";
-import { useDispatch, useSelector } from "../../utils/hooks";
-import {
-  setContextMenuClose,
-  setContextMenuOpen,
-} from "../../services/actions";
-import {
-  contextMenuPlayersTableDelete,
-  contextMenuPlayersTableFull,
-} from "../../utils/constants";
 import { Tplayers } from "../../services/types";
 
 const TableStyle = {
@@ -61,47 +52,65 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
   const PATH = "/players";
   const ROWS_PER_PAGE = 10;
   const { pageNumber = 1 } = useParams();
-  const dispatch = useDispatch();
-  const { contextMenuOpen } = useSelector((store) => store.common);
+  const navigate = useNavigate();
   const [anchor, setAnchor] = React.useState<HTMLButtonElement | null>(null);
-  const [windowWidth, setWindowWidth] = React.useState(0);
 
-  React.useEffect(() => {
-    function handleResize() {
-      setWindowWidth(window.innerWidth);
-    }
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [windowWidth]);
-
-  const openModal = () => {
-    console.log(1);
-    return null;
-  };
-
-  const openContextMenu = (
-    evt: React.MouseEvent<HTMLButtonElement>,
-    itemId: number,
-  ) => {
-    const contextMenuProps = {
-      id: itemId,
-      items: [{ icon: "", value: "" }],
-    };
-    if (windowWidth < 1200) {
-      contextMenuProps.items = contextMenuPlayersTableFull;
-    } else {
-      contextMenuProps.items = contextMenuPlayersTableDelete;
-    }
+  const openContextMenu = (evt: React.MouseEvent<HTMLButtonElement>) => {
     setAnchor(anchor ? null : evt.currentTarget);
-    dispatch(setContextMenuOpen(contextMenuProps));
   };
 
-  // не работает, разобраться
+  // не работает закрытие по клику не по меню, разобраться
   const closeContextMenu = () => {
     console.log("close");
     setAnchor(null);
-    dispatch(setContextMenuClose());
   };
+
+  const addToTournament = (id: number) => {
+    console.log(id);
+  };
+
+  const deletePlayer = (id: number) => {
+    console.log(id);
+  };
+
+  const contextMenuPlayersTableFull = [
+    {
+      icon: "person_add",
+      value: "Добавить в турнир",
+      callback: (e: React.MouseEvent<HTMLElement>) => {
+        const id = Number(e.currentTarget.dataset.id);
+        addToTournament(id);
+        closeContextMenu();
+      },
+    },
+    {
+      icon: "edit",
+      value: "Изменить",
+      callback: (e: React.MouseEvent<HTMLElement>) =>
+        navigate(`/players/edit-player/:${e.currentTarget.dataset.id}`),
+    },
+    {
+      icon: "delete",
+      value: "Удалить",
+      callback: (e: React.MouseEvent<HTMLElement>) => {
+        const id = Number(e.currentTarget.dataset.id);
+        deletePlayer(id);
+        closeContextMenu();
+      },
+    },
+  ];
+
+  const contextMenuPlayersTableDelete = [
+    {
+      icon: "delete",
+      value: "Удалить",
+      callback: (e: React.MouseEvent<HTMLElement>) => {
+        const id = Number(e.currentTarget.dataset.id);
+        deletePlayer(id);
+        closeContextMenu();
+      },
+    },
+  ];
 
   return (
     <TableWithPagination>
@@ -133,7 +142,11 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
                     <EmailSpan>{item.email}</EmailSpan>
                   </LinkStyled>
                 </TableCell>
-                <TableCell align="right" sx={AddCell} onClick={openModal}>
+                <TableCell
+                  align="right"
+                  sx={AddCell}
+                  onClick={() => addToTournament(item.id)}
+                >
                   <BtnSpan>ДОБАВИТЬ В ТУРНИР</BtnSpan>
                 </TableCell>
                 <TableCell align="right" sx={ChangeCell}>
@@ -143,7 +156,8 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
                 </TableCell>
                 <TableCell align="right" sx={IconCell}>
                   <ButtonIcon
-                    onClick={(e) => openContextMenu(e, item.id)}
+                    data-id={item.id}
+                    onClick={openContextMenu}
                     type="button"
                   >
                     <StyledIcon>more_vert</StyledIcon>
@@ -169,8 +183,18 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
           )}
         />
       </PaginationContainer>
-      {contextMenuOpen && (
-        <ContextMenu anchorEl={anchor} close={() => closeContextMenu()} />
+      {window.innerWidth < 1200 ? (
+        <ContextMenu
+          items={contextMenuPlayersTableFull}
+          anchorEl={anchor}
+          close={closeContextMenu}
+        />
+      ) : (
+        <ContextMenu
+          items={contextMenuPlayersTableDelete}
+          anchorEl={anchor}
+          close={closeContextMenu}
+        />
       )}
     </TableWithPagination>
   );
