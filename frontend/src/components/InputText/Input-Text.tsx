@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading, react/require-default-props */
 import React from "react";
-import { InputLabel, OutlinedInput } from "@mui/material";
+import styled from "styled-components";
+import { OutlinedInput } from "@mui/material";
 import { IMaskInput } from "react-imask";
 // import styled from "styled-components";
 import { InputLabelSpan, StyledFormControl } from "./InputTextStyles";
@@ -10,6 +11,17 @@ import { InputLabelSpan, StyledFormControl } from "./InputTextStyles";
 //   color: #d32f2f;
 //   display: inline;
 // `;
+
+const Label = styled.p`
+  margin: 0 0 4px 0;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 143%;
+  letter-spacing: 0.17px;
+  color: rgba(0, 0, 0, 0.87);
+`;
 
 interface CustomProps {
   onChange: (event: { target: { name: string; value: string } }) => void;
@@ -51,6 +63,8 @@ function InputText({
   value = "",
   onChange,
   name = "normal",
+  inputWidth,
+  inputHeight,
 }: {
   required?: boolean;
   label?: string;
@@ -60,6 +74,8 @@ function InputText({
   value?: string;
   onChange?: any;
   name?: "normal" | "snils" | "inn" | "passport" | "phone" | "police";
+  inputWidth?: number;
+  inputHeight?: number;
 }) {
   const [valueState, setValueState] = React.useState(value);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,10 +84,10 @@ function InputText({
 
   return (
     <StyledFormControl formSize={size}>
-      <InputLabel shrink sx={{ top: -14, left: -14 }}>
+      <Label>
         {label}
         {required && <InputLabelSpan> *</InputLabelSpan>}
-      </InputLabel>
+      </Label>
       {name === "normal" ? (
         <OutlinedInput
           required={required}
@@ -83,6 +99,7 @@ function InputText({
           value={value || valueState}
           onChange={onChange || handleChange}
           name={name}
+          sx={{ width: inputWidth, height: inputHeight }}
         />
       ) : (
         <OutlinedInput
