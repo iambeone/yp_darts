@@ -9,6 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
+import { useDispatch } from "../../utils/hooks";
 import {
   TableWithPagination,
   ColumnTitle,
@@ -24,6 +25,7 @@ import {
 } from "./GamersTableStyles";
 import ContextMenu from "../ContextMenu/ContextMenu";
 import { Tplayers } from "../../services/types";
+import { deletePlayer, getPlayers } from "../../services/actions";
 
 const TableStyle = {
   width: "auto",
@@ -49,6 +51,7 @@ const IconCell = {
 };
 
 export default function GamersTable({ data }: { data: Tplayers[] }) {
+  const dispatch = useDispatch();
   const PATH = "/players";
   const ROWS_PER_PAGE = 10;
   const { pageNumber = 1 } = useParams();
@@ -67,10 +70,14 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
 
   const addToTournament = (id: number) => {
     console.log(id);
+    closeContextMenu();
   };
 
-  const deletePlayer = (id: number) => {
-    console.log(id);
+  const deletePlayerHandler = (id: number) => {
+    Promise.resolve(dispatch(deletePlayer(id))).then(() => {
+      dispatch(getPlayers(""));
+      closeContextMenu();
+    });
   };
 
   const contextMenuPlayersTableFull = [
@@ -80,7 +87,6 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
       callback: (e: React.MouseEvent<HTMLElement>) => {
         const id = Number(e.currentTarget.dataset.id);
         addToTournament(id);
-        closeContextMenu();
       },
     },
     {
@@ -94,8 +100,7 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
       value: "Удалить",
       callback: (e: React.MouseEvent<HTMLElement>) => {
         const id = Number(e.currentTarget.dataset.id);
-        deletePlayer(id);
-        closeContextMenu();
+        deletePlayerHandler(id);
       },
     },
   ];
@@ -106,8 +111,7 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
       value: "Удалить",
       callback: (e: React.MouseEvent<HTMLElement>) => {
         const id = Number(e.currentTarget.dataset.id);
-        deletePlayer(id);
-        closeContextMenu();
+        deletePlayerHandler(id);
       },
     },
   ];
