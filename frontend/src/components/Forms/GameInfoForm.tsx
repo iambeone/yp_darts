@@ -54,10 +54,15 @@ export default function GameInfoForm() {
   const [sportCategory, setSportCategory] = React.useState<any>(null);
   const [hand, setHand] = React.useState<any>("right");
   const [dateAssignedCategory, setDateAssignedCategory] = React.useState<any>();
+  const [dateBeginMedPol, setDateBeginMedPol] = React.useState<any>();
+  const [dateEndMedPol, setDateendMedPol] = React.useState<any>();
+
   console.log(hand);
   console.log(subjectRf);
   console.log(sportCategory);
   console.log(dateAssignedCategory);
+  console.log(dateBeginMedPol);
+  console.log(dateEndMedPol);
   return (
     <Section>
       <SelectOptions
@@ -108,14 +113,14 @@ export default function GameInfoForm() {
               name="Начало действия"
               inputWidth={226}
               inputHeight={56}
-              onChangeDate={setDateAssignedCategory}
+              onChangeDate={setDateBeginMedPol}
             />
           </MarginRight>
           <DateTextField
             name="Конец действия"
             inputWidth={226}
             inputHeight={56}
-            onChangeDate={setDateAssignedCategory}
+            onChangeDate={setDateendMedPol}
           />
         </Group>
       </MarginTop>

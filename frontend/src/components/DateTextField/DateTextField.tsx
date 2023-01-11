@@ -30,7 +30,7 @@ export default function DateTextField({
   inputHeight?: number;
   onChangeDate: (value: any) => void;
 }) {
-  const [value] = React.useState(null);
+  const [value, setValue] = React.useState(null);
   return (
     <div>
       <Label>{name}</Label>
@@ -38,6 +38,7 @@ export default function DateTextField({
         <DesktopDatePicker
           value={value}
           onChange={(newValue) => {
+            setValue(newValue);
             onChangeDate(newValue);
           }}
           renderInput={(params) => (
