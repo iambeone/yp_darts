@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { subjectRF } from "../../utils/constants";
 import DateTextField from "../DateTextField/DateTextField";
 import InputText from "../InputText/Input-Text";
-import RadioOption from "../RadioOption/Radio-Option";
+// import RadioOption from "../RadioOption/Radio-Option";
+import RadioOptionHand from "../RadioOption/Radio-Option-Hand";
 // import PageTitle from "../PageTitle/PageTitle";
 import SelectOptions from "../SelectOption/SelectOption";
 
@@ -37,7 +38,30 @@ const Group = styled.div`
   display: flex;
 `;
 
-const radioOptions = ["Левая", "Правая"];
+const MarginRight = styled.div`
+  margin-right: 20px;
+`;
+
+const MarginRightDart = styled(MarginRight)`
+  margin-right: 164px;
+`;
+
+const MarginTop = styled.div`
+  margin-top: 24px;
+`;
+
+const H3 = styled.h3`
+  margin: 40px 0 24px 0;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 160%;
+  letter-spacing: 0.15px;
+  color: #003200;
+`;
+
+// const radioOptions = ["Левая", "Правая"];
 
 export default function GameInfoForm() {
   const [subjectRf, setSubjectRF] = React.useState<any>(null);
@@ -54,7 +78,7 @@ export default function GameInfoForm() {
       <Caption>Регион, за который играет спортсмен</Caption>
 
       <Group>
-        <div>
+        <MarginRight>
           <SelectOptions
             options={subjectRF}
             inputWidth={308}
@@ -62,21 +86,42 @@ export default function GameInfoForm() {
             label="Спортивный разряд"
             onChangeOption={setSubjectRF}
           />
-        </div>
-        <DateTextField name="Присвоен" />
+        </MarginRight>
+        <DateTextField name="Присвоен" inputWidth={226} inputHeight={56} />
       </Group>
-      <InputText label="ФИО тренера" />
+      <MarginTop>
+        <InputText label="ФИО тренера" inputWidth={636} inputHeight={56} />
+      </MarginTop>
       {/* <Label>Ведущая рука</Label> */}
-      <RadioOption name="Ведущая рука" values={radioOptions} />
-      <h3>Дротики</h3>
-      <InputText label="Производитель" />
-      <InputText label="Вес" />
-      <h3>Медицинская страховка</h3>
-      <InputText label="Номер полиса" />
+      <MarginTop>
+        {/* <RadioOption name="Ведущая рука" values={radioOptions} /> */}
+        <RadioOptionHand label="Ведущая рука" />
+      </MarginTop>
+      <H3>Дротики</H3>
       <Group>
-        <DateTextField name="Начало действия" />
-        <DateTextField name="Конец действия" />
+        <MarginRightDart>
+          <InputText label="Производитель" inputWidth={472} inputHeight={56} />
+        </MarginRightDart>
+        <InputText label="Вес" inputWidth={144} inputHeight={56} />
       </Group>
+      <H3>Медицинская страховка</H3>
+      <InputText label="Номер полиса" inputWidth={472} inputHeight={56} />
+      <MarginTop>
+        <Group>
+          <MarginRight>
+            <DateTextField
+              name="Начало действия"
+              inputWidth={226}
+              inputHeight={56}
+            />
+          </MarginRight>
+          <DateTextField
+            name="Конец действия"
+            inputWidth={226}
+            inputHeight={56}
+          />
+        </Group>
+      </MarginTop>
     </Section>
   );
 }

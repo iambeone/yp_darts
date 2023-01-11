@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading, react/require-default-props */
 import React from "react";
+import styled from "styled-components";
+import { OutlinedInput } from "@mui/material";
 import { InputLabel, OutlinedInput, FormHelperText } from "@mui/material";
 import { IMaskInput } from "react-imask";
 import { InputLabelSpan, StyledFormControl } from "./InputTextStyles";
@@ -10,6 +12,17 @@ import { InputLabelSpan, StyledFormControl } from "./InputTextStyles";
 // size отвечает за размеры ввода, на данном этапе есть 3 размера, закрывающие потребности параметров игрока (в турнирах добавятся ещё)
 // name отвечает за маску поля ввода, при normal маска отсутствует,
 // error и helperText для отображения ошибки и её текста соответственно
+
+const Label = styled.p`
+  margin: 0 0 4px 0;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 143%;
+  letter-spacing: 0.17px;
+  color: rgba(0, 0, 0, 0.87);
+`;
 
 interface CustomProps {
   onChange: (event: { target: { name: string; value: string } }) => void;
@@ -56,6 +69,8 @@ function InputText({
   value = "",
   onChange,
   name = "normal",
+  inputWidth,
+  inputHeight,
   error = false,
   helperText = "",
   sx,
@@ -67,6 +82,8 @@ function InputText({
   size?: "small" | "medium" | "large";
   value?: string;
   onChange?: any;
+  inputWidth?: number;
+  inputHeight?: number;
   name?: "normal" | "snils" | "inn" | "passport" | "phone" | "police" | "birth";
   error?: boolean;
   helperText?: string;
@@ -79,10 +96,10 @@ function InputText({
 
   return (
     <StyledFormControl formSize={size} error={error} sx={sx}>
-      <InputLabel shrink sx={{ top: -14, left: -14 }}>
+      <Label>
         {label}
         {required && <InputLabelSpan> *</InputLabelSpan>}
-      </InputLabel>
+      </Label>
       {name === "normal" ? (
         <OutlinedInput
           required={required}
@@ -94,6 +111,7 @@ function InputText({
           value={value || valueState}
           onChange={onChange || handleChange}
           name={name}
+          sx={{ width: inputWidth, height: inputHeight }}
         />
       ) : (
         <OutlinedInput
@@ -103,6 +121,7 @@ function InputText({
           onChange={onChange || handleChange}
           name={name}
           inputComponent={TextMaskCustom as any}
+          sx={{ width: inputWidth, height: inputHeight }}
         />
       )}
       {error && <FormHelperText>{helperText}</FormHelperText>}
