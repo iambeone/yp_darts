@@ -109,6 +109,7 @@ function InputText({
           onChange={onChange}
           name={name}
           inputComponent={TextMaskCustom as any}
+          sx={{ width: inputWidth, height: inputHeight }}
         />
       )}
     </StyledFormControl>

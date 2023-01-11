@@ -43,7 +43,7 @@ const MarginRight = styled.div`
 `;
 
 const MarginRightDart = styled(MarginRight)`
-  width: 472px;
+  margin-right: 164px;
 `;
 
 const MarginTop = styled.div`
@@ -105,13 +105,23 @@ export default function GameInfoForm() {
         <InputText label="Вес" inputWidth={144} inputHeight={56} />
       </Group>
       <H3>Медицинская страховка</H3>
-      <InputText label="Номер полиса" />
-      <Group>
-        <MarginRight>
-          <DateTextField name="Начало действия" />
-        </MarginRight>
-        <DateTextField name="Конец действия" />
-      </Group>
+      <InputText label="Номер полиса" inputWidth={472} inputHeight={56} />
+      <MarginTop>
+        <Group>
+          <MarginRight>
+            <DateTextField
+              name="Начало действия"
+              inputWidth={226}
+              inputHeight={56}
+            />
+          </MarginRight>
+          <DateTextField
+            name="Конец действия"
+            inputWidth={226}
+            inputHeight={56}
+          />
+        </Group>
+      </MarginTop>
     </Section>
   );
 }
