@@ -1,8 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading, react/require-default-props */
 import React from "react";
 import styled from "styled-components";
-import { OutlinedInput } from "@mui/material";
-import { InputLabel, OutlinedInput, FormHelperText } from "@mui/material";
+import { OutlinedInput, FormHelperText } from "@mui/material";
 import { IMaskInput } from "react-imask";
 import { InputLabelSpan, StyledFormControl } from "./InputTextStyles";
 
