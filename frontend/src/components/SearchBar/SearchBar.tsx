@@ -1,4 +1,5 @@
 import React, { ReactElement } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Badge,
   Box,
@@ -28,12 +29,13 @@ function SearchBar(): ReactElement {
     (store) => store.filters,
   );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const counter = !!appliedFilters.length;
   const createButtonText = () => {
     if (mobile) return "";
-    if (tablet) return "cоздать";
-    return "cоздать\u00A0турнир";
+    if (tablet) return "создать";
+    return "создать\u00A0игрока";
   };
 
   const searchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,9 +50,8 @@ function SearchBar(): ReactElement {
 
   const handleFilter = () => dispatch(setModalOpen(true));
 
-  const handleCreateTournament = () => {
-    // eslint-disable-next-line no-console
-    console.log("createTournament");
+  const handleCreatePlayer = () => {
+    navigate("/players/add-player");
   };
 
   const container = {
@@ -153,7 +154,7 @@ function SearchBar(): ReactElement {
           size="large"
           disableRipple
           endIcon={tablet ? <Icon>person_add</Icon> : null}
-          onClick={handleCreateTournament}
+          onClick={handleCreatePlayer}
         >
           {createButtonText()}
         </Button>
