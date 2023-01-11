@@ -4,7 +4,6 @@ import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { CalendarPickerView } from "@mui/x-date-pickers/internals/models";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker/DesktopDatePicker";
 
 const Label = styled.p`
@@ -25,7 +24,6 @@ export default function DateTextField({
   onChangeDate,
 }: {
   name: string;
-  view?: CalendarPickerView[];
   inputWidth?: number;
   inputHeight?: number;
   onChangeDate: (value: any) => void;
@@ -37,6 +35,7 @@ export default function DateTextField({
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DesktopDatePicker
           value={value}
+          inputFormat="DD/MM/YYYY"
           onChange={(newValue) => {
             setValue(newValue);
             onChangeDate(newValue);
@@ -58,7 +57,6 @@ export default function DateTextField({
 }
 
 DateTextField.defaultProps = {
-  view: null,
   inputWidth: null,
   inputHeight: null,
 };
