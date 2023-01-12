@@ -156,6 +156,8 @@ export default function MainForm() {
                 inputWidth={260}
                 inputHeight={56}
                 isRequired
+                error={!!errors.birthday?.message}
+                helperText={errors.birthday?.message?.toString()}
               />
             )}
           />
