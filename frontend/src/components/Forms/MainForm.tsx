@@ -146,6 +146,8 @@ export default function MainForm() {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <DateTextField
+                disableFuture
+                openTo="year"
                 labelText="Дата рождения"
                 onChangeHandler={onChange}
                 onBlur={onBlur}
@@ -153,6 +155,7 @@ export default function MainForm() {
                 type="day"
                 inputWidth={260}
                 inputHeight={56}
+                isRequired
               />
             )}
           />

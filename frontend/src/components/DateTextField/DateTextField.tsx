@@ -19,6 +19,9 @@ const Label = styled.p`
   letter-spacing: 0.17px;
   color: rgba(0, 0, 0, 0.87);
 `;
+const Span = styled.span`
+  color: red;
+`;
 
 type DateTextFieldType = "year" | "month" | "day";
 
@@ -30,6 +33,9 @@ interface DateTextFieldProps {
   inputWidth: number;
   inputHeight: number;
   onBlur?: any;
+  isRequired?: boolean;
+  disableFuture?: boolean;
+  openTo?: CalendarPickerView | undefined;
 }
 export default function DateTextField({
   value,
@@ -39,6 +45,9 @@ export default function DateTextField({
   inputWidth,
   inputHeight,
   onBlur,
+  isRequired = false,
+  disableFuture = false,
+  openTo = "year",
 }: DateTextFieldProps) {
   const getView = (): CalendarPickerView[] | undefined => {
     switch (type) {
@@ -81,9 +90,13 @@ export default function DateTextField({
 
   return (
     <FormControl>
-      <Label>{labelText}</Label>
+      <Label>
+        {labelText} {isRequired ? <Span> *</Span> : <> </>}
+      </Label>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
         <DatePicker
+          disableFuture={disableFuture}
+          openTo={openTo}
           value={value}
           onChange={(newValue) => onChangeHandler(newValue)}
           views={getView()}
