@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,6 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
+import { useDispatch } from "../../utils/hooks";
 import {
   TableWithPagination,
   ColumnTitle,
@@ -16,11 +17,15 @@ import {
   EmailSpan,
   StyledIcon,
   ButtonIcon,
-  LinkSpan,
+  BtnSpan,
   PaginationContainer,
   CountText,
+  LinkStyled,
+  LinkSpan,
 } from "./GamersTableStyles";
+import ContextMenu from "../ContextMenu/ContextMenu";
 import { Tplayers } from "../../services/types";
+import { deletePlayer, getPlayers } from "../../services/actions";
 
 const TableStyle = {
   width: "auto",
@@ -46,24 +51,71 @@ const IconCell = {
 };
 
 export default function GamersTable({ data }: { data: Tplayers[] }) {
+  const dispatch = useDispatch();
   const PATH = "/players";
   const ROWS_PER_PAGE = 10;
   const { pageNumber = 1 } = useParams();
+  const navigate = useNavigate();
+  const [anchor, setAnchor] = React.useState<HTMLButtonElement | null>(null);
 
-  const openModal = () => {
-    console.log(1);
-    return null;
+  const openContextMenu = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchor(anchor ? null : evt.currentTarget);
   };
 
-  const linkToChangePage = () => {
-    console.log(2);
-    return null;
+  // не работает закрытие по клику не по меню, разобраться
+  const closeContextMenu = () => {
+    console.log("close");
+    setAnchor(null);
   };
 
-  const openContextMenu = () => {
-    console.log(3);
-    return null;
+  const addToTournament = (id: number) => {
+    console.log(id);
+    closeContextMenu();
   };
+
+  const deletePlayerHandler = (id: number) => {
+    Promise.resolve(dispatch(deletePlayer(id))).then(() => {
+      dispatch(getPlayers(""));
+      closeContextMenu();
+    });
+  };
+
+  const contextMenuPlayersTableFull = [
+    {
+      icon: "person_add",
+      value: "Добавить в турнир",
+      callback: (e: React.MouseEvent<HTMLElement>) => {
+        const id = Number(e.currentTarget.dataset.id);
+        addToTournament(id);
+      },
+    },
+    {
+      icon: "edit",
+      value: "Изменить",
+      callback: (e: React.MouseEvent<HTMLElement>) =>
+        navigate(`/players/edit-player/:${e.currentTarget.dataset.id}`),
+    },
+    {
+      icon: "delete",
+      value: "Удалить",
+      callback: (e: React.MouseEvent<HTMLElement>) => {
+        const id = Number(e.currentTarget.dataset.id);
+        deletePlayerHandler(id);
+      },
+    },
+  ];
+
+  const contextMenuPlayersTableDelete = [
+    {
+      icon: "delete",
+      value: "Удалить",
+      callback: (e: React.MouseEvent<HTMLElement>) => {
+        const id = Number(e.currentTarget.dataset.id);
+        deletePlayerHandler(id);
+      },
+    },
+  ];
+
   return (
     <TableWithPagination>
       <CountText>Показано игроков: {data.length}</CountText>
@@ -89,25 +141,29 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
             ).map((item) => (
               <TableRow key={item.id}>
                 <TableCell>
-                  <NameSpan>{item.name}</NameSpan> <br />
-                  <EmailSpan>{item.email}</EmailSpan>
-                </TableCell>
-                <TableCell align="right" sx={AddCell} onClick={openModal}>
-                  <LinkSpan>ДОБАВИТЬ В ТУРНИР</LinkSpan>
-                </TableCell>
-                <TableCell
-                  align="right"
-                  sx={ChangeCell}
-                  onClick={linkToChangePage}
-                >
-                  <LinkSpan>ИЗМЕНИТЬ</LinkSpan>
+                  <LinkStyled to={`/player/:${item.id}`}>
+                    <NameSpan>{item.name}</NameSpan> <br />
+                    <EmailSpan>{item.email}</EmailSpan>
+                  </LinkStyled>
                 </TableCell>
                 <TableCell
                   align="right"
-                  sx={IconCell}
-                  onClick={openContextMenu}
+                  sx={AddCell}
+                  onClick={() => addToTournament(item.id)}
                 >
-                  <ButtonIcon type="button">
+                  <BtnSpan>ДОБАВИТЬ В ТУРНИР</BtnSpan>
+                </TableCell>
+                <TableCell align="right" sx={ChangeCell}>
+                  <LinkSpan to={`/players/edit-player/:${item.id}`}>
+                    ИЗМЕНИТЬ
+                  </LinkSpan>
+                </TableCell>
+                <TableCell align="right" sx={IconCell}>
+                  <ButtonIcon
+                    data-id={item.id}
+                    onClick={openContextMenu}
+                    type="button"
+                  >
                     <StyledIcon>more_vert</StyledIcon>
                   </ButtonIcon>
                 </TableCell>
@@ -131,6 +187,19 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
           )}
         />
       </PaginationContainer>
+      {window.innerWidth < 1200 ? (
+        <ContextMenu
+          items={contextMenuPlayersTableFull}
+          anchorEl={anchor}
+          close={closeContextMenu}
+        />
+      ) : (
+        <ContextMenu
+          items={contextMenuPlayersTableDelete}
+          anchorEl={anchor}
+          close={closeContextMenu}
+        />
+      )}
     </TableWithPagination>
   );
 }

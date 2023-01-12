@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { ListItemText } from "@mui/material";
+import PopperUnstyled from "@mui/base/PopperUnstyled";
 
 const StyledListItemText = styled(ListItemText)`
   & > span {
@@ -7,4 +8,8 @@ const StyledListItemText = styled(ListItemText)`
   }
 `;
 
-export default StyledListItemText;
+const Popper = styled(PopperUnstyled)`
+  z-index: 1;
+`;
+
+export { StyledListItemText, Popper };
