@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from "react";
 import { FormControl, TextField } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -18,6 +19,9 @@ const Label = styled.p`
   letter-spacing: 0.17px;
   color: rgba(0, 0, 0, 0.87);
 `;
+const Span = styled.span`
+  color: red;
+`;
 
 type DateTextFieldType = "year" | "month" | "day";
 
@@ -28,6 +32,10 @@ interface DateTextFieldProps {
   type: DateTextFieldType;
   inputWidth: number;
   inputHeight: number;
+  onBlur?: any;
+  isRequired?: boolean;
+  disableFuture?: boolean;
+  openTo?: CalendarPickerView | undefined;
 }
 export default function DateTextField({
   value,
@@ -36,6 +44,10 @@ export default function DateTextField({
   type,
   inputWidth,
   inputHeight,
+  onBlur,
+  isRequired = false,
+  disableFuture = false,
+  openTo = "year",
 }: DateTextFieldProps) {
   const getView = (): CalendarPickerView[] | undefined => {
     switch (type) {
@@ -78,9 +90,13 @@ export default function DateTextField({
 
   return (
     <FormControl>
-      <Label>{labelText}</Label>
+      <Label>
+        {labelText} {isRequired ? <Span> *</Span> : <> </>}
+      </Label>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
         <DatePicker
+          disableFuture={disableFuture}
+          openTo={openTo}
           value={value}
           onChange={(newValue) => onChangeHandler(newValue)}
           views={getView()}
@@ -89,6 +105,7 @@ export default function DateTextField({
             <TextField
               id="date-input"
               {...params}
+              onBlur={onBlur}
               inputProps={{
                 ...params.inputProps,
                 placeholder: getPlaceholder(),

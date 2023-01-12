@@ -65,12 +65,14 @@ export const customSizesInputText = {
     width: "92.2%",
     maxWidth: 328,
     "@media (min-width: 1194px)": { maxWidth: 308 },
-    "@media (min-width: 1440px)": { width: 355 },
+    "@media (min-width: 1440px)": { width: 355, maxWidth: 355 },
   },
   large: {
     width: "92.2%",
-    maxWidth: 328,
-    "@media (min-width: 1194px)": { width: "100%", maxWidth: "100%" },
+    maxWidth: 734,
+    "@media (min-width: 1194px)": { width: "100%", maxWidth: 636 },
+    "@media (min-width: 1440px)": { width: "100%", maxWidth: "100%" },
+    "@media (max-width: 769px)": { width: 328 },
   },
 };
 
