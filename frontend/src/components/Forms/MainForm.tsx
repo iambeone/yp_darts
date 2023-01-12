@@ -151,8 +151,8 @@ export default function MainForm() {
                 onBlur={onBlur}
                 value={value || null}
                 type="day"
-                inputWidth={0}
-                inputHeight={0}
+                inputWidth={260}
+                inputHeight={56}
               />
             )}
           />
