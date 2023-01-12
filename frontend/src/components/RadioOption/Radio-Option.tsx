@@ -5,11 +5,10 @@ import {
   FormControl,
   FormControlLabel,
   Radio,
-  RadioGroup,
   FormHelperText,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { GroupName, Requirement } from "./RadioButtonStyles";
+import { GroupName, Requirement, GroupRadio } from "./RadioButtonStyles";
 
 const theme = createTheme({
   palette: {
@@ -44,7 +43,7 @@ function RadioOption({
         <GroupName id="gender-radio-buttons-group" focused color="info">
           {name} {isRequired && <Requirement>*</Requirement>}
         </GroupName>
-        <RadioGroup
+        <GroupRadio
           aria-labelledby="gender-radio-buttons-group"
           name="controlled-radio-buttons-group"
           value={value}
@@ -73,7 +72,7 @@ function RadioOption({
               />
             );
           })}
-        </RadioGroup>
+        </GroupRadio>
         {error && <FormHelperText>{helperText}</FormHelperText>}
       </FormControl>
     </ThemeProvider>
