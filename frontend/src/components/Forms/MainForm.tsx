@@ -237,7 +237,7 @@ export default function MainForm() {
           control={control}
           rules={{
             pattern: {
-              value: /^[+]?([0-9]{11})+/g,
+              value: /^[+]?[0-9]+/g,
               message: "Неверный формат телефона",
             },
           }}
