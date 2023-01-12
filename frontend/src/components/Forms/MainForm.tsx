@@ -5,6 +5,7 @@ import styled from "styled-components";
 import InputText from "../InputText/Input-Text";
 import RadioOption from "../RadioOption/Radio-Option";
 import DateTextField from "../DateTextField/DateTextField";
+import Button from "../Button/Button";
 
 export default function MainForm() {
   const {
@@ -40,6 +41,14 @@ export default function MainForm() {
     width: 100%;
   `;
 
+  const SubmitBlock = styled.div`
+    position
+  `;
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
+
   return (
     <FormProvider {...methods}>
       <Form
@@ -57,7 +66,7 @@ export default function MainForm() {
               message: "Длинна должна быть больше 1 символа",
             },
             pattern: {
-              value: /[а-яА-ЯёЁa-zA-Z\D\s]+/gi,
+              value: /^(?=.{1,29}$)[а-яА-ЯёЁa-zA-Z\s-]*$/gi,
               message:
                 "Допустимы символы: пробел, кириллические, латинские, тире",
             },
@@ -87,7 +96,7 @@ export default function MainForm() {
               message: "Длинна должна быть больше 1 символа",
             },
             pattern: {
-              value: /[а-яА-ЯёЁa-zA-Z\D\s-]+/gi,
+              value: /^(?=.{1,29}$)[а-яА-ЯёЁa-zA-Z\s-]*$/gi,
               message:
                 "Допустимы символы: пробел, кириллические, латинские, тире",
             },
@@ -117,7 +126,7 @@ export default function MainForm() {
                 message: "Длинна должна быть больше 1 символа",
               },
               pattern: {
-                value: /[а-яА-ЯёЁa-zA-Z\D\s-]+/gi,
+                value: /^(?=.{1,29}$)[а-яА-ЯёЁa-zA-Z\s-]*$/gi,
                 message:
                   "Допустимы символы: пробел, кириллические, латинские, тире",
               },
@@ -257,7 +266,13 @@ export default function MainForm() {
             />
           )}
         />
-        <input type="submit" /> {/* only for tests */}
+        <SubmitBlock />
+        <Button
+          colors="all-red"
+          onClick={handleSubmit(onSubmit)}
+          text="Далее  >"
+        />
+        {/* only for tests */}
       </Form>
     </FormProvider>
   );
