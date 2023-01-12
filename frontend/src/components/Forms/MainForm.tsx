@@ -67,7 +67,7 @@ export default function MainForm() {
               label="Фамилия"
               placeholder="Фамилия"
               size="medium"
-              name="normal"
+              maskName="normal"
               onChange={onChange}
               value={value}
               required
@@ -97,7 +97,7 @@ export default function MainForm() {
               label="Имя"
               placeholder="Имя"
               size="medium"
-              name="normal"
+              maskName="normal"
               onChange={onChange}
               value={value}
               required
@@ -127,7 +127,7 @@ export default function MainForm() {
                 label="Отчество"
                 placeholder="Отчество"
                 size="medium"
-                name="normal"
+                maskName="normal"
                 onChange={onChange}
                 value={value}
                 onBlur={onBlur}
@@ -195,7 +195,7 @@ export default function MainForm() {
                 label="Адрес регистрации"
                 placeholder="188800, г. Выборг, ул. Куйбышева, д 1, к 2"
                 size="large"
-                name="normal"
+                maskName="normal"
                 onChange={onChange}
                 value={value}
                 onBlur={onBlur}
@@ -221,7 +221,7 @@ export default function MainForm() {
                 label="Email"
                 placeholder="example@email.com"
                 size="medium"
-                name="normal"
+                maskName="normal"
                 onChange={onChange}
                 required
                 value={value}
@@ -237,7 +237,7 @@ export default function MainForm() {
           control={control}
           rules={{
             pattern: {
-              value: /^[+]?[0-9]+/g,
+              value: /^[+]?([0-9]{11})+/g,
               message: "Неверный формат телефона",
             },
           }}
@@ -246,7 +246,7 @@ export default function MainForm() {
               label="Контактный телефон"
               placeholder="+7 (999) 123-45-67"
               size="medium"
-              name="phone"
+              maskName="phone"
               onChange={onChange}
               value={value}
               onBlur={onBlur}
