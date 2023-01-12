@@ -75,7 +75,16 @@ export default function DocumentsForm() {
             placeholder="00 00 000-000"
             sx={{ "@media(min-width: 1194px)": { alignSelf: "end" } }}
           />
-          <DateTextField name="Дата выдачи" />
+          <DateTextField
+            value={null}
+            onChangeHandler={(newValue) => {
+              console.log(newValue);
+            }}
+            type="day"
+            labelText="Дата выдачи"
+            inputWidth={226}
+            inputHeight={56}
+          />
         </InputBlock>
         <InputBlock>
           <InputText
