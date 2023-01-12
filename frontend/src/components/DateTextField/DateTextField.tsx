@@ -1,5 +1,6 @@
+/* eslint-disable react/require-default-props */
 import * as React from "react";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/ru";
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
@@ -18,31 +19,47 @@ const Label = styled.p`
   letter-spacing: 0.17px;
   color: rgba(0, 0, 0, 0.87);
 `;
+const Span = styled.span`
+  color: red;
+`;
 
 export default function DateTextField({
   name,
   view,
   inputWidth,
   inputHeight,
+  value = dayjs(),
+  onChange,
+  onBlur,
+  isRequired,
 }: {
   name: string;
   view?: CalendarPickerView[];
   inputWidth?: number;
   inputHeight?: number;
+  value?: Dayjs | null;
+  onChange?: any;
+  onBlur?: any;
+  isRequired?: boolean;
 }) {
-  const [value, setValue] = React.useState(dayjs());
   return (
     <div>
-      <Label>{name}</Label>
+      <Label>
+        {name} {isRequired ? <Span> *</Span> : <> </>}
+      </Label>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
-          views={view || undefined}
+          disableFuture
+          openTo="year"
+          views={view || ["year", "month", "day"] || undefined}
           inputFormat={view ? "YYYY" : "DD/MM/YYYY"}
           value={value}
-          onChange={(newValue) => setValue(dayjs(newValue))}
+          onChange={onChange}
           renderInput={(params) => (
             <TextField
               {...params}
+              onBlur={onBlur}
+              inputProps={{ ...params.inputProps, placeholder: "дд/мм/гггг" }}
               sx={{ width: inputWidth, height: inputHeight }}
             />
           )}

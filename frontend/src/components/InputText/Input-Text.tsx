@@ -73,6 +73,7 @@ function InputText({
   error = false,
   helperText = "",
   sx,
+  onBlur,
 }: {
   required?: boolean;
   label?: string;
@@ -87,6 +88,7 @@ function InputText({
   error?: boolean;
   helperText?: string;
   sx?: any;
+  onBlur?: any;
 }) {
   const [valueState, setValueState] = React.useState(value);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,6 +103,7 @@ function InputText({
       </Label>
       {name === "normal" ? (
         <OutlinedInput
+          onBlur={onBlur}
           required={required}
           placeholder={placeholder}
           size="medium"
@@ -114,6 +117,7 @@ function InputText({
         />
       ) : (
         <OutlinedInput
+          onBlur={onBlur}
           required={required}
           placeholder={placeholder}
           value={value || valueState}
