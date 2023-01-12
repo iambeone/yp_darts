@@ -87,7 +87,16 @@ export default function GameInfoForm() {
             onChangeOption={setSubjectRF}
           />
         </MarginRight>
-        <DateTextField name="Присвоен" inputWidth={226} inputHeight={56} />
+        <DateTextField
+          value={null}
+          onChangeHandler={(newValue) => {
+            console.log(newValue);
+          }}
+          type="day"
+          labelText="Присвоен"
+          inputWidth={226}
+          inputHeight={56}
+        />
       </Group>
       <MarginTop>
         <InputText label="ФИО тренера" inputWidth={636} inputHeight={56} />
@@ -110,13 +119,23 @@ export default function GameInfoForm() {
         <Group>
           <MarginRight>
             <DateTextField
-              name="Начало действия"
+              value={null}
+              onChangeHandler={(newValue) => {
+                console.log(newValue);
+              }}
+              type="day"
+              labelText="Начало действия"
               inputWidth={226}
               inputHeight={56}
             />
           </MarginRight>
           <DateTextField
-            name="Конец действия"
+            value={null}
+            onChangeHandler={(newValue) => {
+              console.log(newValue);
+            }}
+            type="day"
+            labelText="Конец действия"
             inputWidth={226}
             inputHeight={56}
           />

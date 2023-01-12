@@ -182,7 +182,16 @@ export default function DocumentsForm() {
             maskName="passport"
             inputRef={passport.ref}
           />
-          <DateTextField name="Дата выдачи" />
+          <DateTextField
+            value={null}
+            onChangeHandler={(newValue) => {
+              console.log(newValue);
+            }}
+            type="day"
+            labelText="Дата выдачи"
+            inputWidth={226}
+            inputHeight={56}
+          />
         </InputBlock>
         <InputBlock>
           <InputText
