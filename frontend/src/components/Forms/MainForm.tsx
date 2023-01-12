@@ -146,10 +146,13 @@ export default function MainForm() {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <DateTextField
-                name="Дата рождения"
-                onChange={onChange}
+                labelText="Дата рождения"
+                onChangeHandler={onChange}
                 onBlur={onBlur}
                 value={value || null}
+                type="day"
+                inputWidth={0}
+                inputHeight={0}
               />
             )}
           />

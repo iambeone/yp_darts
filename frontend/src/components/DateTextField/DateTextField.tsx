@@ -1,13 +1,13 @@
 /* eslint-disable react/require-default-props */
-import * as React from "react";
-import dayjs, { Dayjs } from "dayjs";
-import "dayjs/locale/ru";
-import styled from "styled-components";
-import TextField from "@mui/material/TextField";
+import React from "react";
+import { FormControl, TextField } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { CalendarPickerView } from "@mui/x-date-pickers/internals/models";
+import { Dayjs } from "dayjs";
+import "dayjs/locale/ru";
+import styled from "styled-components";
 
 const Label = styled.p`
   margin: 0 0 4px 0;
@@ -19,58 +19,89 @@ const Label = styled.p`
   letter-spacing: 0.17px;
   color: rgba(0, 0, 0, 0.87);
 `;
-const Span = styled.span`
-  color: red;
-`;
 
+type DateTextFieldType = "year" | "month" | "day";
+
+interface DateTextFieldProps {
+  value: Dayjs | null;
+  onChangeHandler: (newValue: Dayjs | null) => void;
+  labelText: string;
+  type: DateTextFieldType;
+  inputWidth: number;
+  inputHeight: number;
+  onBlur?: any;
+}
 export default function DateTextField({
-  name,
-  view,
+  value,
+  onChangeHandler,
+  labelText,
+  type,
   inputWidth,
   inputHeight,
-  value = dayjs(),
-  onChange,
   onBlur,
-  isRequired,
-}: {
-  name: string;
-  view?: CalendarPickerView[];
-  inputWidth?: number;
-  inputHeight?: number;
-  value?: Dayjs | null;
-  onChange?: any;
-  onBlur?: any;
-  isRequired?: boolean;
-}) {
+}: DateTextFieldProps) {
+  const getView = (): CalendarPickerView[] | undefined => {
+    switch (type) {
+      case "year":
+        return ["year"];
+      case "month":
+        return ["year", "month"];
+      case "day":
+        return ["year", "month", "day"];
+      default:
+        return undefined;
+    }
+  };
+
+  const getInputFormat = () => {
+    switch (type) {
+      case "year":
+        return "YYYY";
+      case "month":
+        return "MM/YYYY";
+      case "day":
+        return "DD/MM/YYYY";
+      default:
+        return undefined;
+    }
+  };
+
+  const getPlaceholder = () => {
+    switch (type) {
+      case "year":
+        return "гггг";
+      case "month":
+        return "мм/гггг";
+      case "day":
+        return "дд/мм/гггг";
+      default:
+        return undefined;
+    }
+  };
+
   return (
-    <div>
-      <Label>
-        {name} {isRequired ? <Span> *</Span> : <> </>}
-      </Label>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <FormControl>
+      <Label>{labelText}</Label>
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
         <DatePicker
-          disableFuture
-          openTo="year"
-          views={view || ["year", "month", "day"] || undefined}
-          inputFormat={view ? "YYYY" : "DD/MM/YYYY"}
           value={value}
-          onChange={onChange}
+          onChange={(newValue) => onChangeHandler(newValue)}
+          views={getView()}
+          inputFormat={getInputFormat()}
           renderInput={(params) => (
             <TextField
+              id="date-input"
               {...params}
               onBlur={onBlur}
-              inputProps={{ ...params.inputProps, placeholder: "дд/мм/гггг" }}
+              inputProps={{
+                ...params.inputProps,
+                placeholder: getPlaceholder(),
+              }}
               sx={{ width: inputWidth, height: inputHeight }}
             />
           )}
         />
       </LocalizationProvider>
-    </div>
+    </FormControl>
   );
 }
-
-DateTextField.defaultProps = {
-  view: null,
-  inputWidth: null,
-  inputHeight: null,
-};

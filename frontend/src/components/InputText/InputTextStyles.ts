@@ -26,7 +26,6 @@ const StyledFormControl = styled(FormControl)<IStyledFormControl>`
       }
     }};
     max-width: ${({ formSize }) => formSize === "medium" && "308px"};
-    max-width: ${({ formSize }) => formSize === "large" && "750px"};
   }
 
   @media (min-width: 1440px) {
