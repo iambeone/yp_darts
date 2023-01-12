@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { TextField, Input } from "@mui/material";
 import { useForm, useController } from "react-hook-form";
-import InputText from "../InputText/Input-Text";
 import ToggleTabs from "../ToggleTabs/Toggle-Tabs";
-import DateTextField from "../DateTextField/DateTextField";
 import Button from "../Button/Button";
+import InputText from "../InputText/Input-Text";
+import DateTextField from "../DateTextField/DateTextField";
 
 const DocumentsFormBlock = styled.form`
   display: flex;

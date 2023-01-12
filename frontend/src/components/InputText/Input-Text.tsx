@@ -86,6 +86,7 @@ function InputText({
   error = false,
   helperText = "",
   sx,
+  onBlur,
   maskName = "normal",
   inputRef,
 }: {
@@ -102,6 +103,7 @@ function InputText({
   error?: boolean;
   helperText?: string;
   sx?: any;
+  onBlur?: any;
   maskName?:
     | "normal"
     | "snils"
@@ -120,6 +122,7 @@ function InputText({
       </Label>
       {maskName === "normal" ? (
         <OutlinedInput
+          onBlur={onBlur}
           required={required}
           placeholder={placeholder}
           size="medium"
@@ -132,6 +135,7 @@ function InputText({
         />
       ) : (
         <StyledOutlinedInput
+          onBlur={onBlur}
           required={required}
           placeholder={placeholder}
           value={value}

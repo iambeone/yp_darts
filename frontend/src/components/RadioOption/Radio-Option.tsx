@@ -1,9 +1,12 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/no-array-index-key */
 import React from "react";
 import {
   FormControl,
   FormControlLabel,
   Radio,
   RadioGroup,
+  FormHelperText,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { GroupName, Requirement } from "./RadioButtonStyles";
@@ -20,20 +23,24 @@ function RadioOption({
   name = "Пол",
   values = ["Мужчина", "Женщина"],
   isRequired = true,
+  onChange,
+  value = "female",
+  onBlur,
+  error = false,
+  helperText = "",
 }: {
   name: string;
   values: string[];
   isRequired?: boolean;
+  onChange?: any;
+  value?: string;
+  onBlur?: any;
+  error?: boolean;
+  helperText?: string;
 }) {
-  const [value, setValue] = React.useState("female");
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
-  };
-
   return (
     <ThemeProvider theme={theme}>
-      <FormControl>
+      <FormControl error={error}>
         <GroupName id="gender-radio-buttons-group" focused color="info">
           {name} {isRequired && <Requirement>*</Requirement>}
         </GroupName>
@@ -41,12 +48,14 @@ function RadioOption({
           aria-labelledby="gender-radio-buttons-group"
           name="controlled-radio-buttons-group"
           value={value}
-          onChange={handleChange}
+          onChange={onChange}
+          onBlur={onBlur}
         >
-          {values.map((element) => {
+          {values.map((element, index) => {
             return (
               <FormControlLabel
                 value={element}
+                key={`-${index}-radio-option`}
                 control={
                   <Radio
                     color="success"
@@ -65,6 +74,7 @@ function RadioOption({
             );
           })}
         </RadioGroup>
+        {error && <FormHelperText>{helperText}</FormHelperText>}
       </FormControl>
     </ThemeProvider>
   );
