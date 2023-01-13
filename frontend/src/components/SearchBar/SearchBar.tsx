@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Badge,
@@ -17,7 +17,7 @@ import {
   clearFilters,
   deleteFilter,
   getPlayers,
-  setName,
+  setSearch,
 } from "../../services/actions";
 import { encodeQueryString } from "../../utils/helpers";
 
@@ -25,24 +25,37 @@ const tablet = window.innerWidth < 1200;
 const mobile = window.innerWidth < 500;
 
 function SearchBar(): ReactElement {
-  const { gender, age, name, appliedFilters } = useSelector(
+  const { gender, age, search, subjectRF, appliedFilters } = useSelector(
     (store) => store.filters,
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    dispatch(getPlayers(encodeQueryString({ gender, age, subjectRF })));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appliedFilters]);
+
   const counter = !!appliedFilters.length;
   const createButtonText = () => {
     if (mobile) return "";
-    if (tablet) return "создать";
-    return "создать\u00A0игрока";
+    if (tablet) return "cоздать";
+    return "cоздать\u00A0игрока";
   };
 
-  const searchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (name) dispatch(getPlayers(encodeQueryString({ gender, age, name })));
-    dispatch(setName(""));
-  };
+  // const searchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   if (!search) return;
+  //   if (search.includes("@")) {
+  //     dispatch(getPlayers(encodeQueryString({ email: search })));
+  //   } else {
+  //     dispatch(
+  //       getPlayers(encodeQueryString({ gender, age, subjectRF, name: search })),
+  //     );
+  //   }
+
+  //   dispatch(setSearch(""));
+  // };
 
   const handleDeleteChip = (chip: string) => dispatch(deleteFilter(chip));
 
@@ -50,9 +63,7 @@ function SearchBar(): ReactElement {
 
   const handleFilter = () => dispatch(setModalOpen(true));
 
-  const handleCreatePlayer = () => {
-    navigate("/players/add-player");
-  };
+  const handleCreatePlayer = () => navigate("/players/add-player");
 
   const container = {
     margin: 0,
@@ -96,7 +107,7 @@ function SearchBar(): ReactElement {
     },
   };
 
-  const createTournamentButton = {
+  const createPlayerButton = {
     minWidth: tablet ? "auto" : "181px",
     borderRadius: "100px",
     padding: mobile ? "13px 13px" : "8px 18px",
@@ -135,20 +146,22 @@ function SearchBar(): ReactElement {
         >
           {mobile ? "" : "Фильтры"}
         </Button>
-        <Paper component="form" onSubmit={searchSubmit} sx={paper}>
+        <Paper component="form" sx={paper}>
           <Icon sx={{ p: "12px 11px 12px 15px", color: "rgba(0, 0, 0, 0.6)" }}>
             search
           </Icon>
           <InputBase
             sx={inputBase}
-            placeholder="Поиск по имени..."
+            placeholder={
+              mobile ? "Поиск по имени..." : "Поиск по имени, e-mail..."
+            }
             inputProps={{ "aria-label": "Поиск" }}
-            onChange={(e) => dispatch(setName(e.target.value))}
-            value={name}
+            onChange={(e) => dispatch(setSearch(e.target.value))}
+            value={search}
           />
         </Paper>
         <Button
-          sx={createTournamentButton}
+          sx={createPlayerButton}
           color="error"
           variant="contained"
           size="large"

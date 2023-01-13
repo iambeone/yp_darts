@@ -36,14 +36,20 @@ export class ParticipantsService {
     });
   }
 
-  private getRangeOfDateBirthes(age: number): FindOperator<Date> | null {
+  private getRangeOfDateBirthes(age: string): FindOperator<Date> | null {
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth() + 1;
     const day = now.getDay();
+    const ageGradation = {
+      children: 0,
+      teenagers: 15,
+      grownups: 30,
+      interval: 15,
+    };
 
-    const yearFrom = year - age - 1;
-    const yearTo = year - age;
+    const yearFrom = year - ageGradation[age] - ageGradation.interval;
+    const yearTo = year - ageGradation[age];
 
     const dateFrom = `${yearFrom}-${month}-${day}`;
     const dateTo = `${yearTo}-${month}-${day}`;
