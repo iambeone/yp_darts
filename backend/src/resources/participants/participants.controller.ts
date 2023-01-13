@@ -61,6 +61,12 @@ export class ParticipantsController {
   }
 
   @UseGuards(JwtGuard)
+  @Get(':id')
+  public findOne(@Param('id') id: string): Promise<Participant> {
+    return this.participantsService.findOne(parseInt(id));
+  }
+
+  @UseGuards(JwtGuard)
   @Patch(':id')
   public update(
     @Param('id') id: string,
