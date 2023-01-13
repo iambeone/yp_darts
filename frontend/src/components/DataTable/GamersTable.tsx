@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,7 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
-import { useDispatch } from "../../utils/hooks";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import {
   TableWithPagination,
   ColumnTitle,
@@ -23,9 +23,8 @@ import {
   LinkStyled,
   LinkSpan,
 } from "./GamersTableStyles";
-import ContextMenu from "../ContextMenu/ContextMenu";
 import { Tplayers } from "../../services/types";
-import { deletePlayer, getPlayers } from "../../services/actions";
+import { setContextMenuOpen } from "../../services/actions";
 
 const TableStyle = {
   width: "auto",
@@ -52,69 +51,18 @@ const IconCell = {
 
 export default function GamersTable({ data }: { data: Tplayers[] }) {
   const dispatch = useDispatch();
+  const anchor = useSelector((state) => state.players.contextMenuOpen);
   const PATH = "/players";
   const ROWS_PER_PAGE = 10;
   const { pageNumber = 1 } = useParams();
-  const navigate = useNavigate();
-  const [anchor, setAnchor] = React.useState<HTMLButtonElement | null>(null);
 
   const openContextMenu = (evt: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchor(anchor ? null : evt.currentTarget);
-  };
-
-  // не работает закрытие по клику не по меню, разобраться
-  const closeContextMenu = () => {
-    console.log("close");
-    setAnchor(null);
+    dispatch(setContextMenuOpen(anchor ? null : evt.currentTarget));
   };
 
   const addToTournament = (id: number) => {
     console.log(id);
-    closeContextMenu();
   };
-
-  const deletePlayerHandler = (id: number) => {
-    Promise.resolve(dispatch(deletePlayer(id))).then(() => {
-      dispatch(getPlayers(""));
-      closeContextMenu();
-    });
-  };
-
-  const contextMenuPlayersTableFull = [
-    {
-      icon: "person_add",
-      value: "Добавить в турнир",
-      callback: (e: React.MouseEvent<HTMLElement>) => {
-        const id = Number(e.currentTarget.dataset.id);
-        addToTournament(id);
-      },
-    },
-    {
-      icon: "edit",
-      value: "Изменить",
-      callback: (e: React.MouseEvent<HTMLElement>) =>
-        navigate(`/players/edit-player/:${e.currentTarget.dataset.id}`),
-    },
-    {
-      icon: "delete",
-      value: "Удалить",
-      callback: (e: React.MouseEvent<HTMLElement>) => {
-        const id = Number(e.currentTarget.dataset.id);
-        deletePlayerHandler(id);
-      },
-    },
-  ];
-
-  const contextMenuPlayersTableDelete = [
-    {
-      icon: "delete",
-      value: "Удалить",
-      callback: (e: React.MouseEvent<HTMLElement>) => {
-        const id = Number(e.currentTarget.dataset.id);
-        deletePlayerHandler(id);
-      },
-    },
-  ];
 
   return (
     <TableWithPagination>
@@ -190,19 +138,6 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
           )}
         />
       </PaginationContainer>
-      {window.innerWidth < 1200 ? (
-        <ContextMenu
-          items={contextMenuPlayersTableFull}
-          anchorEl={anchor}
-          close={closeContextMenu}
-        />
-      ) : (
-        <ContextMenu
-          items={contextMenuPlayersTableDelete}
-          anchorEl={anchor}
-          close={closeContextMenu}
-        />
-      )}
     </TableWithPagination>
   );
 }

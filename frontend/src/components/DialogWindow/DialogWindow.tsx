@@ -100,7 +100,7 @@ function DialogWindow({
       {contentText && (
         <DialogContent sx={{ px: 3, py: 1 }}>
           <DialogContentText id="dialog-description" sx={{ color: "#000" }}>
-            <Typography variant="inherit">{contentText}</Typography>
+            {contentText}
           </DialogContentText>
         </DialogContent>
       )}
