@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { subjectRF } from "../../utils/constants";
 import DateTextField from "../DateTextField/DateTextField";
-import InputText from "../InputText/Input-Text";
+import InputText from "../InputText/InputText";
 // import RadioOption from "../RadioOption/Radio-Option";
-import RadioOptionHand from "../RadioOption/Radio-Option-Hand";
+import RadioOptionHand from "../RadioOption/RadioOptionHand";
 // import PageTitle from "../PageTitle/PageTitle";
 import SelectOptions from "../SelectOption/SelectOption";
 

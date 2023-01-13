@@ -5,7 +5,14 @@ import {
   FormGroup,
   FormLabel,
 } from "@mui/material";
-import styles from "./Checkbox.module.css";
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+`;
 
 export default function CheckboxesGroup({
   name,
@@ -28,7 +35,7 @@ export default function CheckboxesGroup({
   };
 
   return (
-    <div className={styles.container}>
+    <Container>
       <FormLabel component="legend">{name}</FormLabel>
       <FormGroup
         sx={{ flexDirection: `${direction}` }}
@@ -47,6 +54,6 @@ export default function CheckboxesGroup({
           );
         })}
       </FormGroup>
-    </div>
+    </Container>
   );
 }

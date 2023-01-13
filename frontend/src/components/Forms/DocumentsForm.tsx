@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { TextField, Input } from "@mui/material";
 import { useForm, useController } from "react-hook-form";
+import { Dayjs } from "dayjs";
 import ToggleTabs from "../ToggleTabs/Toggle-Tabs";
 import Button from "../Button/Button";
-import InputText from "../InputText/Input-Text";
+import InputText from "../InputText/InputText";
 import DateTextField from "../DateTextField/DateTextField";
 
 const DocumentsFormBlock = styled.form`
@@ -38,6 +38,7 @@ const InputBlock = styled.div`
 
   @media (min-width: 834px) {
     flex-direction: row;
+    gap: 20px;
   }
 `;
 
@@ -51,8 +52,8 @@ const IdentificationBlock = styled.div`
   overflow: hidden;
 
   @media (min-width: 834px) {
-    margin: 25px 24px 0 24px;
-    gap: 24px;
+    // margin: 25px 24px 0 24px;
+    gap: 20px;
   }
 `;
 
@@ -81,19 +82,26 @@ const tablet = window.innerWidth < 834;
 export default function DocumentsForm() {
   const [value, setValue] = React.useState({
     passport: "",
-    dateOfIssue: Date,
+    dateOfIssue: new Date(0),
     snils: "",
     inn: "",
     police: "",
     issuedBy: "",
   });
 
-  const { control, handleSubmit } = useForm();
+  const [dateShow, setdateShow] = React.useState<Dayjs | null>(null);
+
+  const { control, handleSubmit } = useForm({ mode: "onBlur" });
 
   const { field: snils, fieldState: snilsState } = useController({
     name: "snils",
     control,
-    rules: { pattern: /[0-9]{3}-[0-9]{3}-[0-9]{3} [0-9]{2}/ },
+    rules: {
+      pattern: {
+        value: /[0-9]{3}-[0-9]{3}-[0-9]{3} [0-9]{2}/,
+        message: "Введите снилс",
+      },
+    },
   });
   // const { field: dateOfIssue, fieldState: dateOfIssueState } = useController({
   //   name: "dateOfIssue",
@@ -103,26 +111,40 @@ export default function DocumentsForm() {
   const { field: passport, fieldState: passportState } = useController({
     name: "passport",
     control,
-    rules: { pattern: /[0-9]{2} [0-9]{2} [0-9]{6}/ },
+    rules: {
+      pattern: {
+        value: /[0-9]{2} [0-9]{2} [0-9]{6}/,
+        message: "Введите номер паспорта",
+      },
+    },
   });
   const { field: inn, fieldState: innState } = useController({
     name: "inn",
     control,
-    rules: { pattern: /[0-9]{12}/ },
+    rules: { pattern: { value: /[0-9]{12}/, message: "Введите инн" } },
   });
   const { field: police, fieldState: policeState } = useController({
     name: "police",
     control,
-    rules: { pattern: /[0-9]{3}-[0-9]{3}/ },
+    rules: {
+      pattern: {
+        value: /[0-9]{3}-[0-9]{3}/,
+        message: "Введите код подразделения",
+      },
+    },
   });
   const { field: issuedBy, fieldState: issuedByState } = useController({
     name: "issuedBy",
     control,
-    rules: { pattern: /[а-яА-Я0-9]/ },
+    rules: {
+      pattern: {
+        value: /^[а-яА-Я0-9]+$/gi,
+        message: "Введены недопустимые символы",
+      },
+    },
   });
 
   const onChange = (event: any) => {
-    console.log(innState.error);
     switch (event.target.name) {
       case "snils":
         snils.onChange(event.target.value);
@@ -171,26 +193,39 @@ export default function DocumentsForm() {
             placeholder="00 00 000-000"
             sx={{
               "@media(min-width: 834px)": {
-                maxWidth: "100%",
+                maxWidth: 390,
+              },
+              "@media(min-width: 1195px)": {
+                maxWidth: 456,
               },
             }}
             size="large"
             onChange={onChange}
             value={value.passport}
             error={passportState.error && true}
-            helperText=""
+            helperText={passportState.error?.message}
             maskName="passport"
             inputRef={passport.ref}
+            onBlur={passport.onBlur}
           />
           <DateTextField
-            value={null}
+            value={dateShow}
             onChangeHandler={(newValue) => {
-              console.log(newValue);
+              setdateShow(newValue);
+              const dateValue = newValue?.toDate();
+              if (dateValue) {
+                setValue({ ...value, dateOfIssue: dateValue });
+              }
             }}
             type="day"
             labelText="Дата выдачи"
-            inputWidth={226}
             inputHeight={56}
+            sx={{
+              width: 241,
+              "@media(min-width: 834px)": {
+                width: 226,
+              },
+            }}
           />
         </InputBlock>
         <InputBlock>
@@ -207,9 +242,10 @@ export default function DocumentsForm() {
             onChange={onChange}
             value={value.issuedBy}
             error={issuedByState.error && true}
-            helperText=""
+            helperText={issuedByState.error?.message}
             name="issuedBy"
             inputRef={issuedBy.ref}
+            onBlur={issuedBy.onBlur}
           />
           <InputText
             label="Код подразделения"
@@ -224,9 +260,10 @@ export default function DocumentsForm() {
             onChange={onChange}
             value={value.police}
             error={policeState.error && true}
-            helperText=""
+            helperText={policeState.error?.message}
             maskName="police"
             inputRef={police.ref}
+            onBlur={police.onBlur}
           />
         </InputBlock>
       </IdentificationBlock>
@@ -239,24 +276,23 @@ export default function DocumentsForm() {
           onChange={onChange}
           value={value.snils}
           error={snilsState.error && true}
-          helperText=""
+          helperText={snilsState.error?.message}
           maskName="snils"
           inputRef={snils.ref}
+          onBlur={snils.onBlur}
         />
         <InputText
           name="inn"
           label="ИНН"
           placeholder="000000000000"
           error={innState.error && true}
-          helperText=""
+          helperText={innState.error?.message}
           value={value.inn}
           onChange={onChange}
           maskName="inn"
           inputRef={inn.ref}
+          onBlur={inn.onBlur}
         />
-        <TextField />
-        <Input />
-        <InputText />
       </OtherDocumentsBlock>
       <SubmitButtonBlock>
         <Button
