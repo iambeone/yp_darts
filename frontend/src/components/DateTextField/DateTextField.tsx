@@ -30,12 +30,13 @@ interface DateTextFieldProps {
   onChangeHandler: (newValue: Dayjs | null) => void;
   labelText: string;
   type: DateTextFieldType;
-  inputWidth: number;
-  inputHeight: number;
+  inputWidth?: number;
+  inputHeight?: number;
   onBlur?: any;
   isRequired?: boolean;
   disableFuture?: boolean;
   openTo?: CalendarPickerView | undefined;
+  sx?: any;
 }
 export default function DateTextField({
   value,
@@ -48,6 +49,7 @@ export default function DateTextField({
   isRequired = false,
   disableFuture = false,
   openTo = "year",
+  sx,
 }: DateTextFieldProps) {
   const getView = (): CalendarPickerView[] | undefined => {
     switch (type) {
@@ -89,7 +91,7 @@ export default function DateTextField({
   };
 
   return (
-    <FormControl>
+    <FormControl sx={sx}>
       <Label>
         {labelText} {isRequired ? <Span> *</Span> : <> </>}
       </Label>
