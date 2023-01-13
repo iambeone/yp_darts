@@ -4,7 +4,7 @@ import { useForm, useController } from "react-hook-form";
 import { Dayjs } from "dayjs";
 import ToggleTabs from "../ToggleTabs/Toggle-Tabs";
 import Button from "../Button/Button";
-import InputText from "../InputText/Input-Text";
+import InputText from "../InputText/InputText";
 import DateTextField from "../DateTextField/DateTextField";
 
 const DocumentsFormBlock = styled.form`

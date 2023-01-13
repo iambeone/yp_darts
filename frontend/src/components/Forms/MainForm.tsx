@@ -2,8 +2,8 @@
 import React from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import styled from "styled-components";
-import InputText from "../InputText/Input-Text";
-import RadioOption from "../RadioOption/Radio-Option";
+import InputText from "../InputText/InputText";
+import RadioOption from "../RadioOption/RadioOption";
 import DateTextField from "../DateTextField/DateTextField";
 
 export default function MainForm() {
