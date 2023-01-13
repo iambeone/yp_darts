@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useForm, useController } from "react-hook-form";
 import { Dayjs } from "dayjs";
-import ToggleTabs from "../ToggleTabs/Toggle-Tabs";
+import ToggleTabs from "../ToggleTabs/ToggleTabs";
 import Button from "../Button/Button";
 import InputText from "../InputText/InputText";
 import DateTextField from "../DateTextField/DateTextField";
