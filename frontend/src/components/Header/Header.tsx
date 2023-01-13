@@ -2,9 +2,9 @@ import React from "react";
 import { AppBar, Box } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useLocation, useMatch } from "react-router-dom";
-import HeaderTypeOne from "./header_types/header_type_1";
-import HeaderTypeTwo from "./header_types/header_type_2";
-import HeaderTypeThree from "./header_types/header_type_3";
+import HeaderTypeOne from "./HeaderTypes/HeaderType1";
+import HeaderTypeTwo from "./HeaderTypes/HeaderType2";
+import HeaderTypeThree from "./HeaderTypes/HeaderType3";
 
 const theme = createTheme({
   palette: {
