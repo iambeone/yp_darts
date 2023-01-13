@@ -2,7 +2,7 @@ import {
   SET_GENDER,
   SET_AGE,
   SET_SUBJECT_RF,
-  SET_NAME,
+  SET_SEARCH,
   APPLY_FILTERS,
   CLEAR_FILTERS,
   DELETE_FILTER,
@@ -23,8 +23,8 @@ export interface ISetSubjectRF {
   readonly payload: string;
 }
 
-export interface ISetName {
-  readonly type: typeof SET_NAME;
+export interface ISetSearch {
+  readonly type: typeof SET_SEARCH;
   readonly payload: string;
 }
 
@@ -45,7 +45,7 @@ export type TFiltersActions =
   | ISetGender
   | ISetAge
   | ISetSubjectRF
-  | ISetName
+  | ISetSearch
   | IApplyFilters
   | IDeleteFilter
   | IClearFilters;
@@ -65,8 +65,8 @@ export const setSubjectRF = (payload: string): ISetSubjectRF => ({
   payload,
 });
 
-export const setName = (payload: string): ISetName => ({
-  type: SET_NAME,
+export const setSearch = (payload: string): ISetSearch => ({
+  type: SET_SEARCH,
   payload,
 });
 

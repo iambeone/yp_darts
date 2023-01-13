@@ -2,11 +2,12 @@ import {
   SET_GENDER,
   SET_AGE,
   SET_SUBJECT_RF,
-  SET_NAME,
+  SET_SEARCH,
   APPLY_FILTERS,
   DELETE_FILTER,
   CLEAR_FILTERS,
 } from "../actions/actionsTypes";
+import { subjectsRF } from "../../utils/constants";
 import { TFiltersActions } from "../actions/filtersActions";
 
 export type TFiltersState = {
@@ -19,7 +20,7 @@ export type TFiltersState = {
     [index: string]: string;
   };
   subjectRF: string;
-  name: string;
+  search: string;
   buttonText: string;
   appliedFilters: string[];
 };
@@ -37,7 +38,7 @@ const initialState = {
     grownups: "Взрослые",
   },
   subjectRF: "",
-  name: "",
+  search: "",
   buttonText: "Закрыть",
   appliedFilters: [],
 };
@@ -68,10 +69,10 @@ export const filtersReducer = (
         buttonText: "Применить",
       };
 
-    case SET_NAME:
+    case SET_SEARCH:
       return {
         ...state,
-        name: action.payload,
+        search: action.payload,
       };
 
     case APPLY_FILTERS:
@@ -93,7 +94,9 @@ export const filtersReducer = (
         age: ["До 15 лет", "Юниоры", "Взрослые"].includes(action.payload)
           ? ""
           : state.age,
-        subjectRF: "",
+        subjectRF: subjectsRF.map((el) => el.title).includes(action.payload)
+          ? ""
+          : state.subjectRF,
         buttonText: state.appliedFilters.length > 1 ? "Применить" : "Закрыть",
         appliedFilters: state.appliedFilters.filter(
           (el) => el !== action.payload,
