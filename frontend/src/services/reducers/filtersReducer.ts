@@ -2,7 +2,6 @@ import {
   SET_GENDER,
   SET_AGE,
   SET_SUBJECT_RF,
-  SET_SEARCH,
   APPLY_FILTERS,
   DELETE_FILTER,
   CLEAR_FILTERS,
@@ -20,7 +19,6 @@ export type TFiltersState = {
     [index: string]: string;
   };
   subjectRF: string;
-  search: string;
   buttonText: string;
   appliedFilters: string[];
 };
@@ -38,7 +36,6 @@ const initialState = {
     grownups: "Взрослые",
   },
   subjectRF: "",
-  search: "",
   buttonText: "Закрыть",
   appliedFilters: [],
 };
@@ -67,12 +64,6 @@ export const filtersReducer = (
         ...state,
         subjectRF: action.payload,
         buttonText: "Применить",
-      };
-
-    case SET_SEARCH:
-      return {
-        ...state,
-        search: action.payload,
       };
 
     case APPLY_FILTERS:

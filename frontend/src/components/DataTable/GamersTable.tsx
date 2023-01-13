@@ -142,7 +142,10 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
               <TableRow key={item.id}>
                 <TableCell>
                   <LinkStyled to={`/player/:${item.id}`}>
-                    <NameSpan>{item.name}</NameSpan> <br />
+                    <NameSpan>
+                      {item.surname} {item.name}
+                    </NameSpan>
+                    <br />
                     <EmailSpan>{item.email}</EmailSpan>
                   </LinkStyled>
                 </TableCell>
