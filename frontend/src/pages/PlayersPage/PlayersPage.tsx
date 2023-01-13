@@ -96,6 +96,12 @@ export default function PlayersPage() {
 
   return (
     <>
+      <PageTitle title="Игроки" />
+      <SearchBar />
+      {filteredPlayersData && <GamersTable data={filteredPlayersData} />}
+      <BasicModal>
+        <Filters />
+      </BasicModal>
       <DialogWindow
         open={acceptDeleteOpen}
         type="accept"
@@ -133,12 +139,6 @@ export default function PlayersPage() {
           handleClose={closeContextMenu}
         />
       )}
-      <PageTitle title="Игроки" />
-      <SearchBar />
-      {filteredPlayersData && <GamersTable data={filteredPlayersData} />}
-      <BasicModal>
-        <Filters />
-      </BasicModal>
     </>
   );
 }
