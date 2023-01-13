@@ -25,9 +25,10 @@ const tablet = window.innerWidth < 1200;
 const mobile = window.innerWidth < 500;
 
 function SearchBar(): ReactElement {
-  const { gender, age, search, subjectRF, appliedFilters } = useSelector(
+  const { gender, age, subjectRF, appliedFilters } = useSelector(
     (store) => store.filters,
   );
+  const { search } = useSelector((state) => state.players);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -42,20 +43,6 @@ function SearchBar(): ReactElement {
     if (tablet) return "cоздать";
     return "cоздать\u00A0игрока";
   };
-
-  // const searchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   if (!search) return;
-  //   if (search.includes("@")) {
-  //     dispatch(getPlayers(encodeQueryString({ email: search })));
-  //   } else {
-  //     dispatch(
-  //       getPlayers(encodeQueryString({ gender, age, subjectRF, name: search })),
-  //     );
-  //   }
-
-  //   dispatch(setSearch(""));
-  // };
 
   const handleDeleteChip = (chip: string) => dispatch(deleteFilter(chip));
 

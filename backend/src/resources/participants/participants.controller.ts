@@ -57,7 +57,7 @@ export class ParticipantsController {
   public findAll(@Query() query: FindParticipantDto): Promise<Participant[]> {
     if (Object.keys(query).length)
       return this.participantsService.findByQuery(query);
-    return this.participantsService.findAll();
+    return this.participantsService.findAllForTable();
   }
 
   @UseGuards(JwtGuard)

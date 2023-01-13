@@ -25,8 +25,12 @@ export class ParticipantsService {
     return this.participantsRepository.save(participant);
   }
 
-  public async findAll() {
+  public async findAll(): Promise<Participant[]> {
     return this.participantsRepository.find({ relations: ['events'] });
+  }
+
+  public async findAllForTable(): Promise<Participant[]> {
+    return this.participantsRepository.find({ select: {id: true, surname: true, name: true, email: true} });
   }
 
   public async findOne(id: number): Promise<Participant> {
@@ -69,6 +73,7 @@ export class ParticipantsService {
 
     return this.participantsRepository.find({
       where: { ...rest, dateOfBirth: rangeOfDateBirthes },
+      select: {id: true, surname: true, name: true, email: true}
     });
   }
 

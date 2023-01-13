@@ -2,6 +2,7 @@ import {
   GET_PLAYERS_REQUEST,
   GET_PLAYERS_SUCCESS,
   GET_PLAYERS_FAILED,
+  SET_SEARCH,
   DELETE_PLAYER_REQUEST,
   DELETE_PLAYER_SUCCESS,
   DELETE_PLAYER_FAILED,
@@ -29,6 +30,11 @@ interface IfetchPlayersFailed {
   readonly payload: { error: {} };
 }
 
+export interface ISetSearch {
+  readonly type: typeof SET_SEARCH;
+  readonly payload: string;
+}
+
 interface IdeletePlayerRequest {
   readonly type: typeof DELETE_PLAYER_REQUEST;
 }
@@ -48,7 +54,8 @@ export type TPlayersActions =
   | IfetchPlayersFailed
   | IdeletePlayerRequest
   | IdeletePlayerSuccess
-  | IdeletePlayerFailed;
+  | IdeletePlayerFailed
+  | ISetSearch;
 
 export const fetchPlayersRequest = (): TPlayersActions => ({
   type: GET_PLAYERS_REQUEST,
@@ -62,6 +69,11 @@ export const fetchPlayersSuccess = (data: Tplayers[]): TPlayersActions => ({
 export const fetchPlayersFailed = (error: {}): TPlayersActions => ({
   type: GET_PLAYERS_FAILED,
   payload: { error },
+});
+
+export const setSearch = (payload: string): ISetSearch => ({
+  type: SET_SEARCH,
+  payload,
 });
 
 export const deletePlayerRequest = (): TPlayersActions => ({
