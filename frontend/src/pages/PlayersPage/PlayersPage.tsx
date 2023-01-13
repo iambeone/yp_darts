@@ -9,7 +9,9 @@ import PageTitle from "../../components/PageTitle/PageTitle";
 import DialogWindow from "../../components/DialogWindow/DialogWindow";
 
 export default function PlayersPage() {
-  const players = useSelector((state) => state.players.playersData);
+  const filteredPlayersData = useSelector(
+    (state) => state.players.filteredPlayersData,
+  );
   const deleteTitle = "Вы уверены, что хотите удалить игрока?";
   const deleteText = "После удаления отменить действие невозможно.";
   const handleClose = () => {
@@ -38,7 +40,7 @@ export default function PlayersPage() {
       </DialogWindow>
       <PageTitle title="Игроки" />
       <SearchBar />
-      {players && <GamersTable data={players} />}
+      {filteredPlayersData && <GamersTable data={filteredPlayersData} />}
       <BasicModal>
         <Filters />
       </BasicModal>

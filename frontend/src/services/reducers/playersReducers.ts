@@ -2,6 +2,7 @@ import {
   GET_PLAYERS_REQUEST,
   GET_PLAYERS_SUCCESS,
   GET_PLAYERS_FAILED,
+  SET_SEARCH,
   DELETE_PLAYER_REQUEST,
   DELETE_PLAYER_SUCCESS,
   DELETE_PLAYER_FAILED,
@@ -14,6 +15,8 @@ export type TPlayersState = {
   getAllFailed: boolean;
   getAllSuccess: boolean;
   playersData: Tplayers[];
+  filteredPlayersData: Tplayers[];
+  search: string;
   deleteRequest: boolean;
   deleteFailed: boolean;
   deleteSuccess: boolean;
@@ -24,6 +27,8 @@ const initialState = {
   getAllFailed: false,
   getAllSuccess: false,
   playersData: [],
+  filteredPlayersData: [],
+  search: "",
   deleteRequest: false,
   deleteFailed: false,
   deleteSuccess: false,
@@ -48,6 +53,7 @@ export const playersReducer = (
         getAllFailed: false,
         getAllSuccess: true,
         playersData: action.payload.data,
+        filteredPlayersData: action.payload.data,
       };
     }
 
@@ -58,8 +64,21 @@ export const playersReducer = (
         getAllRequest: false,
         getAllSuccess: false,
         playersData: [],
+        filteredPlayersData: [],
       };
     }
+
+    case SET_SEARCH:
+      return {
+        ...state,
+        search: action.payload,
+        filteredPlayersData: [...state.playersData].filter(
+          (player: Tplayers) =>
+            player.surname.toLowerCase().includes(action.payload) ||
+            player.name.toLowerCase().includes(action.payload) ||
+            player.email.toLowerCase().includes(action.payload),
+        ),
+      };
 
     case DELETE_PLAYER_REQUEST: {
       return {
