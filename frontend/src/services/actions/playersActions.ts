@@ -6,6 +6,10 @@ import {
   DELETE_PLAYER_REQUEST,
   DELETE_PLAYER_SUCCESS,
   DELETE_PLAYER_FAILED,
+  SET_CURRENT_PLAYER_ID,
+  SET_ACCEPT_DELETE_OPEN,
+  SET_CONFIRM_DELETE_OPEN,
+  SET_CONTEXT_MENU_OPEN,
 } from "./actionsTypes";
 import {
   baseUrl,
@@ -30,7 +34,7 @@ interface IfetchPlayersFailed {
   readonly payload: { error: {} };
 }
 
-export interface ISetSearch {
+interface ISetSearch {
   readonly type: typeof SET_SEARCH;
   readonly payload: string;
 }
@@ -48,6 +52,26 @@ interface IdeletePlayerFailed {
   readonly payload: { error: {} };
 }
 
+interface IsetCurrentPlayerID {
+  readonly type: typeof SET_CURRENT_PLAYER_ID;
+  readonly payload: { id: number };
+}
+
+interface IsetAcceptDeleteOpen {
+  readonly type: typeof SET_ACCEPT_DELETE_OPEN;
+  readonly payload: boolean;
+}
+
+interface IsetConfirmDeleteOpen {
+  readonly type: typeof SET_CONFIRM_DELETE_OPEN;
+  readonly payload: boolean;
+}
+
+interface IsetContextMenuOpen {
+  readonly type: typeof SET_CONTEXT_MENU_OPEN;
+  readonly payload: { anchor: HTMLButtonElement | null };
+}
+
 export type TPlayersActions =
   | IfetchPlayersRequest
   | IfetchPlayersSuccess
@@ -55,7 +79,11 @@ export type TPlayersActions =
   | IdeletePlayerRequest
   | IdeletePlayerSuccess
   | IdeletePlayerFailed
-  | ISetSearch;
+  | ISetSearch
+  | IsetCurrentPlayerID
+  | IsetAcceptDeleteOpen
+  | IsetConfirmDeleteOpen
+  | IsetContextMenuOpen;
 
 export const fetchPlayersRequest = (): TPlayersActions => ({
   type: GET_PLAYERS_REQUEST,
@@ -87,6 +115,28 @@ export const deletePlayerSuccess = (): TPlayersActions => ({
 export const deletePlayerFailed = (error: {}): TPlayersActions => ({
   type: DELETE_PLAYER_FAILED,
   payload: { error },
+});
+
+export const setCurrentPlayerID = (id: number): TPlayersActions => ({
+  type: SET_CURRENT_PLAYER_ID,
+  payload: { id },
+});
+
+export const setAcceptDeleteOpen = (payload: boolean): TPlayersActions => ({
+  type: SET_ACCEPT_DELETE_OPEN,
+  payload,
+});
+
+export const setConfirmDeleteOpen = (payload: boolean): TPlayersActions => ({
+  type: SET_CONFIRM_DELETE_OPEN,
+  payload,
+});
+
+export const setContextMenuOpen = (
+  anchor: HTMLButtonElement | null,
+): TPlayersActions => ({
+  type: SET_CONTEXT_MENU_OPEN,
+  payload: { anchor },
 });
 
 export const getPlayers: AppThunk<Promise<IApplicationActions>> =

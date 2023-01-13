@@ -6,6 +6,10 @@ import {
   DELETE_PLAYER_REQUEST,
   DELETE_PLAYER_SUCCESS,
   DELETE_PLAYER_FAILED,
+  SET_CURRENT_PLAYER_ID,
+  SET_ACCEPT_DELETE_OPEN,
+  SET_CONFIRM_DELETE_OPEN,
+  SET_CONTEXT_MENU_OPEN,
 } from "../actions/actionsTypes";
 import { TPlayersActions } from "../actions/playersActions";
 import type { Tplayers } from "../types";
@@ -20,6 +24,10 @@ export type TPlayersState = {
   deleteRequest: boolean;
   deleteFailed: boolean;
   deleteSuccess: boolean;
+  currentPlayerId: number;
+  acceptDeleteOpen: boolean;
+  confirmDeleteOpen: boolean;
+  contextMenuOpen: HTMLButtonElement | null;
 };
 
 const initialState = {
@@ -32,6 +40,10 @@ const initialState = {
   deleteRequest: false,
   deleteFailed: false,
   deleteSuccess: false,
+  currentPlayerId: 0,
+  acceptDeleteOpen: false,
+  confirmDeleteOpen: false,
+  contextMenuOpen: null,
 };
 
 export const playersReducer = (
@@ -103,6 +115,31 @@ export const playersReducer = (
         getAllSuccess: false,
       };
     }
+
+    case SET_CURRENT_PLAYER_ID: {
+      return {
+        ...state,
+        currentPlayerId: action.payload.id,
+      };
+    }
+
+    case SET_ACCEPT_DELETE_OPEN:
+      return {
+        ...state,
+        acceptDeleteOpen: action.payload,
+      };
+
+    case SET_CONFIRM_DELETE_OPEN:
+      return {
+        ...state,
+        confirmDeleteOpen: action.payload,
+      };
+
+    case SET_CONTEXT_MENU_OPEN:
+      return {
+        ...state,
+        contextMenuOpen: action.payload.anchor,
+      };
 
     default:
       return state;
