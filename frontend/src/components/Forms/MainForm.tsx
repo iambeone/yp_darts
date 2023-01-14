@@ -2,12 +2,18 @@
 import React from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { Typography } from "@mui/material";
-import styled from "styled-components";
+
 import { Dayjs } from "dayjs";
 import InputText from "../InputText/InputText";
 import RadioOption from "../RadioOption/RadioOption";
 import DateTextField from "../DateTextField/DateTextField";
-import Button from "../Button/Button";
+import {
+  Form,
+  Line,
+  Requirement,
+  SubmitBlock,
+  SubmitButton,
+} from "./Styles/MainFormStyles";
 
 interface IDataElement<T> {
   value: T;
@@ -54,53 +60,6 @@ export default function MainForm({
   });
   const methods = useForm({ mode: "onBlur" });
 
-  const Form = styled.form`
-    margin: 24px auto 35px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-content: center;
-    max-width: 734px;
-    gap: 48px 24px;
-
-    @media (max-width: 1194px) {
-       {
-        margin-left: 24px;
-      }
-    }
-
-    @media (max-width: 500px) {
-       {
-        margin-left: 16px;
-      }
-    }
-  `;
-
-  const Line = styled.div`
-    width: 100%;
-  `;
-
-  const SubmitBlock = styled.div`
-    button: 0px;
-    width: 100%;
-    justify-items: center;
-    justify-content: center;
-    display: grid;
-    gap: 16px;
-    padding: 16px 0 16px;
-    box-shadow: 0px -5px 8px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    bottom: 0px;
-    background: #ffffff;
-  `;
-
-  const SubmitButton = styled(Button)`
-    max-width: 121px;
-  `;
-
-  const Requirement = styled.span`
-    color: red;
-  `;
   const [mainFormData, setMainFormData] = React.useState();
   const [formValide, setFormValid] = React.useState<boolean>(false);
   console.log(mainFormData);
