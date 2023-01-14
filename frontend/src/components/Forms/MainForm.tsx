@@ -314,6 +314,10 @@ export default function MainForm({
           name="phone"
           control={control}
           rules={{
+            minLength: {
+              value: 18,
+              message: "Номер слишком корроткий",
+            },
             pattern: {
               value: /^[+]?[0-9]+/g,
               message: "Неверный формат телефона",
