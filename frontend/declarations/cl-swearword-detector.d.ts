@@ -1,2 +1,3 @@
 declare function profane(value: string): boolean;
-declare function loadBadWords(value: Array<string>): void;
+declare function loadBadWords(path: string): void;
+declare function censore(value: string): string;
