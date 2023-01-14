@@ -45,6 +45,7 @@ export default function MainForm() {
   const SubmitBlock = styled.div`
     button: 0px;
     width: 100%;
+    justify-items: center;
     justify-content: center;
     display: grid;
     gap: 16px;
@@ -53,6 +54,10 @@ export default function MainForm() {
     position: sticky;
     bottom: 0px;
     background: #ffffff;
+  `;
+
+  const SubmitButton = styled(Button)`
+    max-width: 121px;
   `;
 
   const Requirement = styled.span`
@@ -291,7 +296,7 @@ export default function MainForm() {
             <Requirement>*</Requirement>
           </Typography>
         )}
-        <Button
+        <SubmitButton
           colors="all-red"
           onClick={handleSubmit(onSubmit)}
           text="Далее"
