@@ -316,7 +316,7 @@ export default function MainForm({
           rules={{
             minLength: {
               value: 18,
-              message: "Номер слишком корроткий",
+              message: "Номер слишком короткий",
             },
             pattern: {
               value: /^[+]?[0-9]+/g,
