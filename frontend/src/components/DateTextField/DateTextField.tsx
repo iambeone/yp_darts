@@ -39,6 +39,7 @@ interface DateTextFieldProps {
   error?: boolean;
   helperText?: string;
   sx?: any;
+  isDisabled?: boolean;
 }
 export default function DateTextField({
   value,
@@ -54,6 +55,7 @@ export default function DateTextField({
   error,
   helperText,
   sx,
+  isDisabled = false,
 }: DateTextFieldProps) {
   const getView = (): CalendarPickerView[] | undefined => {
     switch (type) {
@@ -101,6 +103,7 @@ export default function DateTextField({
       </Label>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
         <DatePicker
+          disabled={isDisabled}
           disableFuture={disableFuture}
           openTo={openTo}
           value={value}

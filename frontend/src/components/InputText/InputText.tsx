@@ -89,6 +89,7 @@ function InputText({
   onBlur,
   maskName = "normal",
   inputRef,
+  isDisabled = false,
 }: {
   required?: boolean;
   label?: string;
@@ -113,6 +114,7 @@ function InputText({
     | "police"
     | "birth";
   inputRef?: any;
+  isDisabled?: boolean;
 }) {
   return (
     <StyledFormControl formSize={size} error={error} sx={sx}>
@@ -122,6 +124,7 @@ function InputText({
       </Label>
       {maskName === "normal" ? (
         <OutlinedInput
+          disabled={isDisabled}
           onBlur={onBlur}
           required={required}
           placeholder={placeholder}
@@ -135,6 +138,7 @@ function InputText({
         />
       ) : (
         <StyledOutlinedInput
+          disabled={isDisabled}
           onBlur={onBlur}
           required={required}
           placeholder={placeholder}

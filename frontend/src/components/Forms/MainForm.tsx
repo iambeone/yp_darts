@@ -3,17 +3,55 @@ import React from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { Typography } from "@mui/material";
 import styled from "styled-components";
+import dayjs, { Dayjs } from "dayjs";
 import InputText from "../InputText/InputText";
 import RadioOption from "../RadioOption/RadioOption";
 import DateTextField from "../DateTextField/DateTextField";
 import Button from "../Button/Button";
 
-export default function MainForm() {
+interface IDataElement<T> {
+  value: T;
+  isDisabled: boolean;
+}
+
+interface IMainFormData {
+  lastName?: IDataElement<string>;
+  firstName?: IDataElement<string>;
+  patronymic?: IDataElement<string>;
+  birthday?: IDataElement<Dayjs>;
+  gender?: IDataElement<string>;
+  adress?: IDataElement<string>;
+  email?: IDataElement<string>;
+  phone?: IDataElement<string>;
+}
+
+export default function MainForm({
+  lastName,
+  firstName,
+  patronymic,
+  birthday,
+  gender,
+  adress,
+  email,
+  phone,
+}: IMainFormData) {
   const {
     handleSubmit,
     formState: { errors, isValid },
     control,
-  } = useForm({ mode: "onBlur" });
+  } = useForm({
+    mode: "onBlur",
+    defaultValues: {
+      lastName: lastName?.value,
+      firstName: firstName?.value,
+      patronymic: patronymic?.value,
+      birthday: birthday?.value,
+      gender: gender?.value,
+      adress: adress?.value,
+      email: email?.value,
+      phone: phone?.value,
+    },
+  });
   const methods = useForm({ mode: "onBlur" });
 
   const Form = styled.form`
@@ -95,6 +133,7 @@ export default function MainForm() {
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <InputText
+              isDisabled={lastName?.isDisabled}
               label="Фамилия"
               placeholder="Фамилия"
               size="medium"
@@ -125,6 +164,7 @@ export default function MainForm() {
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <InputText
+              isDisabled={firstName?.isDisabled}
               label="Имя"
               placeholder="Имя"
               size="medium"
@@ -155,6 +195,7 @@ export default function MainForm() {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <InputText
+                isDisabled={patronymic?.isDisabled}
                 label="Отчество"
                 placeholder="Отчество"
                 size="medium"
@@ -177,6 +218,7 @@ export default function MainForm() {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <DateTextField
+                isDisabled={birthday?.isDisabled}
                 disableFuture
                 openTo="year"
                 labelText="Дата рождения"
@@ -201,6 +243,7 @@ export default function MainForm() {
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <RadioOption
+              isDisabled={gender?.isDisabled}
               isRequired
               name="Пол"
               values={["Мужчина", "Женщина"]}
@@ -225,6 +268,7 @@ export default function MainForm() {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <InputText
+                isDisabled={adress?.isDisabled}
                 label="Адрес регистрации"
                 placeholder="188800, г. Выборг, ул. Куйбышева, д 1, к 2"
                 size="large"
@@ -251,6 +295,7 @@ export default function MainForm() {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <InputText
+                isDisabled={email?.isDisabled}
                 label="Email"
                 placeholder="example@email.com"
                 size="medium"
@@ -276,6 +321,7 @@ export default function MainForm() {
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <InputText
+              isDisabled={phone?.isDisabled}
               label="Контактный телефон"
               placeholder="+7 (999) 123-45-67"
               size="medium"
@@ -308,3 +354,14 @@ export default function MainForm() {
     </FormProvider>
   );
 }
+
+MainForm.defaultProps = {
+  lastName: { value: "" },
+  firstName: { value: "" },
+  patronymic: { value: "" },
+  birthday: { value: dayjs(null) },
+  gender: { value: "" },
+  adress: { value: "" },
+  email: { value: "" },
+  phone: { value: "" },
+};

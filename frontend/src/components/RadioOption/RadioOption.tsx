@@ -27,6 +27,7 @@ function RadioOption({
   onBlur,
   error = false,
   helperText = "",
+  isDisabled = false,
 }: {
   name: string;
   values: string[];
@@ -36,6 +37,7 @@ function RadioOption({
   onBlur?: any;
   error?: boolean;
   helperText?: string;
+  isDisabled?: boolean;
 }) {
   return (
     <ThemeProvider theme={theme}>
@@ -57,6 +59,7 @@ function RadioOption({
                 key={`-${index}-radio-option`}
                 control={
                   <Radio
+                    disabled={isDisabled}
                     color="success"
                     sx={{
                       "&.MuiTypography-root": {
