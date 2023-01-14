@@ -17,7 +17,7 @@ export default function MainForm() {
   const methods = useForm({ mode: "onBlur" });
 
   const Form = styled.form`
-    margin: 48px auto 0px;
+    margin: 24px auto 35px;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
