@@ -17,7 +17,7 @@ export default function MainForm() {
   const methods = useForm({ mode: "onBlur" });
 
   const Form = styled.form`
-    margin: 48px auto 35px;
+    margin: 48px auto 0px;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -51,25 +51,28 @@ export default function MainForm() {
     padding: 16px 0 16px;
     box-shadow: 0px -5px 8px rgba(0, 0, 0, 0.1);
     position: sticky;
-    bottom: 10px;
+    bottom: 0px;
     background: #ffffff;
   `;
 
   const Requirement = styled.span`
     color: red;
   `;
+  const [mainFormData, setMainFormData] = React.useState();
+  const [formValide, setFormValid] = React.useState<boolean>(false);
+  console.log(mainFormData);
+
+  React.useEffect(() => {
+    setFormValid(isValid);
+  }, [isValid]);
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    setMainFormData(data);
   };
 
   return (
     <FormProvider {...methods}>
-      <Form
-        onSubmit={handleSubmit((data) => {
-          console.log(data, isValid);
-        })}
-      >
+      <Form>
         <Controller
           name="lastName"
           control={control}
@@ -280,23 +283,23 @@ export default function MainForm() {
             />
           )}
         />
-        <SubmitBlock>
-          {!isValid && (
-            <Typography>
-              Для продолжения заполните обязательные поля{" "}
-              <Requirement>*</Requirement>
-            </Typography>
-          )}
-          <Button
-            colors="all-red"
-            onClick={handleSubmit(onSubmit)}
-            text="Далее"
-            icon=">"
-            iconPosition="right"
-            disabled={!isValid}
-          />
-        </SubmitBlock>
       </Form>
+      <SubmitBlock>
+        {!formValide && (
+          <Typography>
+            Для продолжения заполните обязательные поля{" "}
+            <Requirement>*</Requirement>
+          </Typography>
+        )}
+        <Button
+          colors="all-red"
+          onClick={handleSubmit(onSubmit)}
+          text="Далее"
+          customIcon="forward_arrow"
+          iconPosition="right"
+          disabled={!formValide}
+        />
+      </SubmitBlock>
     </FormProvider>
   );
 }
