@@ -1,6 +1,6 @@
 /* eslint-disable react/require-default-props */
 import React from "react";
-import { FormControl, TextField } from "@mui/material";
+import { FormControl, TextField, FormHelperText } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -36,7 +36,10 @@ interface DateTextFieldProps {
   isRequired?: boolean;
   disableFuture?: boolean;
   openTo?: CalendarPickerView | undefined;
+  error?: boolean;
+  helperText?: string;
   sx?: any;
+  isDisabled?: boolean;
 }
 export default function DateTextField({
   value,
@@ -49,7 +52,10 @@ export default function DateTextField({
   isRequired = false,
   disableFuture = false,
   openTo = "year",
+  error,
+  helperText,
   sx,
+  isDisabled = false,
 }: DateTextFieldProps) {
   const getView = (): CalendarPickerView[] | undefined => {
     switch (type) {
@@ -97,6 +103,7 @@ export default function DateTextField({
       </Label>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
         <DatePicker
+          disabled={isDisabled}
           disableFuture={disableFuture}
           openTo={openTo}
           value={value}
@@ -116,6 +123,7 @@ export default function DateTextField({
             />
           )}
         />
+        {error && <FormHelperText>{helperText}</FormHelperText>}
       </LocalizationProvider>
     </FormControl>
   );

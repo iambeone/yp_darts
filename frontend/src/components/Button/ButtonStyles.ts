@@ -19,6 +19,11 @@ interface IStyledIcon {
 
 const StyledIcon = styled(Icon)<IStyledIcon>`
   padding: 0;
+  sx: {
+     {
+      text-align: center;
+    }
+  }
   color: ${({ iconColor }) => {
     switch (iconColor) {
       case "red":
