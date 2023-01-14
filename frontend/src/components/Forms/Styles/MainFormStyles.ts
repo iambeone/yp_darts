@@ -39,6 +39,12 @@ const SubmitBlock = styled.div`
   position: sticky;
   bottom: 0px;
   background: #ffffff;
+
+  @media (max-width: 500px) {
+     {
+      bottom: 70px;
+    }
+  }
 `;
 
 const SubmitButton = styled(Button)`
