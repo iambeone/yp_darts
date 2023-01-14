@@ -11,17 +11,17 @@ type TContextMenuItem = {
 };
 
 type TContextMenuProps = {
-  close: () => void;
+  handleClose: () => void;
   anchorEl: HTMLButtonElement | null;
   items: TContextMenuItem[];
 };
 
 function ContextMenu(props: TContextMenuProps) {
-  const { close, anchorEl, items } = props;
+  const { handleClose, anchorEl, items } = props;
   return (
     <MenuUnstyled
       open={Boolean(anchorEl)}
-      onClose={close}
+      onClose={handleClose}
       anchorEl={anchorEl}
       slots={{ root: Popper }}
       slotProps={{ root: { placement: "bottom-end" } }}

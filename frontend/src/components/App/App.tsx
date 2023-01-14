@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useDispatch } from "../../utils/hooks";
 import { getPlayers } from "../../services/actions";
-import styles from "./App.module.css";
+import { Section, SectionItem } from "./AppStyles";
 import {
   HomePage,
   LoginPage,
@@ -27,14 +27,14 @@ import {
 
 function ModalSwitch() {
   return (
-    <div className={styles.section}>
-      <div className={styles.section__item}>
+    <Section>
+      <SectionItem>
         <Sidebar />
-      </div>
-      <div className={styles.section__item}>
+      </SectionItem>
+      <SectionItem>
         <Header />
-      </div>
-      <div className={styles.section__item}>
+      </SectionItem>
+      <SectionItem>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/signin" element={<LoginPage />} />
@@ -60,8 +60,8 @@ function ModalSwitch() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="*" element={<NotFound404 />} />
         </Routes>
-      </div>
-    </div>
+      </SectionItem>
+    </Section>
   );
 }
 
