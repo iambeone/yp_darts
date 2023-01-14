@@ -1,7 +1,8 @@
+/* eslint-disable react/require-default-props */
 import React from "react";
 import styled from "styled-components";
 import { useForm, useController } from "react-hook-form";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import ToggleTabs from "../ToggleTabs/ToggleTabs";
 import Button from "../Button/Button";
 import InputText from "../InputText/InputText";
@@ -77,19 +78,48 @@ const SubmitButtonBlock = styled.div`
   width: 100%;
 `;
 
+const TogledBlock = styled.div`
+  width: 100%;
+`;
+
 const tablet = window.innerWidth < 834;
 
-export default function DocumentsForm() {
+interface IDocumentsForm {
+  passportData?: string;
+  dateOfIssueData?: Dayjs;
+  snilsData?: string;
+  innData?: string;
+  policeData?: string;
+  issuedByData?: string;
+  birthSeriesData?: string;
+  birthDateOfIssueData?: Dayjs;
+  birthIssuedByData?: string;
+}
+
+export default function DocumentsForm({
+  passportData,
+  dateOfIssueData,
+  snilsData,
+  innData,
+  policeData,
+  issuedByData,
+  birthSeriesData,
+  birthDateOfIssueData,
+  birthIssuedByData,
+}: IDocumentsForm) {
   const [value, setValue] = React.useState({
-    passport: "",
-    dateOfIssue: new Date(0),
-    snils: "",
-    inn: "",
-    police: "",
-    issuedBy: "",
+    passport: passportData || "",
+    dateOfIssue: dateOfIssueData || dayjs(new Date(0)),
+    snils: snilsData || "",
+    inn: innData || "",
+    police: policeData || "",
+    issuedBy: issuedByData || "",
+    birth: birthSeriesData || "",
+    birthDateOfIssue: birthDateOfIssueData || dayjs(new Date(0)),
+    birthIssuedBy: birthIssuedByData || "",
   });
 
-  const [dateShow, setdateShow] = React.useState<Dayjs | null>(null);
+  const [tabsValue, setTabsValue] = React.useState(0);
 
   const { control, handleSubmit } = useForm({ mode: "onBlur" });
 
@@ -103,11 +133,10 @@ export default function DocumentsForm() {
       },
     },
   });
-  // const { field: dateOfIssue, fieldState: dateOfIssueState } = useController({
-  //   name: "dateOfIssue",
-  //   control,
-  //   rules: { pattern: /[0-2]{12}/ },
-  // });
+  const { field: dateOfIssue } = useController({
+    name: "dateOfIssue",
+    control,
+  });
   const { field: passport, fieldState: passportState } = useController({
     name: "passport",
     control,
@@ -144,6 +173,32 @@ export default function DocumentsForm() {
     },
   });
 
+  const { field: birth, fieldState: birthState } = useController({
+    name: "birth",
+    control,
+    rules: {
+      pattern: {
+        value: /[а-яА-Я]{1}-[а-яА-Я]{2} [0-9]{6}/,
+        message: "Введите номер паспорта",
+      },
+    },
+  });
+  const { field: birthDateOfIssue } = useController({
+    name: "birthDateOfIssue",
+    control,
+  });
+  const { field: birthIssuedBy, fieldState: birthIssuedByState } =
+    useController({
+      name: "birthIssuedBy",
+      control,
+      rules: {
+        pattern: {
+          value: /^[а-яА-Я0-9]+$/gi,
+          message: "Введены недопустимые символы",
+        },
+      },
+    });
+
   const onChange = (event: any) => {
     switch (event.target.name) {
       case "snils":
@@ -165,12 +220,16 @@ export default function DocumentsForm() {
         issuedBy.onChange(event.target.value);
         break;
       }
+      case "birth": {
+        birth.onChange(event.target.value);
+        break;
+      }
+      case "birthIssuedByState": {
+        birthIssuedBy.onChange(event.target.value);
+        break;
+      }
       default:
         break;
-      // case "dateOfIssue": {
-      //   dateOfIssue.onChange(event.target.value);
-      //   break;
-      // }
     }
     setValue({ ...value, [event.target.name]: event.target.value }); // UI state
   };
@@ -185,87 +244,163 @@ export default function DocumentsForm() {
         <DocumentsFormBlockTitle>
           Удостоверение личности
         </DocumentsFormBlockTitle>
-        <ToggleTabs tabs={["Паспорт РФ", "Свидетельство о рождении"]} />
-        <InputBlock>
-          <InputText
-            label="Серия и номер"
-            name="passport"
-            placeholder="00 00 000-000"
-            sx={{
-              "@media(min-width: 834px)": {
-                maxWidth: 390,
-              },
-              "@media(min-width: 1195px)": {
-                maxWidth: 456,
-              },
-            }}
-            size="large"
-            onChange={onChange}
-            value={value.passport}
-            error={passportState.error && true}
-            helperText={passportState.error?.message}
-            maskName="passport"
-            inputRef={passport.ref}
-            onBlur={passport.onBlur}
-          />
-          <DateTextField
-            value={dateShow}
-            onChangeHandler={(newValue) => {
-              setdateShow(newValue);
-              const dateValue = newValue?.toDate();
-              if (dateValue) {
-                setValue({ ...value, dateOfIssue: dateValue });
-              }
-            }}
-            type="day"
-            labelText="Дата выдачи"
-            inputHeight={56}
-            sx={{
-              width: 241,
-              "@media(min-width: 834px)": {
-                width: 226,
-              },
-            }}
-          />
-        </InputBlock>
-        <InputBlock>
-          <InputText
-            label="Кем выдан"
-            placeholder="ОВД Октябрьского округа города Архангельска"
-            rows={tablet ? 2 : 1}
-            size="large"
-            sx={{
-              "@media(min-width: 834px)": {
-                maxWidth: "100%",
-              },
-            }}
-            onChange={onChange}
-            value={value.issuedBy}
-            error={issuedByState.error && true}
-            helperText={issuedByState.error?.message}
-            name="issuedBy"
-            inputRef={issuedBy.ref}
-            onBlur={issuedBy.onBlur}
-          />
-          <InputText
-            label="Код подразделения"
-            name="police"
-            placeholder="000-000"
-            size="small"
-            sx={{
-              "@media(min-width: 834px)": {
-                minWidth: 144,
-              },
-            }}
-            onChange={onChange}
-            value={value.police}
-            error={policeState.error && true}
-            helperText={policeState.error?.message}
-            maskName="police"
-            inputRef={police.ref}
-            onBlur={police.onBlur}
-          />
-        </InputBlock>
+        <ToggleTabs
+          tabs={["Паспорт РФ", "Свидетельство о рождении"]}
+          tabsValue={tabsValue}
+          tabsOnChahge={setTabsValue}
+        />
+        {tabsValue === 0 && (
+          <TogledBlock>
+            <InputBlock>
+              <InputText
+                label="Серия и номер"
+                name="passport"
+                placeholder="00 00 000-000"
+                sx={{
+                  "@media(min-width: 834px)": {
+                    maxWidth: 390,
+                  },
+                  "@media(min-width: 1195px)": {
+                    maxWidth: 456,
+                  },
+                }}
+                size="large"
+                onChange={onChange}
+                value={value.passport}
+                error={passportState.error && true}
+                helperText={passportState.error?.message}
+                maskName="passport"
+                inputRef={passport.ref}
+                onBlur={passport.onBlur}
+              />
+              <DateTextField
+                disableFuture
+                value={value.dateOfIssue}
+                onChangeHandler={(newValue) => {
+                  if (newValue) {
+                    dateOfIssue.onChange(newValue);
+                    setValue({ ...value, dateOfIssue: newValue });
+                  }
+                }}
+                type="day"
+                labelText="Дата выдачи"
+                inputHeight={56}
+                sx={{
+                  width: 241,
+                  "@media(min-width: 834px)": {
+                    width: 226,
+                  },
+                }}
+                onBlur={dateOfIssue.onBlur}
+              />
+            </InputBlock>
+            <InputBlock>
+              <InputText
+                label="Кем выдан"
+                placeholder="ОВД Октябрьского округа города Архангельска"
+                rows={tablet ? 2 : 1}
+                size="large"
+                sx={{
+                  "@media(min-width: 834px)": {
+                    maxWidth: "100%",
+                  },
+                }}
+                onChange={onChange}
+                value={value.issuedBy}
+                error={issuedByState.error && true}
+                helperText={issuedByState.error?.message}
+                name="issuedBy"
+                inputRef={issuedBy.ref}
+                onBlur={issuedBy.onBlur}
+              />
+              <InputText
+                label="Код подразделения"
+                name="police"
+                placeholder="000-000"
+                size="small"
+                sx={{
+                  "@media(min-width: 834px)": {
+                    minWidth: 144,
+                  },
+                }}
+                onChange={onChange}
+                value={value.police}
+                error={policeState.error && true}
+                helperText={policeState.error?.message}
+                maskName="police"
+                inputRef={police.ref}
+                onBlur={police.onBlur}
+              />
+            </InputBlock>
+          </TogledBlock>
+        )}
+        {tabsValue === 1 && (
+          <TogledBlock>
+            <InputBlock>
+              <InputText
+                label="Серия и номер"
+                name="birth"
+                placeholder="Х-МЮ 000000"
+                sx={{
+                  "@media(min-width: 834px)": {
+                    maxWidth: 390,
+                  },
+                  "@media(min-width: 1195px)": {
+                    maxWidth: 456,
+                  },
+                }}
+                size="large"
+                onChange={onChange}
+                value={value.birth}
+                error={birthState.error && true}
+                helperText={birthState.error?.message}
+                maskName="birth"
+                inputRef={birth.ref}
+                onBlur={birth.onBlur}
+              />
+              <DateTextField
+                disableFuture
+                value={value.birthDateOfIssue}
+                onChangeHandler={(newValue) => {
+                  if (newValue) {
+                    birthDateOfIssue.onChange(newValue);
+                    setValue({ ...value, birthDateOfIssue: newValue });
+                  }
+                }}
+                type="day"
+                labelText="Дата выдачи"
+                inputHeight={56}
+                sx={{
+                  width: 241,
+                  "@media(min-width: 834px)": {
+                    width: 226,
+                  },
+                }}
+                onBlur={birthDateOfIssue.onBlur}
+              />
+            </InputBlock>
+            <InputBlock>
+              <InputText
+                label="Кем выдан"
+                placeholder="Орган ЗАГС Октябрьского округа города Архангельска"
+                rows={tablet ? 2 : 1}
+                size="large"
+                sx={{
+                  "@media(min-width: 834px)": {
+                    maxWidth: "100%",
+                  },
+                }}
+                onChange={onChange}
+                value={value.birthIssuedBy}
+                error={birthIssuedByState.error && true}
+                helperText={birthIssuedByState.error?.message}
+                name="birthIssuedBy"
+                inputRef={birthIssuedBy.ref}
+                onBlur={birthIssuedBy.onBlur}
+              />
+            </InputBlock>
+          </TogledBlock>
+        )}
       </IdentificationBlock>
       <OtherDocumentsBlock>
         <DocumentsFormBlockTitle>Другие документы</DocumentsFormBlockTitle>
@@ -296,11 +431,11 @@ export default function DocumentsForm() {
       </OtherDocumentsBlock>
       <SubmitButtonBlock>
         <Button
+          // тестовая
           colors="all-red"
           onClick={handleSubmit(onSubmit)}
           text="Далее  >"
         />
-        {/* <button type="submit" style={{ width: 100, height: 100 }} /> */}
       </SubmitButtonBlock>
     </DocumentsFormBlock>
   );
