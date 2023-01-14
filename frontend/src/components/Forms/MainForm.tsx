@@ -3,7 +3,7 @@ import React from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { Typography } from "@mui/material";
 import styled from "styled-components";
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import InputText from "../InputText/InputText";
 import RadioOption from "../RadioOption/RadioOption";
 import DateTextField from "../DateTextField/DateTextField";
@@ -359,7 +359,7 @@ MainForm.defaultProps = {
   lastName: { value: "" },
   firstName: { value: "" },
   patronymic: { value: "" },
-  birthday: { value: dayjs(null) },
+  birthday: { value: "" },
   gender: { value: "" },
   adress: { value: "" },
   email: { value: "" },
