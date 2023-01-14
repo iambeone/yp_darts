@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
+import { Typography } from "@mui/material";
 import styled from "styled-components";
 import InputText from "../InputText/Input-Text";
 import RadioOption from "../RadioOption/Radio-Option";
@@ -42,7 +43,20 @@ export default function MainForm() {
   `;
 
   const SubmitBlock = styled.div`
-    position
+    button: 0px;
+    width: 100%;
+    justify-content: center;
+    display: grid;
+    gap: 16px;
+    padding: 16px 0 16px;
+    box-shadow: 0px -5px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    bottom: 10px;
+    background: #ffffff;
+  `;
+
+  const Requirement = styled.span`
+    color: red;
   `;
 
   const onSubmit = (data: any) => {
@@ -266,13 +280,22 @@ export default function MainForm() {
             />
           )}
         />
-        <SubmitBlock />
-        <Button
-          colors="all-red"
-          onClick={handleSubmit(onSubmit)}
-          text="Далее  >"
-        />
-        {/* only for tests */}
+        <SubmitBlock>
+          {!isValid && (
+            <Typography>
+              Для продолжения заполните обязательные поля{" "}
+              <Requirement>*</Requirement>
+            </Typography>
+          )}
+          <Button
+            colors="all-red"
+            onClick={handleSubmit(onSubmit)}
+            text="Далее"
+            icon=">"
+            iconPosition="right"
+            disabled={!isValid}
+          />
+        </SubmitBlock>
       </Form>
     </FormProvider>
   );
