@@ -19,24 +19,25 @@ const TabLink = styled(Link)`
   text-decoration: none;
   margin-bottom: 32px;
 
-  @media (max-width: 500px) {
-    width: 100px;
-    margin-bottom: 0;
-  }
-
   &:last-of-type {
     width: 100%;
     position: absolute;
     bottom: 64px;
     margin-bottom: 0;
     left: 0;
-
-    @media (max-width: 900px) {
+  }
+  @media (max-width: 900px) {
+    &:link:last-of-type {
       bottom: 32px;
       z-index: 10;
     }
+  }
 
-    @media (max-width: 500px) {
+  @media (max-width: 500px) {
+    width: 100px;
+    margin-bottom: 0;
+
+    &:link:last-of-type {
       position: relative;
       width: 60px;
       bottom: 0;
@@ -89,6 +90,7 @@ const TabBorder = styled.div`
 
 const Group = styled.div`
   display: flex;
+  align-items: center;
 
   @media (max-width: 900px) {
     width: 100%;
