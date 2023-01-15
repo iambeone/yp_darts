@@ -18,9 +18,10 @@ type TContextMenuProps = {
 
 function ContextMenu(props: TContextMenuProps) {
   const { handleClose, anchorEl, items } = props;
+  const isOpen = Boolean(anchorEl);
   return (
     <MenuUnstyled
-      open={Boolean(anchorEl)}
+      open={isOpen}
       onClose={handleClose}
       anchorEl={anchorEl}
       slots={{ root: Popper }}
