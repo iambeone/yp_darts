@@ -18,6 +18,11 @@ type TTabMenuProps = {
   }[];
 };
 
+const sxBox = {
+  width: "100%",
+  marginLeft: { xs: "16px", sm: "24px", lg: "40px" },
+};
+
 const sxLink = {
   padding: "9px 16px 9px 16px",
   fontSize: "14px",
@@ -43,7 +48,7 @@ function TabMenu({ tabs }: TTabMenuProps) {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={sxBox}>
       <Tabs
         sx={sxTabs}
         value={value}

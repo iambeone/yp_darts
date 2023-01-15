@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { sportsCategory, subjectRF } from "../../utils/constants";
+import { sportsCategory, subjectsRF } from "../../utils/constants";
 import DateTextField from "../DateTextField/DateTextField";
 import InputText from "../InputText/InputText";
 import RadioOptionHand from "../RadioOption/RadioOptionHand";
@@ -67,7 +67,7 @@ export default function GameInfoForm() {
   return (
     <Section>
       <SelectOptions
-        options={subjectRF}
+        options={subjectsRF}
         inputWidth={390}
         inputHeight={56}
         label="Субъект РФ"
