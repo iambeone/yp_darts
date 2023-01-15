@@ -55,3 +55,7 @@ export type TContextMenuProps = {
   id: number;
   items: TContextMenuItem[];
 };
+
+// export type Tplayer = {
+
+// };

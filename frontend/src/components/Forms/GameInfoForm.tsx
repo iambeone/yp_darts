@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { getPlayer } from "../../services/actions";
 import { subjectRF } from "../../utils/constants";
 import DateTextField from "../DateTextField/DateTextField";
 import InputText from "../InputText/Input-Text";
@@ -41,6 +43,17 @@ const radioOptions = ["Левая", "Правая"];
 
 export default function GameInfoForm() {
   const [subjectRf, setSubjectRF] = React.useState<any>(null);
+  const player = useSelector((state: any) => state.player.playerData);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const url = window.location.pathname;
+    const urlArray = url.split("/");
+    // eslint-disable-next-line prefer-template
+    const playerId = "/" + urlArray[3];
+    dispatch(getPlayer(playerId));
+  }, [dispatch]);
+  console.log(player);
   console.log(subjectRf);
   return (
     <Section>
@@ -65,14 +78,14 @@ export default function GameInfoForm() {
         </div>
         <DateTextField name="Присвоен" />
       </Group>
-      <InputText label="ФИО тренера" />
+      <InputText label="ФИО тренера" value={player.nameOfTrainer} />
       {/* <Label>Ведущая рука</Label> */}
       <RadioOption name="Ведущая рука" values={radioOptions} />
       <h3>Дротики</h3>
-      <InputText label="Производитель" />
-      <InputText label="Вес" />
+      <InputText label="Производитель" value={player.producerOfDart} />
+      <InputText label="Вес" value={player.weightOfDart} />
       <h3>Медицинская страховка</h3>
-      <InputText label="Номер полиса" />
+      <InputText label="Номер полиса" value={player.policyNumber} />
       <Group>
         <DateTextField name="Начало действия" />
         <DateTextField name="Конец действия" />
