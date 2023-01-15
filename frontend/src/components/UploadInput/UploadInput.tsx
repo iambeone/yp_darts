@@ -1,4 +1,4 @@
-import React, { useState, useCallback, RefObject } from "react";
+import React, { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
@@ -9,15 +9,16 @@ import Typography from "@mui/material/Typography";
 import { ImageWrapper, UploadLink, AdditionalText } from "./UploadInputStyles";
 
 interface UploadInputProps {
-  inputRef: RefObject<HTMLInputElement>;
+  onFileSelect: (value: File) => void;
 }
 
-function UploadInput({ inputRef }: UploadInputProps) {
+function UploadInput({ onFileSelect }: UploadInputProps) {
   const [fileName, setFileName] = useState("");
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    const { name } = acceptedFiles[0];
-    if (name) {
+    if (acceptedFiles.length) {
+      onFileSelect(acceptedFiles[0]);
+      const { name } = acceptedFiles[0];
       setFileName(name);
     }
   }, []);
@@ -42,10 +43,10 @@ function UploadInput({ inputRef }: UploadInputProps) {
       }}
       {...getRootProps()}
     >
-      <input id="avatarImage" ref={inputRef} {...getInputProps()} />
+      <input id="avatarImage" {...getInputProps()} />
       <Stack alignItems="center" spacing={1}>
         <Tooltip title="Выбор файла">
-          <ImageWrapper htmlFor="avatarImage">
+          <ImageWrapper>
             <IconButton
               color="primary"
               aria-label="upload picture"
@@ -56,7 +57,7 @@ function UploadInput({ inputRef }: UploadInputProps) {
           </ImageWrapper>
         </Tooltip>
 
-        <label htmlFor="avatarImage">
+        <label>
           {fileName ? (
             <Typography variant="subtitle1">{fileName}</Typography>
           ) : (
