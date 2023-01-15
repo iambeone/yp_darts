@@ -99,7 +99,6 @@ export default function RadioOptionHand(props: TRadioHand) {
       <FormControl sx={sx}>
         <Label>{label}</Label>
         <RadioGroup
-          defaultValue="right"
           aria-labelledby="demo-customized-radios"
           name="customized-radios"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,6 +110,7 @@ export default function RadioOptionHand(props: TRadioHand) {
               value="left"
               control={<BpRadio />}
               label="Левая"
+              sx={{ marginLeft: "4px" }}
             />
             <FormControlLabelCustom
               value="right"

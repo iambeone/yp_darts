@@ -12,10 +12,11 @@ type TOptions = {
 type TSelect = {
   label?: string;
   options: TOptions[];
-  inputWidth: number;
-  inputHeight: number;
+  inputWidth?: number;
+  inputHeight?: number;
   onChangeOption: (value: TOptions | null) => void;
   sx?: any;
+  value?: TOptions;
 };
 
 const Label = styled.p`
@@ -30,11 +31,13 @@ const Label = styled.p`
 `;
 
 export default function SelectOption(props: TSelect) {
-  const { label, options, inputWidth, inputHeight, onChangeOption, sx } = props;
+  const { label, options, inputWidth, inputHeight, onChangeOption, sx, value } =
+    props;
   return (
     <Stack sx={sx}>
       <Label>{label}</Label>
       <Autocomplete
+        value={value}
         onChange={(event, newValue) => {
           onChangeOption(newValue);
         }}
@@ -56,4 +59,7 @@ export default function SelectOption(props: TSelect) {
 SelectOption.defaultProps = {
   label: null,
   sx: null,
+  value: null,
+  inputWidth: null,
+  inputHeight: null,
 };
