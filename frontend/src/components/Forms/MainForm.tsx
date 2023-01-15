@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React from "react";
-import { Controller, FormProvider, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Typography } from "@mui/material";
 
 import { Dayjs } from "dayjs";
@@ -58,7 +58,6 @@ export default function MainForm({
       phone: phone?.value,
     },
   });
-  const methods = useForm({ mode: "onBlur" });
 
   const [mainFormData, setMainFormData] = React.useState();
   const [formValide, setFormValid] = React.useState<boolean>(false);
@@ -73,7 +72,7 @@ export default function MainForm({
   };
 
   return (
-    <FormProvider {...methods}>
+    <>
       <Form>
         <Controller
           name="lastName"
@@ -314,7 +313,7 @@ export default function MainForm({
           disabled={!formValide}
         />
       </SubmitBlock>
-    </FormProvider>
+    </>
   );
 }
 
