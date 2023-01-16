@@ -19,7 +19,6 @@ type TTabMenuProps = {
 };
 
 const sxBox = {
-  width: "100%",
   marginLeft: { xs: "16px", sm: "24px", lg: "40px" },
 };
 
