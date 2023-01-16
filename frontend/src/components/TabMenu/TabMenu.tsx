@@ -44,11 +44,14 @@ function TabMenu({ tabs }: TTabMenuProps) {
   const [value, setValue] = React.useState<number | undefined>(0);
 
   React.useEffect(() => {
-    if (location) {
-      const lastParam = location.pathname.split("/");
-      const index = lastParam.length - 1;
-      const tabValue = tabs.find((el) => el.href === lastParam[index]);
+    const lastParam = location.pathname.split("/");
+
+    const index = lastParam.length - 1;
+    const tabValue = tabs.find((el) => el.href === lastParam[index]);
+    if (tabValue?.id) {
       setValue(tabValue?.id);
+    } else {
+      setValue(0);
     }
   }, [location, tabs]);
 
