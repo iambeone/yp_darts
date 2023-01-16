@@ -55,7 +55,7 @@ export default function PlayersPage() {
     {
       icon: "edit",
       value: "Изменить",
-      callback: () => navigate(`/players/edit-player/:${currentPlayerId}`),
+      callback: () => navigate(`/players/edit-player/${currentPlayerId}`),
     },
     {
       icon: "delete",

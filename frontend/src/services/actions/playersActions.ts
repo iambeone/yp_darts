@@ -183,7 +183,6 @@ export const getPlayers: AppThunk<Promise<IApplicationActions>> =
       .then(checkResponse)
       .then((json) => {
         dispatch(fetchPlayersSuccess(json));
-        console.log(json);
         return json;
       })
       .catch((error) => dispatch(fetchPlayersFailed(error)));
@@ -196,7 +195,6 @@ export const deletePlayer: AppThunk<Promise<IApplicationActions>> =
       .then(checkResponse)
       .then((res) => {
         dispatch(fetchPlayersSuccess(res));
-        getPlayers();
         return res;
       })
       .catch((error) => dispatch(deletePlayerFailed(error)));
