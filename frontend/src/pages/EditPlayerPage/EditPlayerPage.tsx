@@ -5,10 +5,10 @@ import TabMenu from "../../components/TabMenu/TabMenu";
 
 export default function EditPlayerPage() {
   const tabsForms = [
-    { label: "Основное", href: "main", disabled: false, id: 1 },
-    { label: "Документы", href: "documents", disabled: false, id: 2 },
-    { label: "Игровая информация", href: "game-info", disabled: false, id: 3 },
-    { label: "Дополнительно", href: "additional", disabled: false, id: 4 },
+    { label: "Основное", href: "main", disabled: false, id: 0 },
+    { label: "Документы", href: "documents", disabled: false, id: 1 },
+    { label: "Игровая информация", href: "game-info", disabled: false, id: 2 },
+    { label: "Дополнительно", href: "additional", disabled: false, id: 3 },
   ];
   return (
     <>
