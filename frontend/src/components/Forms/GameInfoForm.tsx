@@ -481,7 +481,7 @@ export default function GameInfoForm() {
           onClick={handleSubmit(onSubmit)}
           text="Далее"
           customIcon="forward_arrow"
-          iconPosition="right"
+          reverse="right"
           disabled={!isValid}
         />
       </SubmitBlock>
