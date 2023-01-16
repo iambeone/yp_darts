@@ -117,7 +117,7 @@ function InputText({
   isDisabled?: boolean;
 }) {
   return (
-    <StyledFormControl formSize={size} error={error} sx={sx}>
+    <StyledFormControl formsize={size} error={error} sx={sx}>
       <Label>
         {label}
         {required && <InputLabelSpan> *</InputLabelSpan>}

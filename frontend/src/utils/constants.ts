@@ -170,7 +170,7 @@ export const tokenRequestOptions = (method: string) => {
 
   // убрать после подключения авторизации. Залогинится через postman и вставить полученный токен
   const accessToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTY3Mzc3MjgyMiwiZXhwIjoxNjczODU5MjIyfQ.dhvsj_263yidtlPecH29-cN-Vwyofx9oZQmugYx8Bxs";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImlhdCI6MTY3Mzg0NDEyMywiZXhwIjoxNjczOTMwNTIzfQ.v78DiipPzabVQoCfd84SnByVDKXdKcJ0qFkpcFx6KoU";
 
   const requestOptions = {
     method: `${method}`,
