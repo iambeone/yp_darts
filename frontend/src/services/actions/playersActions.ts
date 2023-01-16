@@ -6,6 +6,9 @@ import {
   DELETE_PLAYER_REQUEST,
   DELETE_PLAYER_SUCCESS,
   DELETE_PLAYER_FAILED,
+  GET_PLAYER_REQUEST,
+  GET_PLAYER_SUCCESS,
+  GET_PLAYER_FAILED,
   SET_CURRENT_PLAYER_ID,
   SET_ACCEPT_DELETE_OPEN,
   SET_CONFIRM_DELETE_OPEN,
@@ -52,6 +55,20 @@ interface IdeletePlayerFailed {
   readonly payload: { error: {} };
 }
 
+interface IgetPlayerRequest {
+  readonly type: typeof GET_PLAYER_REQUEST;
+}
+
+interface IgetPlayerSuccess {
+  readonly type: typeof GET_PLAYER_SUCCESS;
+  readonly payload: { data: Tplayers };
+}
+
+interface IgetPlayerFailed {
+  readonly type: typeof GET_PLAYER_FAILED;
+  readonly payload: { error: {} };
+}
+
 interface IsetCurrentPlayerID {
   readonly type: typeof SET_CURRENT_PLAYER_ID;
   readonly payload: { id: number };
@@ -79,6 +96,9 @@ export type TPlayersActions =
   | IdeletePlayerRequest
   | IdeletePlayerSuccess
   | IdeletePlayerFailed
+  | IgetPlayerRequest
+  | IgetPlayerSuccess
+  | IgetPlayerFailed
   | ISetSearch
   | IsetCurrentPlayerID
   | IsetAcceptDeleteOpen
@@ -122,6 +142,20 @@ export const setCurrentPlayerID = (id: number): TPlayersActions => ({
   payload: { id },
 });
 
+export const getPlayerRequest = (): TPlayersActions => ({
+  type: GET_PLAYER_REQUEST,
+});
+
+export const getPlayerSuccess = (data: Tplayers): TPlayersActions => ({
+  type: GET_PLAYER_SUCCESS,
+  payload: { data },
+});
+
+export const getPlayerFailed = (error: {}): TPlayersActions => ({
+  type: GET_PLAYER_FAILED,
+  payload: { error },
+});
+
 export const setAcceptDeleteOpen = (payload: boolean): TPlayersActions => ({
   type: SET_ACCEPT_DELETE_OPEN,
   payload,
@@ -161,8 +195,19 @@ export const deletePlayer: AppThunk<Promise<IApplicationActions>> =
       .then(checkResponse)
       .then((res) => {
         dispatch(fetchPlayersSuccess(res));
-        getPlayers();
         return res;
       })
       .catch((error) => dispatch(deletePlayerFailed(error)));
+  };
+
+export const getPlayer: AppThunk<Promise<IApplicationActions>> =
+  (id: number) => (dispatch: AppDispatch) => {
+    dispatch(getPlayerRequest());
+    return fetch(`${baseUrl}/participants/${id}`, tokenRequestOptions("GET"))
+      .then(checkResponse)
+      .then((res) => {
+        dispatch(getPlayerSuccess(res));
+        return res;
+      })
+      .catch((error) => dispatch(getPlayerFailed(error)));
   };

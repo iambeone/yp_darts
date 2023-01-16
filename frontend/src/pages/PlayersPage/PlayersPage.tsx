@@ -43,31 +43,25 @@ export default function PlayersPage() {
   };
 
   const addToTournament = (id: number) => {
-    console.log(id);
+    return id;
   };
 
   const contextMenuPlayersTableFull = [
     {
       icon: "person_add",
       value: "Добавить в турнир",
-      callback: (e: React.MouseEvent<HTMLElement>) => {
-        const id = Number(e.currentTarget.dataset.id);
-        addToTournament(id);
-      },
+      callback: () => addToTournament(currentPlayerId),
     },
     {
       icon: "edit",
       value: "Изменить",
-      callback: (e: React.MouseEvent<HTMLElement>) =>
-        navigate(`/players/edit-player/:${e.currentTarget.dataset.id}`),
+      callback: () => navigate(`/players/edit-player/${currentPlayerId}`),
     },
     {
       icon: "delete",
       value: "Удалить",
-      callback: (e: React.MouseEvent<HTMLElement>) => {
-        const id = Number(e.currentTarget.dataset.id);
+      callback: () => {
         dispatch(setAcceptDeleteOpen(true));
-        dispatch(setCurrentPlayerID(id));
       },
     },
   ];
@@ -76,10 +70,8 @@ export default function PlayersPage() {
     {
       icon: "delete",
       value: "Удалить",
-      callback: (e: React.MouseEvent<HTMLElement>) => {
-        const id = Number(e.currentTarget.dataset.id);
+      callback: () => {
         dispatch(setAcceptDeleteOpen(true));
-        dispatch(setCurrentPlayerID(id));
       },
     },
   ];

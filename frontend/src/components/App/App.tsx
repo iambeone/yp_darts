@@ -47,7 +47,7 @@ function ModalSwitch() {
             <Route path="game-info" element={<GameInfoForm />} />
             <Route path="additional" element={<AdditionalForm />} />
           </Route>
-          <Route path="/players/edit-player/:id" element={<EditPlayerPage />}>
+          <Route path="/players/edit-player/id" element={<EditPlayerPage />}>
             <Route index element={<MainForm />} />
             <Route path="main" element={<MainForm />} />
             <Route path="documents" element={<DocumentsForm />} />

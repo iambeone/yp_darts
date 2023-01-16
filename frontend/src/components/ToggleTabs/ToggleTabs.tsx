@@ -87,6 +87,7 @@ function ToggleTabs({
       {tabs.map((element, index) => {
         return (
           <StyledTab
+            key={element[index]}
             label={element}
             id={`toggle-tab-${index}`}
             aria-controls={`toggle-tabpanel-${index}`}
