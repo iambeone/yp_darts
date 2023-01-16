@@ -118,6 +118,10 @@ export class CreateParticipantDto {
 
   @IsOptional()
   @IsString()
+  public clothingSize?: string;
+
+  @IsOptional()
+  @IsString()
   public hobby?: string;
 
   @IsOptional()
@@ -163,7 +167,8 @@ export class CreateParticipantDto {
   "startOfAction": "2004-10-19",
   "endOfAction": "2004-10-19",
   "weightOfPlayer": 90,
-  "heightOfPlaye": 180,
+  "heightOfPlayer": 180,
+  "clothingSize": "M",
   "hobby": "dfsfdsfdsfds",
   "educationalInstitution": "dfsfdsfdsfds",
   "endOfEducation": "2004-10-19",

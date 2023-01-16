@@ -6,3 +6,17 @@ export const encodeQueryString = (params: { [index: string]: string }) => {
     .join("&");
   return query ? `?${query}` : "";
 };
+
+export const dateFormatter = (date: string, full: boolean) => {
+  const desiredDate = new Date(date);
+  const day = desiredDate.getDay();
+  const month = desiredDate.getMonth();
+  const year = desiredDate.getFullYear();
+
+  if (full) {
+    const formatted = `${day}.${month}.${year}`;
+    return formatted;
+  }
+  const formatted = `${year}`;
+  return formatted;
+};
