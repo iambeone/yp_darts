@@ -1,14 +1,21 @@
 import React from "react";
 import styled from "styled-components";
-import { sportsCategory, subjectRF } from "../../utils/constants";
+import { useForm, Controller } from "react-hook-form";
+import { Dayjs } from "dayjs";
+import { sportsCategory, subjectsRF } from "../../utils/constants";
 import DateTextField from "../DateTextField/DateTextField";
 import InputText from "../InputText/InputText";
 import RadioOptionHand from "../RadioOption/RadioOptionHand";
 import SelectOptions from "../SelectOption/SelectOption";
+import Button from "../Button/Button";
 
-const Section = styled.div`
-  margin: 24px;
+const Form = styled.form`
+  margin: 24px auto 43px;
   max-width: 636px;
+
+  @media (max-width: 1200px) {
+    margin: 24px;
+  }
 
   @media (max-width: 500px) {
     margin-left: 16px;
@@ -35,8 +42,8 @@ const Caption = styled.p`
 const Group = styled.div`
   display: flex;
 
-  @media (max-width: 500px) {
-    display: block;
+  @media (max-width: 750px) {
+    flex-direction: column;
   }
 `;
 
@@ -61,253 +68,423 @@ const InputWrapper = styled.div`
   margin-right: 20px;
 
   @media (max-width: 1000px) {
-    width: 400;
+    width: 400px;
   }
 `;
+const SubmitBlock = styled.div`
+  width: 100%;
+  justify-items: center;
+  justify-content: center;
+  display: grid;
+  gap: 16px;
+  padding: 16px 0 16px;
+  box-shadow: 0px -5px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  bottom: 0px;
+  background: #ffffff;
+`;
+const SubmitButton = styled(Button)`
+  max-width: 121px;
+`;
+
+interface IGameInfoFormData {
+  subject: string;
+  category: string;
+  hand: string;
+  dateAssignedCategory: Dayjs;
+  dateBeginMedPol: Dayjs;
+  dateEndMedPol: Dayjs;
+  coach: string;
+  maker: string;
+  policyNumber: string;
+  dartWeight: string;
+  sertificateRUSADA: string;
+  dateBeginSertRUSADA: Dayjs;
+  dateEndSertRUSADA: Dayjs;
+}
 
 export default function GameInfoForm() {
-  const [subjectRf, setSubjectRF] = React.useState<any>(null);
-  const [sportCategory, setSportCategory] = React.useState<any>(null);
-  const [hand, setHand] = React.useState<any>();
-  const [dateAssignedCategory, setDateAssignedCategory] = React.useState<any>();
-  const [dateBeginMedPol, setDateBeginMedPol] = React.useState<any>();
-  const [dateEndMedPol, setDateendMedPol] = React.useState<any>();
-  const [coach, setCoach] = React.useState<any>();
-  const [maker, setMaker] = React.useState<any>();
-  const [policyNumber, setPolicyNumber] = React.useState<any>();
-  const [dartWeight, setDartWeight] = React.useState<any>();
-  const [sertificateRUSADA, setSertificateRUSADA] = React.useState<any>();
-  const [dateBeginSertRUSADA, setDateBeginSertRUSADA] = React.useState<any>();
-  const [dateEndSertRUSADA, setDateendSertRUSADA] = React.useState<any>();
+  const [gameInfoFormData, setGameInfoFormData] =
+    React.useState<IGameInfoFormData>();
+  const {
+    handleSubmit,
+    control,
+    formState: { errors, isValid },
+  } = useForm({ mode: "onBlur" });
 
-  console.log(hand);
-  // console.log(subjectRf);
-  // console.log(sportCategory);
-  // console.log(dateAssignedCategory);
-  // console.log(dateBeginMedPol);
-  // console.log(dateEndMedPol);
-  // console.log(coach);
-  // console.log(maker);
-  // console.log(policyNumber);
-  // console.log(dartWeight);
+  console.log(gameInfoFormData);
+
+  const onSubmit = (data: any) => {
+    setGameInfoFormData(data);
+  };
   return (
-    <Section>
-      <SelectOptions
-        value={subjectRf}
-        options={subjectRF}
-        inputHeight={56}
-        label="Субъект РФ"
-        onChangeOption={setSubjectRF}
-        sx={{
-          width: 390,
-          "@media(max-width: 1000px)": {
-            width: 300,
-          },
-          "@media(max-width: 500px)": {
-            width: "100%",
-          },
-        }}
-      />
-      <Caption>Регион, за который играет спортсмен</Caption>
+    <>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Controller
+          name="subjectRF"
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <SelectOptions
+              value={value}
+              options={subjectsRF}
+              inputHeight={56}
+              label="Субъект РФ"
+              sx={{
+                width: 390,
+                "@media(max-width: 500px)": {
+                  width: "100%",
+                },
+              }}
+              onChangeOption={onChange}
+              onBlur={onBlur}
+              error={!!errors.subjectRF?.message}
+              helperText={errors.subjectRF?.message?.toString()}
+            />
+          )}
+        />
 
-      <Group>
-        <SelectOptions
-          value={sportCategory}
-          options={sportsCategory}
-          inputHeight={56}
-          label="Спортивный разряд"
-          onChangeOption={setSportCategory}
-          sx={{
-            mr: 2.5,
-            width: 300,
-            "@media(max-width: 500px)": {
-              width: "100%",
-            },
-          }}
-        />
-        <DateTextField
-          type="day"
-          value={dateAssignedCategory}
-          labelText="Присвоен"
-          inputHeight={56}
-          onChangeHandler={setDateAssignedCategory}
-          sx={{
-            width: 226,
-            "@media(max-width: 500px)": {
-              mt: 2,
-              width: 242,
-            },
-          }}
-        />
-      </Group>
-      <InputText
-        value={coach}
-        label="ФИО тренера"
-        inputHeight={56}
-        sx={{
-          maxWidth: 636,
-          mt: 3,
-          "@media(max-width: 1000px)": {
-            maxWidth: 400,
-          },
-          "@media(max-width: 500px)": {
-            width: "100%",
-            mt: 2,
-          },
-        }}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          setCoach(event.target.value);
-        }}
-      />
-      <RadioOptionHand
-        label="Ведущая рука"
-        onChangeInput={setHand}
-        sx={{
-          mt: 3,
-          "@media(max-width: 500px)": {
-            mt: 2,
-          },
-        }}
-      />
-      <H3>Дротики</H3>
-      <Group>
-        <InputWrapper>
-          <InputText
-            value={maker}
-            label="Производитель"
-            inputHeight={56}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setMaker(event.target.value);
-            }}
-            sx={{
-              mr: 2.5,
-              maxWidth: 472,
-              width: 472,
-              "@media(max-width: 1000px)": {
-                width: 400,
-              },
-              "@media(max-width: 500px)": {
-                width: 328,
-              },
-            }}
+        <Caption>Регион, за который играет спортсмен</Caption>
+
+        <Group>
+          <Controller
+            name="category"
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <SelectOptions
+                value={value}
+                options={sportsCategory}
+                inputHeight={56}
+                label="Спортивный разряд"
+                onChangeOption={onChange}
+                onBlur={onBlur}
+                error={!!errors.category?.message}
+                helperText={errors.category?.message?.toString()}
+                sx={{
+                  mr: 2.5,
+                  width: 300,
+                  "@media(max-width: 500px)": {
+                    width: "100%",
+                  },
+                }}
+              />
+            )}
           />
-        </InputWrapper>
+          <Controller
+            name="dateAssignedCategory"
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <DateTextField
+                type="day"
+                value={value}
+                labelText="Присвоен"
+                inputHeight={56}
+                onChangeHandler={onChange}
+                onBlur={onBlur}
+                error={!!errors.dateAssignedCategory?.message}
+                helperText={errors.dateAssignedCategory?.message?.toString()}
+                sx={{
+                  width: 226,
+                  "@media(max-width: 500px)": {
+                    mt: 2,
+                    width: 242,
+                  },
+                }}
+              />
+            )}
+          />
+        </Group>
+        <Controller
+          name="coach"
+          control={control}
+          rules={{
+            minLength: {
+              value: 2,
+              message: "Длина должна быть больше 1 символа",
+            },
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <InputText
+              value={value}
+              label="ФИО тренера"
+              inputHeight={56}
+              onBlur={onBlur}
+              error={!!errors.coach?.message}
+              helperText={errors.coach?.message?.toString()}
+              sx={{
+                maxWidth: 636,
+                width: "100%",
+                mt: 3,
+                "@media(max-width: 1000px)": {
+                  maxWidth: 564,
+                },
+                "@media(max-width: 500px)": {
+                  mt: 2,
+                },
+              }}
+              onChange={onChange}
+            />
+          )}
+        />
+        <Controller
+          name="hand"
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <RadioOptionHand
+              value={value}
+              label="Ведущая рука"
+              onChangeInput={onChange}
+              onBlur={onBlur}
+              error={!!errors.hand?.message}
+              helperText={errors.category?.message?.toString()}
+              sx={{
+                mt: 3,
+                "@media(max-width: 500px)": {
+                  mt: 2,
+                },
+              }}
+            />
+          )}
+        />
+        <H3>Дротики</H3>
+        <Group>
+          <InputWrapper>
+            <Controller
+              name="maker"
+              control={control}
+              rules={{
+                minLength: {
+                  value: 2,
+                  message: "Длина должна быть больше 1 символа",
+                },
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <InputText
+                  value={value}
+                  label="Производитель"
+                  inputHeight={56}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  error={!!errors.maker?.message}
+                  helperText={errors.category?.message?.toString()}
+                  sx={{
+                    mr: 2.5,
+                    maxWidth: 472,
+                    width: 472,
+                    "@media(max-width: 1000px)": {
+                      width: 400,
+                    },
+                    "@media(max-width: 500px)": {
+                      width: 328,
+                    },
+                  }}
+                />
+              )}
+            />
+          </InputWrapper>
 
-        <InputText
-          value={dartWeight}
-          label="Вес"
-          // inputWidth={144}
-          inputHeight={56}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setDartWeight(event.target.value);
-          }}
-          sx={{
-            width: 144,
-            "@media(max-width: 500px)": {
-              mt: 2,
-              width: 156,
+          <Controller
+            name="dartWeight"
+            control={control}
+            rules={{
+              minLength: {
+                value: 2,
+                message: "Длина должна быть больше 1 символа",
+              },
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <InputText
+                value={value}
+                label="Вес"
+                inputHeight={56}
+                onChange={onChange}
+                onBlur={onBlur}
+                error={!!errors.dartWeight?.message}
+                helperText={errors.category?.message?.toString()}
+                sx={{
+                  width: 144,
+                  "@media(max-width: 500px)": {
+                    mt: 2,
+                    width: 156,
+                  },
+                }}
+              />
+            )}
+          />
+        </Group>
+        <H3>Медицинская страховка</H3>
+        <Controller
+          name="policyNumber"
+          control={control}
+          rules={{
+            minLength: {
+              value: 2,
+              message: "Длина должна быть больше 1 символа",
             },
           }}
-        />
-      </Group>
-      <H3>Медицинская страховка</H3>
-      <InputText
-        value={policyNumber}
-        label="Номер полиса"
-        inputHeight={56}
-        sx={{
-          mb: 3,
-          width: 472,
-          "@media(max-width: 500px)": {
-            width: "100%",
-            mb: 2,
-          },
-        }}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          setPolicyNumber(event.target.value);
-        }}
-      />
-      <Group>
-        <DateTextField
-          value={dateBeginMedPol}
-          type="day"
-          labelText="Начало действия"
-          inputHeight={56}
-          onChangeHandler={setDateBeginMedPol}
-          sx={{
-            mr: 2.5,
-            width: 226,
-            "@media(max-width: 500px)": {
-              width: 242,
-              mr: 0,
-            },
-          }}
-        />
-
-        <DateTextField
-          value={dateEndMedPol}
-          type="day"
-          labelText="Конец действия"
-          inputHeight={56}
-          onChangeHandler={setDateendMedPol}
-          sx={{
-            width: 226,
-            "@media(max-width: 500px)": {
-              width: 242,
-              mt: 2,
-            },
-          }}
-        />
-      </Group>
-      <H3>Сертификат РУСАDa</H3>
-      <InputText
-        value={sertificateRUSADA}
-        label="ID сертификата"
-        inputHeight={56}
-        sx={{
-          mb: 3,
-          width: 472,
-          "@media(max-width: 500px)": {
-            width: "100%",
-            mb: 2,
-          },
-        }}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          setSertificateRUSADA(event.target.value);
-        }}
-      />
-      <Group>
-        <DateTextField
-          value={dateBeginSertRUSADA}
-          type="day"
-          labelText="Выдан"
-          inputHeight={56}
-          onChangeHandler={setDateBeginSertRUSADA}
-          sx={{
-            mr: 2.5,
-            width: 226,
-            "@media(max-width: 500px)": {
-              width: 242,
-              mr: 0,
-            },
-          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <InputText
+              value={value}
+              label="Номер полиса"
+              inputHeight={56}
+              onBlur={onBlur}
+              error={!!errors.policyNumber?.message}
+              helperText={errors.category?.message?.toString()}
+              sx={{
+                mb: 3,
+                width: 472,
+                "@media(max-width: 500px)": {
+                  width: "100%",
+                  mb: 2,
+                },
+              }}
+              onChange={onChange}
+            />
+          )}
         />
 
-        <DateTextField
-          value={dateEndSertRUSADA}
-          type="day"
-          labelText="Конец действия"
-          inputHeight={56}
-          onChangeHandler={setDateendSertRUSADA}
-          sx={{
-            width: 226,
-            "@media(max-width: 500px)": {
-              width: 242,
-              mt: 2,
+        <Group>
+          <Controller
+            name="dateBeginMedPol"
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <DateTextField
+                value={value}
+                type="day"
+                labelText="Начало действия"
+                inputHeight={56}
+                onChangeHandler={onChange}
+                onBlur={onBlur}
+                error={!!errors.dateBeginMedPol?.message}
+                helperText={errors.category?.message?.toString()}
+                sx={{
+                  mr: 2.5,
+                  width: 226,
+                  "@media(max-width: 500px)": {
+                    width: 242,
+                    mr: 0,
+                  },
+                }}
+              />
+            )}
+          />
+
+          <Controller
+            name="dateEndMedPol"
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <DateTextField
+                value={value}
+                type="day"
+                labelText="Конец действия"
+                inputHeight={56}
+                onChangeHandler={onChange}
+                onBlur={onBlur}
+                error={!!errors.dateEndMedPol?.message}
+                helperText={errors.category?.message?.toString()}
+                sx={{
+                  width: 226,
+                  "@media(max-width: 500px)": {
+                    width: 242,
+                    mt: 2,
+                  },
+                }}
+              />
+            )}
+          />
+        </Group>
+        <H3>Сертификат РУСАDa</H3>
+
+        <Controller
+          name="sertificateRUSADA"
+          control={control}
+          rules={{
+            minLength: {
+              value: 2,
+              message: "Длина должна быть больше 1 символа",
             },
           }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <InputText
+              value={value}
+              label="ID сертификата"
+              inputHeight={56}
+              onBlur={onBlur}
+              error={!!errors.sertificateRUSADA?.message}
+              helperText={errors.category?.message?.toString()}
+              sx={{
+                mb: 3,
+                width: 472,
+                "@media(max-width: 500px)": {
+                  width: "100%",
+                  mb: 2,
+                },
+              }}
+              onChange={onChange}
+            />
+          )}
         />
-      </Group>
-    </Section>
+
+        <Group>
+          <Controller
+            name="dateBeginSertRUSADA"
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <DateTextField
+                value={value}
+                type="day"
+                labelText="Выдан"
+                inputHeight={56}
+                onChangeHandler={onChange}
+                onBlur={onBlur}
+                error={!!errors.dateBeginSertRUSADA?.message}
+                helperText={errors.category?.message?.toString()}
+                sx={{
+                  mr: 2.5,
+                  width: 226,
+                  "@media(max-width: 500px)": {
+                    width: 242,
+                    mr: 0,
+                  },
+                }}
+              />
+            )}
+          />
+
+          <Controller
+            name="dateEndSertRUSADA"
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <DateTextField
+                value={value}
+                type="day"
+                labelText="Конец действия"
+                inputHeight={56}
+                onChangeHandler={onChange}
+                onBlur={onBlur}
+                error={!!errors.dateEndSertRUSADA?.message}
+                helperText={errors.category?.message?.toString()}
+                sx={{
+                  width: 226,
+                  "@media(max-width: 500px)": {
+                    width: 242,
+                    mt: 2,
+                  },
+                }}
+              />
+            )}
+          />
+        </Group>
+      </Form>
+      <SubmitBlock>
+        <SubmitButton
+          colors="all-red"
+          onClick={handleSubmit(onSubmit)}
+          text="Далее"
+          customIcon="forward_arrow"
+          iconPosition="right"
+          disabled={!isValid}
+        />
+      </SubmitBlock>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Radio, { RadioProps } from "@mui/material/Radio";
+import { FormHelperText } from "@mui/material";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
@@ -78,6 +79,10 @@ type TRadioHand = {
   label: string;
   onChangeInput: (value: string) => void;
   sx?: any;
+  value: string;
+  onBlur?: any;
+  error?: boolean;
+  helperText?: string;
 };
 
 const FormControlLabelCustom = styled(FormControlLabel)({
@@ -93,14 +98,16 @@ const FormControlLabelCustom = styled(FormControlLabel)({
 });
 
 export default function RadioOptionHand(props: TRadioHand) {
-  const { label, onChangeInput, sx } = props;
+  const { label, onChangeInput, sx, value, onBlur, error, helperText } = props;
   return (
     <div>
-      <FormControl sx={sx}>
+      <FormControl sx={sx} error={error}>
         <Label>{label}</Label>
         <RadioGroup
           aria-labelledby="demo-customized-radios"
           name="customized-radios"
+          value={value}
+          onBlur={onBlur}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             onChangeInput(event.target.value);
           }}
@@ -119,6 +126,7 @@ export default function RadioOptionHand(props: TRadioHand) {
             />
           </Group>
         </RadioGroup>
+        {error && <FormHelperText>{helperText}</FormHelperText>}
       </FormControl>
     </div>
   );
@@ -126,4 +134,7 @@ export default function RadioOptionHand(props: TRadioHand) {
 
 RadioOptionHand.defaultProps = {
   sx: null,
+  onBlur: null,
+  error: false,
+  helperText: null,
 };
