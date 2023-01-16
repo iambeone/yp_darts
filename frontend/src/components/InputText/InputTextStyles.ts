@@ -7,16 +7,16 @@ const InputLabelSpan = styled.span`
 `;
 
 interface IStyledFormControl {
-  formSize: "small" | "medium" | "large";
+  formsize: "small" | "medium" | "large";
 }
 
 const StyledFormControl = styled(FormControl)<IStyledFormControl>`
-  width: ${({ formSize }) => (formSize === "small" ? "156px" : "92.2%")};
-  max-width: ${({ formSize }) => formSize !== "small" && "328px"};
+  width: ${({ formsize }) => (formsize === "small" ? "156px" : "92.2%")};
+  max-width: ${({ formsize }) => formsize !== "small" && "328px"};
 
   @media (min-width: 1194px) {
-    width: ${({ formSize }) => {
-      switch (formSize) {
+    width: ${({ formsize }) => {
+      switch (formsize) {
         case "small":
           return "144px";
         case "large":
@@ -25,13 +25,13 @@ const StyledFormControl = styled(FormControl)<IStyledFormControl>`
           return "100%";
       }
     }};
-    max-width: ${({ formSize }) => formSize === "medium" && "308px"};
-    max-width: ${({ formSize }) => formSize === "large" && "636px"};
+    max-width: ${({ formsize }) => formsize === "medium" && "308px"};
+    max-width: ${({ formsize }) => formsize === "large" && "636px"};
   }
 
   @media (min-width: 1440px) {
-    max-width: ${({ formSize }) => formSize === "medium" && "355px"};
-    max-width: ${({ formSize }) => formSize === "large" && "734px"};
+    max-width: ${({ formsize }) => formsize === "medium" && "355px"};
+    max-width: ${({ formsize }) => formsize === "large" && "734px"};
   }
 `;
 

@@ -13,7 +13,7 @@ import { StyledMuiIconButton, StyledIcon, TextButton } from "./ButtonStyles";
 type TButton = {
   text?: string;
   colors: string;
-  iconPosition?: "right" | "left";
+  reverse?: "right" | "left";
   iconColor?: "blue" | "red";
   disabled?: boolean;
   icon?: string;
@@ -104,7 +104,7 @@ function Button({
   colors,
   icon,
   disabled,
-  iconPosition,
+  reverse,
   iconColor,
   customIcon,
   ...props
@@ -112,15 +112,17 @@ function Button({
   const sxStyle = () => {
     if (colors === "all-red" && text !== "") {
       return styleButtonRed;
-    } else if (colors === "empty-red" && text !== "") { // eslint-disable-line
-      return styleButtonRedEmpty;
-    } else if (colors === "all-red" && text === "") { // eslint-disable-line
-      return styleButtonRedCricle;
-    } else if (colors === "empty-red" && text === "") { // eslint-disable-line
-      return styleButtonRedEmptyCricle;
-    } else {
-      return noStyle;
     }
+    if (colors === "empty-red" && text !== "") {
+      return styleButtonRedEmpty;
+    }
+    if (colors === "all-red" && text === "") {
+      return styleButtonRedCricle;
+    }
+    if (colors === "empty-red" && text === "") {
+      return styleButtonRedEmptyCricle;
+    }
+    return noStyle;
   };
 
   const displayIcon = !!(icon || customIcon);
@@ -143,7 +145,7 @@ function Button({
           {...props}
           sx={sxStyle}
           disabled={disabled}
-          reverse={iconPosition === "right"}
+          reverse={reverse}
         >
           <>
             {!customIcon && (
@@ -177,7 +179,7 @@ export default Button;
 Button.defaultProps = {
   icon: undefined,
   disabled: false,
-  iconPosition: "left",
+  reverse: "right",
   iconColor: undefined,
   text: "",
   customIcon: undefined,

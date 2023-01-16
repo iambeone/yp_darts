@@ -173,8 +173,9 @@ export default function DocumentsForm({
   };
 
   const onSubmit = (data: any) => {
-    console.log(data);
-    console.log(value);
+    // console.log(data);
+    // console.log(value);
+    return { data, value };
   };
 
   return (
@@ -376,8 +377,8 @@ export default function DocumentsForm({
           onClick={handleSubmit(onSubmit)}
           text="Далее"
           customIcon="forward_arrow"
-          iconPosition="right"
           disabled={!isValid}
+          reverse="right"
         />
       </SubmitBlock>
     </>

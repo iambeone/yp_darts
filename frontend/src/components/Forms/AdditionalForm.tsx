@@ -66,10 +66,11 @@ function AdditionalForm({
   const [file, setFile] = useState<File | null>(null);
 
   const onSubmit = (data: any) => {
-    console.log({
-      ...data,
-      file,
-    });
+    // console.log({
+    //   ...data,
+    //   file,
+    // });
+    return { ...data, file };
   };
 
   return (

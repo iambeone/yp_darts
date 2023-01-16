@@ -3,14 +3,23 @@ import { IconButton as MuiIconButton } from "@mui/material";
 import Icon from "@mui/material/Icon";
 
 interface IStyledMuiIconButton {
-  reverse?: boolean;
+  reverse?: string;
   disabled?: boolean;
 }
 
 const StyledMuiIconButton = styled(MuiIconButton)<IStyledMuiIconButton>`
   display: flex;
   gap: 9px;
-  flex-direction: ${({ reverse }) => (reverse ? "row-reverse" : "row")};
+  flex-direction: ${({ reverse }) => {
+    switch (reverse) {
+      case "right":
+        return "row-reverse";
+      case "left":
+        return "row";
+      default:
+        return "";
+    }
+  }};
 `;
 
 interface IStyledIcon {

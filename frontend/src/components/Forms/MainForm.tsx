@@ -61,7 +61,6 @@ export default function MainForm({
 
   const [mainFormData, setMainFormData] = React.useState();
   const [formValide, setFormValid] = React.useState<boolean>(false);
-  console.log(mainFormData);
 
   React.useEffect(() => {
     setFormValid(isValid);
@@ -69,6 +68,7 @@ export default function MainForm({
 
   const onSubmit = (data: any) => {
     setMainFormData(data);
+    return mainFormData;
   };
 
   return (
@@ -309,8 +309,9 @@ export default function MainForm({
           onClick={handleSubmit(onSubmit)}
           text="Далее"
           customIcon="forward_arrow"
-          iconPosition="right"
           disabled={!formValide}
+          reverse="right"
+          iconColor="blue"
         />
       </SubmitBlock>
     </>
