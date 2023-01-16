@@ -190,3 +190,27 @@ export const sportsCategory = [
   { id: 5, title: "1-й юношеский разряд" },
   { id: 6, title: "3-й юношеский разряд" },
 ];
+
+export const clothingSizeOptions = [
+  { id: 1, title: "XXS (38)" },
+  { id: 2, title: "XS (40)" },
+  { id: 3, title: "S (42)" },
+  { id: 4, title: "M (44)" },
+  { id: 5, title: "M (46)" },
+  { id: 6, title: "L (48)" },
+  { id: 7, title: "L (50)" },
+  { id: 8, title: "XL (52)" },
+  { id: 9, title: "XXL (54)" },
+];
+
+export const educationLevelOptions = [
+  { id: 1, title: "основное общее (1—9 класс)" },
+  { id: 2, title: "среднее общее (1-11 класс)" },
+  { id: 3, title: "среднее профессиональное" },
+  { id: 4, title: "высшее I степени (бакалавриат)" },
+  { id: 5, title: "высшее II степени (специалитет, магистратура)" },
+  {
+    id: 6,
+    title: "высшее III степени (подготовка кадров высшей квалификации)",
+  },
+];
