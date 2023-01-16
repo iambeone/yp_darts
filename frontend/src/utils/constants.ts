@@ -48,70 +48,6 @@ export const tabs = [
 ];
 
 export const subjectsRF = [
-  { value: "Московская область", text: "Московская область" },
-  { value: "Республика Удмуртия", text: "Республика Удмуртия" },
-  {
-    value: "Еврейский автономный округ",
-    text: "Еврейский автономный округ",
-  },
-];
-
-export const customSizesInputText = {
-  small: {
-    width: 156,
-    "@media (min-width: 1194px)": { width: 144 },
-  },
-  medium: {
-    width: "92.2%",
-    maxWidth: 328,
-    "@media (min-width: 1194px)": { maxWidth: 308 },
-    "@media (min-width: 1440px)": { width: 355 },
-  },
-  large: {
-    width: "92.2%",
-    maxWidth: 328,
-    "@media (min-width: 1194px)": { width: "100%", maxWidth: "100%" },
-  },
-};
-
-export const contextMenuPlayersTableFull = [
-  { icon: "person_add", value: "Добавить в турнир" },
-  { icon: "edit", value: "Изменить" },
-  { icon: "delete", value: "Удалить" },
-];
-
-export const contextMenuPlayersTableDelete = [
-  { icon: "delete", value: "Удалить" },
-];
-
-export function checkResponse(res: Response) {
-  if (!res.ok) {
-    return Promise.reject(new Error(`Ошибка ${res.status}`));
-  }
-  return res.json();
-}
-
-export const baseUrl = "http://localhost:3000";
-
-export const tokenRequestOptions = (method: string) => {
-  // использовать после подключения авторизации
-  // const accessToken = localStorage.getItem("accessToken");
-
-  // убрать после подключения авторизации. Залогинится через postman и вставить полученный токен
-  const accessToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTY3Mzc5NjgzMywiZXhwIjoxNjczODgzMjMzfQ.wPerpOz9vI4UH0SLzV1046Gpoh3pImjyyn1OoOTLSwA";
-
-  const requestOptions = {
-    method: `${method}`,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-  return requestOptions;
-};
-
-export const subjectRF = [
   { id: 1, title: "Республика Адыгея (Адыгея)" },
   { id: 2, title: "Республика Алтай" },
   { id: 3, title: "Республика Башкортостан" },
@@ -197,4 +133,84 @@ export const subjectRF = [
   { id: 83, title: "Ханты-Мансийский автономный округ – Югра" },
   { id: 84, title: "Чукотский автономный округ" },
   { id: 85, title: "Ямало-Ненецкий автономный округ" },
+];
+
+export const customSizesInputText = {
+  small: {
+    width: 156,
+    "@media (min-width: 1194px)": { width: 144 },
+  },
+  medium: {
+    width: "92.2%",
+    maxWidth: 328,
+    "@media (min-width: 1194px)": { maxWidth: 308 },
+    "@media (min-width: 1440px)": { width: 355, maxWidth: 355 },
+  },
+  large: {
+    width: "92.2%",
+    maxWidth: 734,
+    "@media (min-width: 1194px)": { width: "100%", maxWidth: 636 },
+    "@media (min-width: 1440px)": { width: "100%", maxWidth: "100%" },
+    "@media (max-width: 769px)": { width: 328 },
+  },
+};
+
+export function checkResponse(res: Response) {
+  if (!res.ok) {
+    return Promise.reject(new Error(`Ошибка ${res.status}`));
+  }
+  return res.json();
+}
+
+export const baseUrl = "http://localhost:3000";
+
+export const tokenRequestOptions = (method: string) => {
+  // использовать после подключения авторизации
+  // const accessToken = localStorage.getItem("accessToken");
+
+  // убрать после подключения авторизации. Залогинится через postman и вставить полученный токен
+  const accessToken =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTY3Mzc5NjgzMywiZXhwIjoxNjczODgzMjMzfQ.wPerpOz9vI4UH0SLzV1046Gpoh3pImjyyn1OoOTLSwA";
+
+  const requestOptions = {
+    method: `${method}`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+  return requestOptions;
+};
+
+export const sportsCategory = [
+  { id: 1, title: "Кандидат в мастера спорта России (КМС)" },
+  { id: 2, title: "1-й спортивный разряд" },
+  { id: 3, title: "2-й спортивный разряд" },
+  { id: 4, title: "3-й спортивный разряд" },
+  { id: 5, title: "1-й юношеский разряд" },
+  { id: 6, title: "3-й юношеский разряд" },
+];
+
+export const clothingSizeOptions = [
+  { id: 1, title: "XXS (38)" },
+  { id: 2, title: "XS (40)" },
+  { id: 3, title: "S (42)" },
+  { id: 4, title: "M (44)" },
+  { id: 5, title: "M (46)" },
+  { id: 6, title: "L (48)" },
+  { id: 7, title: "L (50)" },
+  { id: 8, title: "XL (52)" },
+  { id: 9, title: "XXL (54)" },
+];
+
+export const educationLevelOptions = [
+  { id: 1, title: "основное общее (1—9 класс)" },
+  { id: 2, title: "среднее общее (1-11 класс)" },
+  { id: 3, title: "среднее профессиональное" },
+  { id: 4, title: "высшее I степени (бакалавриат)" },
+  { id: 5, title: "высшее II степени (специалитет, магистратура)" },
+  {
+    id: 6,
+    title: "высшее III степени (подготовка кадров высшей квалификации)",
+  },
 ];

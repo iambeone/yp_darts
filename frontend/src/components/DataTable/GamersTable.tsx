@@ -9,6 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import {
   TableWithPagination,
   ColumnTitle,
@@ -22,17 +23,8 @@ import {
   LinkStyled,
   LinkSpan,
 } from "./GamersTableStyles";
-import ContextMenu from "../ContextMenu/ContextMenu";
-import { useDispatch, useSelector } from "../../utils/hooks";
-import {
-  setContextMenuClose,
-  setContextMenuOpen,
-} from "../../services/actions";
-import {
-  contextMenuPlayersTableDelete,
-  contextMenuPlayersTableFull,
-} from "../../utils/constants";
 import { Tplayers } from "../../services/types";
+import { setContextMenuOpen } from "../../services/actions";
 
 const TableStyle = {
   width: "auto",
@@ -58,49 +50,18 @@ const IconCell = {
 };
 
 export default function GamersTable({ data }: { data: Tplayers[] }) {
+  const dispatch = useDispatch();
+  const anchor = useSelector((state) => state.players.contextMenuOpen);
   const PATH = "/players";
   const ROWS_PER_PAGE = 10;
   const { pageNumber = 1 } = useParams();
-  const dispatch = useDispatch();
-  const { contextMenuOpen } = useSelector((store) => store.common);
-  const [anchor, setAnchor] = React.useState<HTMLButtonElement | null>(null);
-  const [windowWidth, setWindowWidth] = React.useState(0);
 
-  React.useEffect(() => {
-    function handleResize() {
-      setWindowWidth(window.innerWidth);
-    }
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [windowWidth]);
-
-  const openModal = () => {
-    console.log(1);
-    return null;
+  const openContextMenu = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    dispatch(setContextMenuOpen(anchor ? null : evt.currentTarget));
   };
 
-  const openContextMenu = (
-    evt: React.MouseEvent<HTMLButtonElement>,
-    itemId: number,
-  ) => {
-    const contextMenuProps = {
-      id: itemId,
-      items: [{ icon: "", value: "" }],
-    };
-    if (windowWidth < 1200) {
-      contextMenuProps.items = contextMenuPlayersTableFull;
-    } else {
-      contextMenuProps.items = contextMenuPlayersTableDelete;
-    }
-    setAnchor(anchor ? null : evt.currentTarget);
-    dispatch(setContextMenuOpen(contextMenuProps));
-  };
-
-  // не работает, разобраться
-  const closeContextMenu = () => {
-    console.log("close");
-    setAnchor(null);
-    dispatch(setContextMenuClose());
+  const addToTournament = (id: number) => {
+    console.log(id);
   };
 
   return (
@@ -129,11 +90,18 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
               <TableRow key={item.id}>
                 <TableCell>
                   <LinkStyled to={`/player/:${item.id}`}>
-                    <NameSpan>{item.name}</NameSpan> <br />
+                    <NameSpan>
+                      {item.surname} {item.name}
+                    </NameSpan>
+                    <br />
                     <EmailSpan>{item.email}</EmailSpan>
                   </LinkStyled>
                 </TableCell>
-                <TableCell align="right" sx={AddCell} onClick={openModal}>
+                <TableCell
+                  align="right"
+                  sx={AddCell}
+                  onClick={() => addToTournament(item.id)}
+                >
                   <BtnSpan>ДОБАВИТЬ В ТУРНИР</BtnSpan>
                 </TableCell>
                 <TableCell align="right" sx={ChangeCell}>
@@ -143,7 +111,8 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
                 </TableCell>
                 <TableCell align="right" sx={IconCell}>
                   <ButtonIcon
-                    onClick={(e) => openContextMenu(e, item.id)}
+                    data-id={item.id}
+                    onClick={openContextMenu}
                     type="button"
                   >
                     <StyledIcon>more_vert</StyledIcon>
@@ -169,9 +138,6 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
           )}
         />
       </PaginationContainer>
-      {contextMenuOpen && (
-        <ContextMenu anchorEl={anchor} close={() => closeContextMenu()} />
-      )}
     </TableWithPagination>
   );
 }

@@ -1,16 +1,6 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
-import {
-  Box,
-  Chip,
-  Container,
-  MenuItem,
-  Select,
-  Button,
-  Stack,
-  SelectChangeEvent,
-} from "@mui/material";
-import { styled } from "@mui/system";
+import { Box, Chip, Container, Button, Stack } from "@mui/material";
 import { useDispatch, useSelector } from "../../utils/hooks";
 import {
   setGender,
@@ -18,15 +8,12 @@ import {
   applyFilters,
   setModalOpen,
   setSubjectRF,
-  getPlayers,
 } from "../../services/actions";
-import { encodeQueryString } from "../../utils/helpers";
 import { subjectsRF } from "../../utils/constants";
+import SelectOption from "../SelectOption/SelectOption";
 
 export default function Filters() {
-  const { gender, age, subjectRF, name, buttonText } = useSelector(
-    (store) => store.filters,
-  );
+  const { gender, age, buttonText } = useSelector((store) => store.filters);
   const dispatch = useDispatch();
 
   const container = {
@@ -65,15 +52,6 @@ export default function Filters() {
     letterSpacing: "0.46px",
   };
 
-  const Placeholder = styled("span")(
-    `
-      font-size: 16px;
-      line-height: 24px;
-      letter-spacing: 0.15px;
-      color: rgba(0, 0, 0, 0.6);
-      `,
-  );
-
   const handleMaleChip = () => dispatch(setGender("male"));
 
   const handleFemaleChip = () => dispatch(setGender("female"));
@@ -84,12 +62,11 @@ export default function Filters() {
 
   const handleGrownupsChip = () => dispatch(setAge("grownups"));
 
-  const handleSelectChange = (e: SelectChangeEvent) =>
-    dispatch(setSubjectRF(e.target.value));
+  const handleSelectChange = (value: { id: number; title: string } | null) =>
+    dispatch(setSubjectRF(value ? value.title : ""));
 
   const handleApplyFilters = () => {
     dispatch(applyFilters());
-    dispatch(getPlayers(encodeQueryString({ gender, age, name })));
     dispatch(setModalOpen(false));
   };
 
@@ -136,20 +113,12 @@ export default function Filters() {
       </Box>
       <Box sx={box}>
         <Typography sx={subTitle}>Субъект РФ</Typography>
-        <Select
-          onChange={handleSelectChange}
-          inputProps={{ "aria-label": "Without label" }}
-          value={subjectRF}
-          displayEmpty
-          renderValue={(value) => value || <Placeholder>Выбрать</Placeholder>}
-          sx={{ width: "100%" }}
-        >
-          {subjectsRF.map(({ value, text }) => (
-            <MenuItem value={value} key={value}>
-              {text}
-            </MenuItem>
-          ))}
-        </Select>
+        <SelectOption
+          options={subjectsRF}
+          inputWidth={326}
+          inputHeight={56}
+          onChangeOption={handleSelectChange}
+        />
       </Box>
       <Button
         variant="outlined"

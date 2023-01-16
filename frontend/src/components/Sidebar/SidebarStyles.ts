@@ -16,6 +16,7 @@ const Section = styled.section`
     height: 70px;
     display: flex;
     align-items: flex-end;
+    z-index: 1;
   }
 `;
 

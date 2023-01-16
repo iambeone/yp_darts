@@ -1,13 +1,24 @@
-/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/jsx-props-no-spreading, react/require-default-props */
 import { styled, Tab, Tabs } from "@mui/material";
 import React from "react";
 
-function ToggleTabs({ tabs = ["1"] }: { tabs: string[] }) {
+function ToggleTabs({
+  tabs = ["1"],
+  tabsValue,
+  tabsOnChahge,
+}: {
+  tabs: string[];
+  tabsValue?: number;
+  tabsOnChahge?: any;
+}) {
   // Что-бы создать элемент необходимо в tabs передать массив, с именами которые необходимы кнопкам.
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(tabsValue || 0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    if (tabsOnChahge) {
+      tabsOnChahge(newValue);
+    }
   };
   interface StyledTabsProps {
     children?: React.ReactNode;

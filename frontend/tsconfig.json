@@ -21,6 +21,7 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
+    "src",
+    "./declarations"
 , "src/components/App/App.tsx"  ]
 }
