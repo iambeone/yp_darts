@@ -183,7 +183,6 @@ export const tokenRequestOptions = (method: string) => {
 };
 
 export const tokenRequestOptionsPatch = (method: string, data: any) => {
-  console.log(data);
   const accessToken =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTY3Mzg4NTY2MCwiZXhwIjoxNjczOTcyMDYwfQ.yNFerBmFNgFy75MwV1bVTqULEBD-5UV9ZmkwdrJgFqw";
   const requestOptions = {

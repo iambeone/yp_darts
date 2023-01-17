@@ -85,10 +85,6 @@ function AdditionalForm({
   }, [window.location.pathname]);
 
   const onSubmit = (data: any) => {
-    console.log({
-      ...data,
-      file,
-    });
     return { ...data, file };
   };
 

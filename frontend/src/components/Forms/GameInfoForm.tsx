@@ -112,14 +112,9 @@ export default function GameInfoForm() {
     formState: { errors, isValid },
   } = useForm({ mode: "onBlur" });
 
-  console.log(gameInfoFormData);
-
-  // const dispatch = useDispatch();
-
   const url = window.location.pathname;
   const urlArray = url.split("/");
   const urlPath = urlArray[2];
-  // const { id } = useParams();
 
   const [isEdit, setIsEdit] = React.useState<boolean>(false);
 
@@ -133,6 +128,7 @@ export default function GameInfoForm() {
 
   const onSubmit = (data: any) => {
     setGameInfoFormData(data);
+    return gameInfoFormData;
   };
   return (
     <>

@@ -100,7 +100,6 @@ export default function MainForm({
       dispatch(patchPlayer(id, data));
     }
     setMainFormData(data);
-    // console.log(data);
     return mainFormData;
   };
 
