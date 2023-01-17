@@ -77,7 +77,7 @@ export default function MainForm({
     } else {
       setIsEdit(false);
     }
-  }, [window.location.pathname]);
+  }, [urlPath]);
 
   React.useEffect(() => {
     setFormValid(isValid);
