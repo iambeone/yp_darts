@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import Autocomplete from "@mui/material/Autocomplete";
+import { FormHelperText } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 
@@ -12,10 +13,14 @@ type TOptions = {
 type TSelect = {
   label?: string;
   options: TOptions[];
-  inputWidth: number;
-  inputHeight: number;
+  inputWidth?: number;
+  inputHeight?: number;
   onChangeOption: (value: TOptions | null) => void;
   sx?: any;
+  value?: TOptions;
+  onBlur?: any;
+  error?: boolean;
+  helperText?: string;
 };
 
 const Label = styled.p`
@@ -30,11 +35,24 @@ const Label = styled.p`
 `;
 
 export default function SelectOption(props: TSelect) {
-  const { label, options, inputWidth, inputHeight, onChangeOption, sx } = props;
+  const {
+    label,
+    options,
+    inputWidth,
+    inputHeight,
+    onChangeOption,
+    sx,
+    value,
+    onBlur,
+    error,
+    helperText,
+  } = props;
   return (
     <Stack sx={sx}>
       <Label>{label}</Label>
       <Autocomplete
+        value={value}
+        onBlur={onBlur}
         onChange={(event, newValue) => {
           onChangeOption(newValue);
         }}
@@ -45,10 +63,12 @@ export default function SelectOption(props: TSelect) {
           <TextField
             {...params}
             placeholder="Выбрать"
+            error={error}
             sx={{ width: inputWidth, height: inputHeight }}
           />
         )}
       />
+      {error && <FormHelperText>{helperText}</FormHelperText>}
     </Stack>
   );
 }
@@ -56,4 +76,10 @@ export default function SelectOption(props: TSelect) {
 SelectOption.defaultProps = {
   label: null,
   sx: null,
+  value: null,
+  inputWidth: null,
+  inputHeight: null,
+  onBlur: null,
+  error: false,
+  helperText: null,
 };

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -40,18 +40,26 @@ const sxTabs = {
 };
 
 function TabMenu({ tabs }: TTabMenuProps) {
-  const [value, setValue] = React.useState(0);
+  const location = useLocation();
+  const [value, setValue] = React.useState<number | undefined>(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
+  React.useEffect(() => {
+    const lastParam = location.pathname.split("/");
+
+    const index = lastParam.length - 1;
+    const tabValue = tabs.find((el) => el.href === lastParam[index]);
+    if (tabValue?.id) {
+      setValue(tabValue?.id);
+    } else {
+      setValue(0);
+    }
+  }, [location, tabs]);
 
   return (
     <Box sx={sxBox}>
       <Tabs
         sx={sxTabs}
         value={value}
-        onChange={handleChange}
         variant="scrollable"
         scrollButtons="auto"
         aria-label="scrollable auto tabs example"

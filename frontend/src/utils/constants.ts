@@ -170,7 +170,7 @@ export const tokenRequestOptions = (method: string) => {
 
   // убрать после подключения авторизации. Залогинится через postman и вставить полученный токен
   const accessToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImlhdCI6MTY3Mzg0NDEyMywiZXhwIjoxNjczOTMwNTIzfQ.v78DiipPzabVQoCfd84SnByVDKXdKcJ0qFkpcFx6KoU";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImlhdCI6MTY3Mzk0OTY1OCwiZXhwIjoxNjc0MDM2MDU4fQ.Y-VP7vOv8hwHRAxXcXIMD39gbln5YOZr_dRei8nUzZk";
 
   const requestOptions = {
     method: `${method}`,
@@ -178,6 +178,20 @@ export const tokenRequestOptions = (method: string) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
+  };
+  return requestOptions;
+};
+
+export const tokenRequestOptionsPatch = (method: string, data: any) => {
+  const accessToken =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTY3Mzg4NTY2MCwiZXhwIjoxNjczOTcyMDYwfQ.yNFerBmFNgFy75MwV1bVTqULEBD-5UV9ZmkwdrJgFqw";
+  const requestOptions = {
+    method: `${method}`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(data),
   };
   return requestOptions;
 };

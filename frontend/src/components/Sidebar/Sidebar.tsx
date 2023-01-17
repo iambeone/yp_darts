@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../images/Logo.svg";
-import Tabs from "../Tabs/Tabs";
+import Tabs from "../SideBarTabs/SideBarTabs";
 import { Section, Img } from "./SidebarStyles";
 
 function Sidebar() {

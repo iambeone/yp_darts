@@ -26,7 +26,6 @@ const styleButtonRed = {
   color: "#fff",
   backgroundColor: "#D32F2F",
   borderRadius: "100px",
-  // width: "100%",
   boxShadow:
     "0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
   "&:hover": {
@@ -44,7 +43,6 @@ const styleButtonRedCricle = {
   color: "#fff",
   backgroundColor: "#D32F2F",
   borderRadius: "64px",
-  // width: "100%",
   boxShadow:
     "0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
   "&:hover": {

@@ -91,7 +91,7 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
             ).map((item) => (
               <TableRow key={item.id}>
                 <TableCell>
-                  <LinkStyled to={`/player/:${item.id}`}>
+                  <LinkStyled to={`/player/${item.id}`}>
                     <NameSpan>
                       {item.surname} {item.name}
                     </NameSpan>
@@ -107,7 +107,7 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
                   <BtnSpan>ДОБАВИТЬ В ТУРНИР</BtnSpan>
                 </TableCell>
                 <TableCell align="right" sx={ChangeCell}>
-                  <LinkSpan to={`/players/edit-player/:${item.id}`}>
+                  <LinkSpan to={`/players/edit-player/${item.id}`}>
                     ИЗМЕНИТЬ
                   </LinkSpan>
                 </TableCell>
@@ -143,5 +143,3 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
     </TableWithPagination>
   );
 }
-
-// https://github.com/ankitasingh170190/Pagination_Demo
