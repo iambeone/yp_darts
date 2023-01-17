@@ -13,11 +13,15 @@ import {
   SET_ACCEPT_DELETE_OPEN,
   SET_CONFIRM_DELETE_OPEN,
   SET_CONTEXT_MENU_OPEN,
+  PATCH_PLAYER_REQUEST,
+  PATCH_PLAYER_SUCCESS,
+  PATCH_PLAYER_FAILED,
 } from "./actionsTypes";
 import {
   baseUrl,
   tokenRequestOptions,
   checkResponse,
+  tokenRequestOptionsPatch,
 } from "../../utils/constants";
 import type { IApplicationActions } from ".";
 import type { AppThunk, AppDispatch } from "../store";
@@ -89,6 +93,20 @@ interface IsetContextMenuOpen {
   readonly payload: { anchor: HTMLButtonElement | null };
 }
 
+interface IpatchPlayerRequest {
+  readonly type: typeof PATCH_PLAYER_REQUEST;
+}
+
+interface IpatchPlayerSuccess {
+  readonly type: typeof PATCH_PLAYER_SUCCESS;
+  readonly payload: { data: any };
+}
+
+interface IpatchPlayerFailed {
+  readonly type: typeof PATCH_PLAYER_FAILED;
+  readonly payload: { error: {} };
+}
+
 export type TPlayersActions =
   | IfetchPlayersRequest
   | IfetchPlayersSuccess
@@ -96,14 +114,17 @@ export type TPlayersActions =
   | IdeletePlayerRequest
   | IdeletePlayerSuccess
   | IdeletePlayerFailed
-  | IgetPlayerRequest
-  | IgetPlayerSuccess
-  | IgetPlayerFailed
   | ISetSearch
   | IsetCurrentPlayerID
   | IsetAcceptDeleteOpen
   | IsetConfirmDeleteOpen
-  | IsetContextMenuOpen;
+  | IsetContextMenuOpen
+  | IpatchPlayerRequest
+  | IpatchPlayerSuccess
+  | IpatchPlayerFailed
+  | IgetPlayerRequest
+  | IgetPlayerSuccess
+  | IgetPlayerFailed;
 
 export const fetchPlayersRequest = (): TPlayersActions => ({
   type: GET_PLAYERS_REQUEST,
@@ -166,6 +187,20 @@ export const setConfirmDeleteOpen = (payload: boolean): TPlayersActions => ({
   payload,
 });
 
+export const patchPlayerRequest = (): TPlayersActions => ({
+  type: PATCH_PLAYER_REQUEST,
+});
+
+export const patchPlayerSuccess = (data: any): TPlayersActions => ({
+  type: PATCH_PLAYER_SUCCESS,
+  payload: { data },
+});
+
+export const patchPlayerFailed = (error: {}): TPlayersActions => ({
+  type: PATCH_PLAYER_FAILED,
+  payload: { error },
+});
+
 export const setContextMenuOpen = (
   anchor: HTMLButtonElement | null,
 ): TPlayersActions => ({
@@ -177,7 +212,7 @@ export const getPlayers: AppThunk<Promise<IApplicationActions>> =
   (payload: string) => (dispatch: AppDispatch) => {
     dispatch(fetchPlayersRequest());
     return fetch(
-      `${baseUrl}/participants${payload}`,
+      `${baseUrl}/participants/${payload}`,
       tokenRequestOptions("GET"),
     )
       .then(checkResponse)
@@ -210,4 +245,21 @@ export const getPlayer: AppThunk<Promise<IApplicationActions>> =
         return res;
       })
       .catch((error) => dispatch(getPlayerFailed(error)));
+  };
+
+export const patchPlayer: AppThunk<Promise<IApplicationActions>> =
+  (id: string, data: any) => (dispatch: AppDispatch) => {
+    console.log(id);
+    console.log(data);
+    dispatch(patchPlayerRequest());
+    return fetch(
+      `${baseUrl}/participants/${id}`,
+      tokenRequestOptionsPatch("PATCH", data),
+    )
+      .then(checkResponse)
+      .then((json) => {
+        dispatch(patchPlayerSuccess(json));
+        return json;
+      })
+      .catch((error) => dispatch(patchPlayerFailed(error)));
   };

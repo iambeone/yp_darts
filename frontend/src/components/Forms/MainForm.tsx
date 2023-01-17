@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import React from "react";
+import { useParams } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { Typography } from "@mui/material";
-
 import { Dayjs } from "dayjs";
 import InputText from "../InputText/InputText";
 import RadioOption from "../RadioOption/RadioOption";
@@ -14,6 +14,8 @@ import {
   SubmitBlock,
   SubmitButton,
 } from "./Styles/MainFormStyles";
+import { useDispatch } from "../../utils/hooks";
+import { patchPlayer } from "../../services/actions";
 
 interface IDataElement<T> {
   value: T;
@@ -21,23 +23,23 @@ interface IDataElement<T> {
 }
 
 interface IMainFormData {
-  lastName?: IDataElement<string>;
-  firstName?: IDataElement<string>;
+  surname?: IDataElement<string>;
+  name?: IDataElement<string>;
   patronymic?: IDataElement<string>;
   birthday?: IDataElement<Dayjs>;
   gender?: IDataElement<string>;
-  adress?: IDataElement<string>;
+  address?: IDataElement<string>;
   email?: IDataElement<string>;
   phone?: IDataElement<string>;
 }
 
 export default function MainForm({
-  lastName,
-  firstName,
+  surname,
+  name,
   patronymic,
   birthday,
   gender,
-  adress,
+  address,
   email,
   phone,
 }: IMainFormData) {
@@ -48,26 +50,58 @@ export default function MainForm({
   } = useForm({
     mode: "onBlur",
     defaultValues: {
-      lastName: lastName?.value,
-      firstName: firstName?.value,
+      surname: surname?.value,
+      name: name?.value,
       patronymic: patronymic?.value,
       birthday: birthday?.value,
       gender: gender?.value,
-      adress: adress?.value,
+      address: address?.value,
       email: email?.value,
       phone: phone?.value,
     },
   });
 
+  const dispatch = useDispatch();
+
+  const url = window.location.pathname;
+  const urlArray = url.split("/");
+  const urlPath = urlArray[2];
+  const { id } = useParams();
+
   const [mainFormData, setMainFormData] = React.useState();
   const [formValide, setFormValid] = React.useState<boolean>(false);
+  const [isEdit, setIsEdit] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    if (urlPath === "edit-player") {
+      setIsEdit(true);
+    } else {
+      setIsEdit(false);
+    }
+  }, [window.location.pathname]);
 
   React.useEffect(() => {
     setFormValid(isValid);
   }, [isValid]);
 
+  function convert(str: any) {
+    const date = new Date(str);
+    const mnth = `0${date.getMonth() + 1}`.slice(-2);
+    const day = `0${date.getDate()}`.slice(-2);
+    return [date.getFullYear(), mnth, day].join("-");
+  }
+
   const onSubmit = (data: any) => {
+    const dateOfBirth = convert(data.birthday);
+    // eslint-disable-next-line no-param-reassign
+    delete data.birthday;
+    // eslint-disable-next-line no-param-reassign
+    data.dateOfBirth = dateOfBirth;
+    if (isEdit) {
+      dispatch(patchPlayer(id, data));
+    }
     setMainFormData(data);
+    // console.log(data);
     return mainFormData;
   };
 
@@ -75,7 +109,7 @@ export default function MainForm({
     <>
       <Form>
         <Controller
-          name="lastName"
+          name="surname"
           control={control}
           rules={{
             required: "Это обязательное поле",
@@ -91,7 +125,7 @@ export default function MainForm({
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <InputText
-              isDisabled={lastName?.isDisabled}
+              isDisabled={surname?.isDisabled}
               label="Фамилия"
               placeholder="Фамилия"
               size="medium"
@@ -100,13 +134,13 @@ export default function MainForm({
               value={value}
               required
               onBlur={onBlur}
-              error={!!errors.lastName?.message}
-              helperText={errors.lastName?.message?.toString()}
+              error={!!errors.surname?.message}
+              helperText={errors.surname?.message?.toString()}
             />
           )}
         />
         <Controller
-          name="firstName"
+          name="name"
           control={control}
           rules={{
             required: "Это обязательное поле",
@@ -122,7 +156,7 @@ export default function MainForm({
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <InputText
-              isDisabled={firstName?.isDisabled}
+              isDisabled={name?.isDisabled}
               label="Имя"
               placeholder="Имя"
               size="medium"
@@ -131,8 +165,8 @@ export default function MainForm({
               value={value}
               required
               onBlur={onBlur}
-              error={!!errors.firstName?.message}
-              helperText={errors.firstName?.message?.toString()}
+              error={!!errors.name?.message}
+              helperText={errors.name?.message?.toString()}
             />
           )}
         />
@@ -215,7 +249,7 @@ export default function MainForm({
         />
         <Line>
           <Controller
-            name="adress"
+            name="address"
             control={control}
             rules={{
               pattern: {
@@ -226,7 +260,7 @@ export default function MainForm({
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <InputText
-                isDisabled={adress?.isDisabled}
+                isDisabled={address?.isDisabled}
                 label="Адрес регистрации"
                 placeholder="188800, г. Выборг, ул. Куйбышева, д 1, к 2"
                 size="large"
@@ -234,8 +268,8 @@ export default function MainForm({
                 onChange={onChange}
                 value={value}
                 onBlur={onBlur}
-                error={!!errors.adress?.message}
-                helperText={errors.adress?.message?.toString()}
+                error={!!errors.address?.message}
+                helperText={errors.address?.message?.toString()}
               />
             )}
           />
@@ -297,34 +331,48 @@ export default function MainForm({
           )}
         />
       </Form>
-      <SubmitBlock>
-        {!formValide && (
-          <Typography>
-            Для продолжения заполните обязательные поля{" "}
-            <Requirement>*</Requirement>
-          </Typography>
-        )}
-        <SubmitButton
-          colors="all-red"
-          onClick={handleSubmit(onSubmit)}
-          text="Далее"
-          customIcon="forward_arrow"
-          disabled={!formValide}
-          reverse="right"
-          iconColor="blue"
-        />
-      </SubmitBlock>
+      {isEdit ? (
+        <SubmitBlock>
+          <SubmitButton
+            colors="all-red"
+            onClick={handleSubmit(onSubmit)}
+            text="Сохранить"
+            // customIcon="forward_arrow"
+            disabled={!formValide}
+            reverse="right"
+            iconColor="blue"
+          />
+        </SubmitBlock>
+      ) : (
+        <SubmitBlock>
+          {!formValide && (
+            <Typography>
+              Для продолжения заполните обязательные поля{" "}
+              <Requirement>*</Requirement>
+            </Typography>
+          )}
+          <SubmitButton
+            colors="all-red"
+            onClick={handleSubmit(onSubmit)}
+            text="Далее"
+            customIcon="forward_arrow"
+            disabled={!formValide}
+            reverse="right"
+            iconColor="blue"
+          />
+        </SubmitBlock>
+      )}
     </>
   );
 }
 
 MainForm.defaultProps = {
-  lastName: { value: "" },
-  firstName: { value: "" },
+  surname: { value: "" },
+  name: { value: "" },
   patronymic: { value: "" },
   birthday: { value: "" },
   gender: { value: "" },
-  adress: { value: "" },
+  address: { value: "" },
   email: { value: "" },
   phone: { value: "" },
 };
