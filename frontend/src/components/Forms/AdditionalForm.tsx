@@ -13,25 +13,30 @@ import {
   educationLevelOptions,
 } from "../../utils/constants";
 
+type TOptions = {
+  id: number;
+  title: string;
+};
+
 interface AdditionalFormProps {
   weightValue?: string;
   heightValue?: string;
-  clothingSizeValue?: string;
+  clothingSizeValue?: TOptions;
   hobbyValue?: string;
   institutionValue?: string;
   graduationDateValue?: Dayjs | null;
-  educationLevelValue?: string;
+  educationLevelValue?: TOptions;
   specializationValue?: string;
 }
 
 const defaultProps: Partial<AdditionalFormProps> = {
   weightValue: "",
   heightValue: "",
-  clothingSizeValue: "",
+  clothingSizeValue: undefined,
   hobbyValue: "",
   institutionValue: "",
   graduationDateValue: null,
-  educationLevelValue: "",
+  educationLevelValue: undefined,
   specializationValue: "",
 };
 
@@ -66,10 +71,10 @@ function AdditionalForm({
   const [file, setFile] = useState<File | null>(null);
 
   const onSubmit = (data: any) => {
-    // console.log({
-    //   ...data,
-    //   file,
-    // });
+    console.log({
+      ...data,
+      file,
+    });
     return { ...data, file };
   };
 
@@ -154,13 +159,19 @@ function AdditionalForm({
                 <Controller
                   name="clothingSize"
                   control={control}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, onBlur, value } }) => (
                     <SelectOption
                       label="Размер одежды"
-                      inputWidth={140}
                       inputHeight={56}
-                      // value={value}
+                      sx={{
+                        width: 140,
+                        "@media(min-width: 834px)": {
+                          width: 144,
+                        },
+                      }}
+                      value={value}
                       onChangeOption={onChange}
+                      onBlur={onBlur}
                       options={clothingSizeOptions}
                     />
                   )}
@@ -264,13 +275,19 @@ function AdditionalForm({
               <Controller
                 name="educationLevel"
                 control={control}
-                render={({ field: { onChange } }) => (
+                render={({ field: { onChange, onBlur, value } }) => (
                   <SelectOption
                     label="Уровень"
-                    inputWidth={242}
                     inputHeight={56}
-                    // value={value}
+                    sx={{
+                      width: 242,
+                      "@media(min-width: 834px)": {
+                        width: 226,
+                      },
+                    }}
+                    value={value}
                     onChangeOption={onChange}
+                    onBlur={onBlur}
                     options={educationLevelOptions}
                   />
                 )}
