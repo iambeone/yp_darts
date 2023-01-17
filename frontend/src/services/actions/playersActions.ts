@@ -25,7 +25,7 @@ import {
 } from "../../utils/constants";
 import type { IApplicationActions } from ".";
 import type { AppThunk, AppDispatch } from "../store";
-import { Tplayers } from "../types";
+import { Tplayers, Tplayer } from "../types";
 
 interface IfetchPlayersRequest {
   readonly type: typeof GET_PLAYERS_REQUEST;
@@ -65,7 +65,7 @@ interface IgetPlayerRequest {
 
 interface IgetPlayerSuccess {
   readonly type: typeof GET_PLAYER_SUCCESS;
-  readonly payload: { data: Tplayers };
+  readonly payload: { data: Tplayer };
 }
 
 interface IgetPlayerFailed {
@@ -167,7 +167,7 @@ export const getPlayerRequest = (): TPlayersActions => ({
   type: GET_PLAYER_REQUEST,
 });
 
-export const getPlayerSuccess = (data: Tplayers): TPlayersActions => ({
+export const getPlayerSuccess = (data: any): TPlayersActions => ({
   type: GET_PLAYER_SUCCESS,
   payload: { data },
 });
@@ -191,7 +191,7 @@ export const patchPlayerRequest = (): TPlayersActions => ({
   type: PATCH_PLAYER_REQUEST,
 });
 
-export const patchPlayerSuccess = (data: any): TPlayersActions => ({
+export const patchPlayerSuccess = (data: Tplayer): TPlayersActions => ({
   type: PATCH_PLAYER_SUCCESS,
   payload: { data },
 });

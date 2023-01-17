@@ -8,12 +8,12 @@ enum LeadHandEnum {
   RIGHT = "right",
 }
 
-export type Tplayers = {
+export type Tplayer = {
   id: number;
   surname: string;
   name: string;
   patronymic?: string;
-  dateOfBirth?: Date;
+  dateOfBirth: Date;
   gender: GenderEnum;
   address?: string;
   email: string;
@@ -44,4 +44,11 @@ export type Tplayers = {
   speciality?: string;
   image?: string;
   events?: Event[];
+};
+
+export type Tplayers = {
+  id: number;
+  surname: string;
+  name: string;
+  email: string;
 };

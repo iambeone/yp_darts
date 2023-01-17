@@ -6,7 +6,10 @@ import TabMenu from "../../components/TabMenu/TabMenu";
 import { getPlayer } from "../../services/actions";
 
 export default function EditPlayerPage() {
-  const player = useSelector((state: any) => state.player.playerData);
+  const player = useSelector((state: any) => state.players.player);
+  const playerFullName = `${player?.surname} ${player?.name} ${
+    player?.patronymic ? player?.patronymic : ""
+  }`;
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -23,7 +26,7 @@ export default function EditPlayerPage() {
 
   return (
     <>
-      {player.name && <PageTitle title={`${player.surname} ${player.name}`} />}
+      {player && <PageTitle title={playerFullName} />}
       <TabMenu tabs={tabsForms} />
       <Outlet />
     </>
