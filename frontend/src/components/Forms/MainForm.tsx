@@ -332,7 +332,6 @@ export default function MainForm({
         />
       </Form>
       {isEdit ? (
-        // eslint-disable-next-line react/jsx-no-useless-fragment
         <SubmitBlock>
           <SubmitButton
             colors="all-red"
