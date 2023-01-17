@@ -5,7 +5,7 @@ import { FormHelperText } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 
-type TOptions = {
+export type TOptions = {
   id: number;
   title: string;
 };
@@ -51,6 +51,7 @@ export default function SelectOption(props: TSelect) {
     <Stack sx={sx}>
       <Label>{label}</Label>
       <Autocomplete
+        isOptionEqualToValue={(option, parameter) => option.id === parameter.id}
         value={value}
         onBlur={onBlur}
         onChange={(event, newValue) => {

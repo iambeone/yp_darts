@@ -6,8 +6,8 @@ import { sportsCategory, subjectsRF } from "../../utils/constants";
 import DateTextField from "../InputDate/InputDate";
 import InputText from "../InputText/InputText";
 import RadioOptionHand from "../RadioOption/RadioOptionHand";
-import SelectOptions from "../SelectOption/SelectOption";
-import Button from "../Button/Button";
+import SelectOptions, { TOptions } from "../SelectOption/SelectOption";
+import { SubmitBlock, SubmitButton } from "./Styles/MainFormStyles";
 
 const Form = styled.form`
   margin: 24px auto 43px;
@@ -20,6 +20,7 @@ const Form = styled.form`
   @media (max-width: 500px) {
     margin-left: 16px;
     margin-right: 16px;
+    margin-bottom: 26px;
     max-width: 328px;
   }
 `;
@@ -71,46 +72,62 @@ const InputWrapper = styled.div`
     width: 400px;
   }
 `;
-const SubmitBlock = styled.div`
-  width: 100%;
-  justify-items: center;
-  justify-content: center;
-  display: grid;
-  gap: 16px;
-  padding: 16px 0 16px;
-  box-shadow: 0px -5px 8px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  bottom: 0px;
-  background: #ffffff;
-`;
-const SubmitButton = styled(Button)`
-  max-width: 121px;
-`;
 
 interface IGameInfoFormData {
-  subject: string;
-  category: string;
-  hand: string;
-  dateAssignedCategory: Dayjs;
-  dateBeginMedPol: Dayjs;
-  dateEndMedPol: Dayjs;
-  coach: string;
-  maker: string;
-  policyNumber: string;
-  dartWeight: string;
-  sertificateRUSADA: string;
-  dateBeginSertRUSADA: Dayjs;
-  dateEndSertRUSADA: Dayjs;
+  subjectValue?: TOptions;
+  categoryValue?: TOptions;
+  handValue?: string;
+  dateAssignedCategoryValue?: Dayjs | null;
+  dateBeginMedPolValue?: Dayjs | null;
+  dateEndMedPolValue?: Dayjs | null;
+  coachValue?: string;
+  makerValue?: string;
+  policyNumberValue?: string;
+  dartWeightValue?: string;
+  sertificateRUSADAValue?: string;
+  dateBeginSertRUSADAValue?: Dayjs | null;
+  dateEndSertRUSADAValue?: Dayjs | null;
 }
 
-export default function GameInfoForm() {
+export default function GameInfoForm({
+  subjectValue,
+  categoryValue,
+  handValue,
+  dateAssignedCategoryValue,
+  dateBeginMedPolValue,
+  dateEndMedPolValue,
+  coachValue,
+  makerValue,
+  policyNumberValue,
+  dartWeightValue,
+  sertificateRUSADAValue,
+  dateBeginSertRUSADAValue,
+  dateEndSertRUSADAValue,
+}: IGameInfoFormData) {
   const [gameInfoFormData, setGameInfoFormData] =
     React.useState<IGameInfoFormData>();
   const {
     handleSubmit,
     control,
     formState: { errors, isValid },
-  } = useForm({ mode: "onBlur" });
+  } = useForm({
+    mode: "onBlur",
+    defaultValues: {
+      subjectRF: subjectValue,
+      category: categoryValue,
+      dateAssignedCategory: dateAssignedCategoryValue || null,
+      coach: coachValue,
+      maker: makerValue,
+      hand: handValue || "",
+      dartWeight: dartWeightValue,
+      policyNumber: policyNumberValue,
+      dateBeginMedPol: dateBeginMedPolValue || null,
+      dateEndMedPol: dateEndMedPolValue || null,
+      sertificateRUSADA: sertificateRUSADAValue,
+      dateBeginSertRUSADA: dateBeginSertRUSADAValue || null,
+      dateEndSertRUSADA: dateEndSertRUSADAValue || null,
+    },
+  });
 
   const url = window.location.pathname;
   const urlArray = url.split("/");
@@ -197,7 +214,7 @@ export default function GameInfoForm() {
                 helperText={errors.dateAssignedCategory?.message?.toString()}
                 sx={{
                   width: 226,
-                  "@media(max-width: 500px)": {
+                  "@media(max-width: 750px)": {
                     mt: 2,
                     width: 242,
                   },
@@ -315,7 +332,7 @@ export default function GameInfoForm() {
                 helperText={errors.category?.message?.toString()}
                 sx={{
                   width: 144,
-                  "@media(max-width: 500px)": {
+                  "@media(max-width: 750px)": {
                     mt: 2,
                     width: 156,
                   },
@@ -386,6 +403,7 @@ export default function GameInfoForm() {
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <DateTextField
+                disableFuture
                 value={value}
                 type="day"
                 labelText="Конец действия"
@@ -396,7 +414,7 @@ export default function GameInfoForm() {
                 helperText={errors.category?.message?.toString()}
                 sx={{
                   width: 226,
-                  "@media(max-width: 500px)": {
+                  "@media(max-width: 750px)": {
                     width: 242,
                     mt: 2,
                   },
@@ -478,7 +496,7 @@ export default function GameInfoForm() {
                 helperText={errors.category?.message?.toString()}
                 sx={{
                   width: 226,
-                  "@media(max-width: 500px)": {
+                  "@media(max-width: 750px)": {
                     width: 242,
                     mt: 2,
                   },
