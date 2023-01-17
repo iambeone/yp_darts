@@ -36,6 +36,7 @@ export type Tplayers = {
   endOfAction?: Date;
   weightOfPlayer?: number;
   heightOfPlayer?: number;
+  clothingSize?: string;
   hobby?: string;
   educationalInstitution?: string;
   endOfEducation?: Date;

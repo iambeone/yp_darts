@@ -24,7 +24,7 @@ import {
   LinkSpan,
 } from "./GamersTableStyles";
 import { Tplayers } from "../../services/types";
-import { setContextMenuOpen } from "../../services/actions";
+import { setContextMenuOpen, setCurrentPlayerID } from "../../services/actions";
 
 const TableStyle = {
   width: "auto",
@@ -57,11 +57,13 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
   const { pageNumber = 1 } = useParams();
 
   const openContextMenu = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    const id = Number(evt.currentTarget.dataset.id);
     dispatch(setContextMenuOpen(anchor ? null : evt.currentTarget));
+    dispatch(setCurrentPlayerID(id));
   };
 
   const addToTournament = (id: number) => {
-    console.log(id);
+    return id;
   };
 
   return (
@@ -89,7 +91,7 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
             ).map((item) => (
               <TableRow key={item.id}>
                 <TableCell>
-                  <LinkStyled to={`/player/:${item.id}`}>
+                  <LinkStyled to={`/player/${item.id}`}>
                     <NameSpan>
                       {item.surname} {item.name}
                     </NameSpan>
@@ -105,7 +107,7 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
                   <BtnSpan>ДОБАВИТЬ В ТУРНИР</BtnSpan>
                 </TableCell>
                 <TableCell align="right" sx={ChangeCell}>
-                  <LinkSpan to={`/players/edit-player/:${item.id}`}>
+                  <LinkSpan to={`/players/edit-player/${item.id}`}>
                     ИЗМЕНИТЬ
                   </LinkSpan>
                 </TableCell>

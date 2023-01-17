@@ -182,6 +182,21 @@ export const tokenRequestOptions = (method: string) => {
   return requestOptions;
 };
 
+export const tokenRequestOptionsPatch = (method: string, data: any) => {
+  console.log(data);
+  const accessToken =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTY3Mzg4NTY2MCwiZXhwIjoxNjczOTcyMDYwfQ.yNFerBmFNgFy75MwV1bVTqULEBD-5UV9ZmkwdrJgFqw";
+  const requestOptions = {
+    method: `${method}`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(data),
+  };
+  return requestOptions;
+};
+
 export const sportsCategory = [
   { id: 1, title: "Кандидат в мастера спорта России (КМС)" },
   { id: 2, title: "1-й спортивный разряд" },

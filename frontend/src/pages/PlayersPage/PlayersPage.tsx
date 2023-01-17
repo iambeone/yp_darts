@@ -8,14 +8,7 @@ import Filters from "../../components/Modals/Filters";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import DialogWindow from "../../components/DialogWindow/DialogWindow";
-import {
-  deletePlayer,
-  getPlayers,
-  setAcceptDeleteOpen,
-  setConfirmDeleteOpen,
-  setContextMenuOpen,
-  setCurrentPlayerID,
-} from "../../services/actions";
+import * as actions from "../../services/actions";
 import ContextMenu from "../../components/ContextMenu/ContextMenu";
 
 export default function PlayersPage() {
@@ -39,35 +32,29 @@ export default function PlayersPage() {
 
   // не работает закрытие по клику не по меню, разобраться
   const closeContextMenu = () => {
-    dispatch(setContextMenuOpen(null));
+    dispatch(actions.setContextMenuOpen(null));
   };
 
   const addToTournament = (id: number) => {
-    console.log(id);
+    return id;
   };
 
   const contextMenuPlayersTableFull = [
     {
       icon: "person_add",
       value: "Добавить в турнир",
-      callback: (e: React.MouseEvent<HTMLElement>) => {
-        const id = Number(e.currentTarget.dataset.id);
-        addToTournament(id);
-      },
+      callback: () => addToTournament(currentPlayerId),
     },
     {
       icon: "edit",
       value: "Изменить",
-      callback: (e: React.MouseEvent<HTMLElement>) =>
-        navigate(`/players/edit-player/:${e.currentTarget.dataset.id}`),
+      callback: () => navigate(`/players/edit-player/${currentPlayerId}`),
     },
     {
       icon: "delete",
       value: "Удалить",
-      callback: (e: React.MouseEvent<HTMLElement>) => {
-        const id = Number(e.currentTarget.dataset.id);
-        dispatch(setAcceptDeleteOpen(true));
-        dispatch(setCurrentPlayerID(id));
+      callback: () => {
+        dispatch(actions.setAcceptDeleteOpen(true));
       },
     },
   ];
@@ -76,22 +63,22 @@ export default function PlayersPage() {
     {
       icon: "delete",
       value: "Удалить",
-      callback: (e: React.MouseEvent<HTMLElement>) => {
-        const id = Number(e.currentTarget.dataset.id);
-        dispatch(setAcceptDeleteOpen(true));
-        dispatch(setCurrentPlayerID(id));
+      callback: () => {
+        dispatch(actions.setAcceptDeleteOpen(true));
       },
     },
   ];
 
   const handleDeletePlayer = () => {
-    Promise.resolve(dispatch(deletePlayer(currentPlayerId))).then(() => {
-      dispatch(getPlayers(""));
-      dispatch(setAcceptDeleteOpen(false));
-      dispatch(setConfirmDeleteOpen(true));
-      dispatch(setCurrentPlayerID(0));
-    });
-    dispatch(setAcceptDeleteOpen(false));
+    Promise.resolve(dispatch(actions.deletePlayer(currentPlayerId))).then(
+      () => {
+        dispatch(actions.getPlayers(""));
+        dispatch(actions.setAcceptDeleteOpen(false));
+        dispatch(actions.setConfirmDeleteOpen(true));
+        dispatch(actions.setCurrentPlayerID(0));
+      },
+    );
+    dispatch(actions.setAcceptDeleteOpen(false));
   };
 
   return (
@@ -107,9 +94,9 @@ export default function PlayersPage() {
         type="accept"
         title={deleteTitle}
         contentText={deleteText}
-        handleClose={() => dispatch(setAcceptDeleteOpen(false))}
+        handleClose={() => dispatch(actions.setAcceptDeleteOpen(false))}
       >
-        <Button onClick={() => dispatch(setAcceptDeleteOpen(false))}>
+        <Button onClick={() => dispatch(actions.setAcceptDeleteOpen(false))}>
           Отмена
         </Button>
         <Button onClick={handleDeletePlayer} color="error">
@@ -118,11 +105,11 @@ export default function PlayersPage() {
       </DialogWindow>
       <DialogWindow
         open={confirmDeleteOpen}
-        handleClose={() => dispatch(setConfirmDeleteOpen(false))}
+        handleClose={() => dispatch(actions.setConfirmDeleteOpen(false))}
         type="success"
         title={confirmDeleteTitle}
       >
-        <Button onClick={() => dispatch(setConfirmDeleteOpen(false))}>
+        <Button onClick={() => dispatch(actions.setConfirmDeleteOpen(false))}>
           Перейти в список игроков
         </Button>
       </DialogWindow>

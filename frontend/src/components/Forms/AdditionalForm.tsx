@@ -13,25 +13,30 @@ import {
   educationLevelOptions,
 } from "../../utils/constants";
 
+type TOptions = {
+  id: number;
+  title: string;
+};
+
 interface AdditionalFormProps {
   weightValue?: string;
   heightValue?: string;
-  clothingSizeValue?: string;
+  clothingSizeValue?: TOptions;
   hobbyValue?: string;
   institutionValue?: string;
   graduationDateValue?: Dayjs | null;
-  educationLevelValue?: string;
+  educationLevelValue?: TOptions;
   specializationValue?: string;
 }
 
 const defaultProps: Partial<AdditionalFormProps> = {
   weightValue: "",
   heightValue: "",
-  clothingSizeValue: "",
+  clothingSizeValue: undefined,
   hobbyValue: "",
   institutionValue: "",
   graduationDateValue: null,
-  educationLevelValue: "",
+  educationLevelValue: undefined,
   specializationValue: "",
 };
 
@@ -63,13 +68,28 @@ function AdditionalForm({
     },
   });
 
+  const url = window.location.pathname;
+  const urlArray = url.split("/");
+  const urlPath = urlArray[2];
+  // const { id } = useParams();
+
   const [file, setFile] = useState<File | null>(null);
+  const [isEdit, setIsEdit] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    if (urlPath === "edit-player") {
+      setIsEdit(true);
+    } else {
+      setIsEdit(false);
+    }
+  }, [window.location.pathname]);
 
   const onSubmit = (data: any) => {
     console.log({
       ...data,
       file,
     });
+    return { ...data, file };
   };
 
   return (
@@ -153,13 +173,19 @@ function AdditionalForm({
                 <Controller
                   name="clothingSize"
                   control={control}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, onBlur, value } }) => (
                     <SelectOption
                       label="Размер одежды"
-                      inputWidth={140}
                       inputHeight={56}
-                      // value={value}
+                      sx={{
+                        width: 140,
+                        "@media(min-width: 834px)": {
+                          width: 144,
+                        },
+                      }}
+                      value={value}
                       onChangeOption={onChange}
+                      onBlur={onBlur}
                       options={clothingSizeOptions}
                     />
                   )}
@@ -263,13 +289,19 @@ function AdditionalForm({
               <Controller
                 name="educationLevel"
                 control={control}
-                render={({ field: { onChange } }) => (
+                render={({ field: { onChange, onBlur, value } }) => (
                   <SelectOption
                     label="Уровень"
-                    inputWidth={242}
                     inputHeight={56}
-                    // value={value}
+                    sx={{
+                      width: 242,
+                      "@media(min-width: 834px)": {
+                        width: 226,
+                      },
+                    }}
+                    value={value}
                     onChangeOption={onChange}
+                    onBlur={onBlur}
                     options={educationLevelOptions}
                   />
                 )}
@@ -315,41 +347,79 @@ function AdditionalForm({
       </Form>
 
       <ButtonWrapper>
-        <Button
-          size="medium"
-          variant="contained"
-          sx={{
-            padding: "6px 16px",
-            alignSelf: "center",
-            backgroundColor: "#D32F2F",
-            borderRadius: "100px",
-            boxShadow:
-              "0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
-            "@media(min-width: 834px)": {
-              padding: "8px 22px",
-            },
-            "&:disabled": {
-              background: "rgba(0, 0, 0, 0.12)",
-              boxShadow: "0",
-            },
-          }}
-          disabled={!isValid}
-          onClick={handleSubmit(onSubmit)}
-        >
-          <Typography
-            variant="button"
+        {isEdit ? (
+          <Button
+            size="medium"
+            variant="contained"
             sx={{
-              fontSize: 14,
-              lineHeight: 1.71,
+              padding: "6px 16px",
+              alignSelf: "center",
+              backgroundColor: "#D32F2F",
+              borderRadius: "100px",
+              boxShadow:
+                "0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
               "@media(min-width: 834px)": {
-                fontSize: 15,
-                lineHeight: 1.73,
+                padding: "8px 22px",
+              },
+              "&:disabled": {
+                background: "rgba(0, 0, 0, 0.12)",
+                boxShadow: "0",
               },
             }}
+            disabled={!isValid}
+            onClick={handleSubmit(onSubmit)}
           >
-            Создать игрока
-          </Typography>
-        </Button>
+            <Typography
+              variant="button"
+              sx={{
+                fontSize: 14,
+                lineHeight: 1.71,
+                "@media(min-width: 834px)": {
+                  fontSize: 15,
+                  lineHeight: 1.73,
+                },
+              }}
+            >
+              Сохранить
+            </Typography>
+          </Button>
+        ) : (
+          <Button
+            size="medium"
+            variant="contained"
+            sx={{
+              padding: "6px 16px",
+              alignSelf: "center",
+              backgroundColor: "#D32F2F",
+              borderRadius: "100px",
+              boxShadow:
+                "0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
+              "@media(min-width: 834px)": {
+                padding: "8px 22px",
+              },
+              "&:disabled": {
+                background: "rgba(0, 0, 0, 0.12)",
+                boxShadow: "0",
+              },
+            }}
+            disabled={!isValid}
+            onClick={handleSubmit(onSubmit)}
+          >
+            <Typography
+              variant="button"
+              sx={{
+                fontSize: 14,
+                lineHeight: 1.71,
+                "@media(min-width: 834px)": {
+                  fontSize: 15,
+                  lineHeight: 1.73,
+                },
+              }}
+            >
+              Создать игрока
+            </Typography>
+          </Button>
+        )}
       </ButtonWrapper>
     </Stack>
   );

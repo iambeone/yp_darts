@@ -52,7 +52,23 @@ export default function DocumentsForm({
     birthIssuedBy: birthIssuedByData || "",
   });
 
+  // const dispatch = useDispatch();
+
+  const url = window.location.pathname;
+  const urlArray = url.split("/");
+  const urlPath = urlArray[2];
+  // const { id } = useParams();
+
   const [tabsValue, setTabsValue] = useState(0);
+  const [isEdit, setIsEdit] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    if (urlPath === "edit-player") {
+      setIsEdit(true);
+    } else {
+      setIsEdit(false);
+    }
+  }, [window.location.pathname]);
 
   const {
     control,
@@ -173,8 +189,9 @@ export default function DocumentsForm({
   };
 
   const onSubmit = (data: any) => {
-    console.log(data);
-    console.log(value);
+    // console.log(data);
+    // console.log(value);
+    return { data, value };
   };
 
   return (
@@ -370,16 +387,29 @@ export default function DocumentsForm({
           />
         </OtherDocumentsBlock>
       </DocumentsFormBlock>
-      <SubmitBlock>
-        <SubmitButton
-          colors="all-red"
-          onClick={handleSubmit(onSubmit)}
-          text="Далее"
-          customIcon="forward_arrow"
-          iconPosition="right"
-          disabled={!isValid}
-        />
-      </SubmitBlock>
+      {isEdit ? (
+        <SubmitBlock>
+          <SubmitButton
+            colors="all-red"
+            onClick={handleSubmit(onSubmit)}
+            text="Сохранить"
+            // customIcon="forward_arrow"
+            disabled={!isValid}
+            reverse="right"
+          />
+        </SubmitBlock>
+      ) : (
+        <SubmitBlock>
+          <SubmitButton
+            colors="all-red"
+            onClick={handleSubmit(onSubmit)}
+            text="Далее"
+            customIcon="forward_arrow"
+            disabled={!isValid}
+            reverse="right"
+          />
+        </SubmitBlock>
+      )}
     </>
   );
 }

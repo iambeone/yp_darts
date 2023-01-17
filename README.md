@@ -9,6 +9,7 @@
 - создать docker container в папке backend: cd backend && docker compose up -d
 - установить зависимости в папке frontend: cd frontend && npm install
 - запуcтить frontend: npm run start
+- в Postman создать админа, в коллекции: auth - signup, скопировать токен, вставить в frontend/src/utils/constants.ts
 
 ### Api Docs
 - Swagger - https://app.swaggerhub.com/apis/darts-api/darts-api/1.0.0

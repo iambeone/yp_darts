@@ -92,18 +92,3 @@ export const getPlayer: AppThunk<Promise<IApplicationActions>> =
       })
       .catch((error) => dispatch(fetchPlayerFailed(error)));
   };
-
-export const patchPlayer: AppThunk<Promise<IApplicationActions>> =
-  (payload: string) => (dispatch: AppDispatch) => {
-    dispatch(patchPlayerRequest());
-    return fetch(
-      `${baseUrl}/participants/${payload}`,
-      tokenRequestOptions("PATCH"),
-    )
-      .then(checkResponse)
-      .then((json) => {
-        dispatch(patchPlayerFailed(json));
-        return json;
-      })
-      .catch((error) => dispatch(fetchPlayerFailed(error)));
-  };
