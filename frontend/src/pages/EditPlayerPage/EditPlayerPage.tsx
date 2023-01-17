@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import TabMenu from "../../components/TabMenu/TabMenu";
 import { getPlayer } from "../../services/actions";
@@ -8,13 +8,14 @@ import { getPlayer } from "../../services/actions";
 export default function EditPlayerPage() {
   const player = useSelector((state: any) => state.player.playerData);
   const dispatch = useDispatch();
+  const { id } = useParams();
 
   useEffect(() => {
-    const url = window.location.pathname;
-    const urlArray = url.split("/");
-    // eslint-disable-next-line prefer-template
-    const playerId = "/" + urlArray[3];
-    dispatch(getPlayer(playerId));
+    // const url = window.location.pathname;
+    // const urlArray = url.split("/");
+    // const playerId = "/" + urlArray[3];
+    dispatch(getPlayer(id));
+    console.log("sa");
   }, [dispatch]);
 
   const tabsForms = [

@@ -143,7 +143,7 @@ export const getPlayers: AppThunk<Promise<IApplicationActions>> =
   (payload: string) => (dispatch: AppDispatch) => {
     dispatch(fetchPlayersRequest());
     return fetch(
-      `${baseUrl}/participants${payload}`,
+      `${baseUrl}/participants/${payload}`,
       tokenRequestOptions("GET"),
     )
       .then(checkResponse)

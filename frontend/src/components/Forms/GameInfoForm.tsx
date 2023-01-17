@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import { getPlayer } from "../../services/actions";
 import { sportsCategory, subjectsRF } from "../../utils/constants";
 import DateTextField from "../DateTextField/DateTextField";
@@ -58,13 +59,13 @@ export default function GameInfoForm() {
 
   const player = useSelector((state: any) => state.player.playerData);
   const dispatch = useDispatch();
+  const { id } = useParams();
 
   useEffect(() => {
-    const url = window.location.pathname;
-    const urlArray = url.split("/");
-    // eslint-disable-next-line prefer-template
-    const playerId = "/" + urlArray[3];
-    dispatch(getPlayer(playerId));
+    // const url = window.location.pathname;
+    // const urlArray = url.split("/");
+    // const playerId = "/" + urlArray[3];
+    dispatch(getPlayer(id));
   }, [dispatch]);
   console.log(player);
 

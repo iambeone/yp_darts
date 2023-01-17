@@ -2,6 +2,9 @@ import {
   GET_PLAYER_REQUEST,
   GET_PLAYER_SUCCESS,
   GET_PLAYER_FAILED,
+  PATCH_PLAYER_REQUEST,
+  PATCH_PLAYER_SUCCESS,
+  PATCH_PLAYER_FAILED,
 } from "./actionsTypes";
 import {
   baseUrl,
@@ -25,10 +28,27 @@ interface IfetchPlayerFailed {
   readonly payload: { error: {} };
 }
 
+interface IpatchPlayerRequest {
+  readonly type: typeof PATCH_PLAYER_REQUEST;
+}
+
+interface IpatchPlayerSuccess {
+  readonly type: typeof PATCH_PLAYER_SUCCESS;
+  readonly payload: { data: any };
+}
+
+interface IpatchPlayerFailed {
+  readonly type: typeof PATCH_PLAYER_FAILED;
+  readonly payload: { error: {} };
+}
+
 export type TPlayerActions =
   | IfetchPlayerRequest
   | IfetchPlayerSuccess
-  | IfetchPlayerFailed;
+  | IfetchPlayerFailed
+  | IpatchPlayerRequest
+  | IpatchPlayerSuccess
+  | IpatchPlayerFailed;
 
 export const fetchPlayerRequest = (): TPlayerActions => ({
   type: GET_PLAYER_REQUEST,
@@ -44,16 +64,45 @@ export const fetchPlayerFailed = (error: {}): TPlayerActions => ({
   payload: { error },
 });
 
+export const patchPlayerRequest = (): TPlayerActions => ({
+  type: PATCH_PLAYER_REQUEST,
+});
+
+export const patchPlayerSuccess = (data: any): TPlayerActions => ({
+  type: PATCH_PLAYER_SUCCESS,
+  payload: { data },
+});
+
+export const patchPlayerFailed = (error: {}): TPlayerActions => ({
+  type: PATCH_PLAYER_FAILED,
+  payload: { error },
+});
+
 export const getPlayer: AppThunk<Promise<IApplicationActions>> =
   (payload: string) => (dispatch: AppDispatch) => {
     dispatch(fetchPlayerRequest());
     return fetch(
-      `${baseUrl}/participants${payload}`,
+      `${baseUrl}/participants/${payload}`,
       tokenRequestOptions("GET"),
     )
       .then(checkResponse)
       .then((json) => {
         dispatch(fetchPlayerSuccess(json));
+        return json;
+      })
+      .catch((error) => dispatch(fetchPlayerFailed(error)));
+  };
+
+export const patchPlayer: AppThunk<Promise<IApplicationActions>> =
+  (payload: string) => (dispatch: AppDispatch) => {
+    dispatch(patchPlayerRequest());
+    return fetch(
+      `${baseUrl}/participants/${payload}`,
+      tokenRequestOptions("PATCH"),
+    )
+      .then(checkResponse)
+      .then((json) => {
+        dispatch(patchPlayerFailed(json));
         return json;
       })
       .catch((error) => dispatch(fetchPlayerFailed(error)));
