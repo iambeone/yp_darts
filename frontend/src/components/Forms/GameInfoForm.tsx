@@ -114,6 +114,23 @@ export default function GameInfoForm() {
 
   console.log(gameInfoFormData);
 
+  // const dispatch = useDispatch();
+
+  const url = window.location.pathname;
+  const urlArray = url.split("/");
+  const urlPath = urlArray[2];
+  // const { id } = useParams();
+
+  const [isEdit, setIsEdit] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    if (urlPath === "edit-player") {
+      setIsEdit(true);
+    } else {
+      setIsEdit(false);
+    }
+  }, [window.location.pathname]);
+
   const onSubmit = (data: any) => {
     setGameInfoFormData(data);
   };
@@ -475,16 +492,29 @@ export default function GameInfoForm() {
           />
         </Group>
       </Form>
-      <SubmitBlock>
-        <SubmitButton
-          colors="all-red"
-          onClick={handleSubmit(onSubmit)}
-          text="Далее"
-          customIcon="forward_arrow"
-          reverse="right"
-          disabled={!isValid}
-        />
-      </SubmitBlock>
+      {isEdit ? (
+        <SubmitBlock>
+          <SubmitButton
+            colors="all-red"
+            onClick={handleSubmit(onSubmit)}
+            text="Сохранить"
+            // customIcon="forward_arrow"
+            reverse="right"
+            disabled={!isValid}
+          />
+        </SubmitBlock>
+      ) : (
+        <SubmitBlock>
+          <SubmitButton
+            colors="all-red"
+            onClick={handleSubmit(onSubmit)}
+            text="Далее"
+            customIcon="forward_arrow"
+            reverse="right"
+            disabled={!isValid}
+          />
+        </SubmitBlock>
+      )}
     </>
   );
 }

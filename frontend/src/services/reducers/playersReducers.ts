@@ -6,9 +6,9 @@ import {
   DELETE_PLAYER_REQUEST,
   DELETE_PLAYER_SUCCESS,
   DELETE_PLAYER_FAILED,
-  GET_PLAYER_REQUEST,
-  GET_PLAYER_SUCCESS,
-  GET_PLAYER_FAILED,
+  PATCH_PLAYER_REQUEST,
+  PATCH_PLAYER_SUCCESS,
+  PATCH_PLAYER_FAILED,
   SET_CURRENT_PLAYER_ID,
   SET_ACCEPT_DELETE_OPEN,
   SET_CONFIRM_DELETE_OPEN,
@@ -135,7 +135,7 @@ export const playersReducer = (
       };
     }
 
-    case GET_PLAYER_REQUEST: {
+    case PATCH_PLAYER_REQUEST: {
       return {
         ...state,
         playerReq: true,
@@ -143,7 +143,7 @@ export const playersReducer = (
       };
     }
 
-    case GET_PLAYER_SUCCESS: {
+    case PATCH_PLAYER_SUCCESS: {
       return {
         ...state,
         playerReq: false,
@@ -154,7 +154,7 @@ export const playersReducer = (
       };
     }
 
-    case GET_PLAYER_FAILED: {
+    case PATCH_PLAYER_FAILED: {
       return {
         ...state,
         playerFailed: true,
