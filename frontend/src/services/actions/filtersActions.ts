@@ -22,11 +22,6 @@ export interface ISetSubjectRF {
   readonly payload: string;
 }
 
-// export interface ISetSearch {
-//   readonly type: typeof SET_SEARCH;
-//   readonly payload: string;
-// }
-
 export interface IApplyFilters {
   readonly type: typeof APPLY_FILTERS;
 }
@@ -62,11 +57,6 @@ export const setSubjectRF = (payload: string): ISetSubjectRF => ({
   type: SET_SUBJECT_RF,
   payload,
 });
-
-// export const setSearch = (payload: string): ISetSearch => ({
-//   type: SET_SEARCH,
-//   payload,
-// });
 
 export const applyFilters = (): IApplyFilters => ({
   type: APPLY_FILTERS,

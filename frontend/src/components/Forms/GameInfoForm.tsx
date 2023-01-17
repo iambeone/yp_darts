@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useForm, Controller } from "react-hook-form";
 import { Dayjs } from "dayjs";
 import { sportsCategory, subjectsRF } from "../../utils/constants";
-import DateTextField from "../DateTextField/DateTextField";
+import DateTextField from "../InputDate/InputDate";
 import InputText from "../InputText/InputText";
 import RadioOptionHand from "../RadioOption/RadioOptionHand";
 import SelectOptions from "../SelectOption/SelectOption";

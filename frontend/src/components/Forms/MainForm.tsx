@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Typography } from "@mui/material";
@@ -6,7 +5,7 @@ import { Typography } from "@mui/material";
 import { Dayjs } from "dayjs";
 import InputText from "../InputText/InputText";
 import RadioOption from "../RadioOption/RadioOption";
-import DateTextField from "../DateTextField/DateTextField";
+import DateTextField from "../InputDate/InputDate";
 import {
   Form,
   Line,
@@ -317,14 +316,3 @@ export default function MainForm({
     </>
   );
 }
-
-MainForm.defaultProps = {
-  lastName: { value: "" },
-  firstName: { value: "" },
-  patronymic: { value: "" },
-  birthday: { value: "" },
-  gender: { value: "" },
-  adress: { value: "" },
-  email: { value: "" },
-  phone: { value: "" },
-};
