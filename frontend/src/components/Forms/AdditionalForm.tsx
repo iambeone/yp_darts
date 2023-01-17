@@ -6,7 +6,7 @@ import { Dayjs } from "dayjs";
 import { Form, ButtonWrapper } from "./Styles/AdditionalFormStyles";
 import InputText from "../InputText/InputText";
 import SelectOption from "../SelectOption/SelectOption";
-import DateTextField from "../DateTextField/DateTextField";
+import DateTextField from "../InputDate/InputDate";
 import UploadInput from "../UploadInput/UploadInput";
 import {
   clothingSizeOptions,
@@ -85,10 +85,6 @@ function AdditionalForm({
   }, [window.location.pathname]);
 
   const onSubmit = (data: any) => {
-    console.log({
-      ...data,
-      file,
-    });
     return { ...data, file };
   };
 

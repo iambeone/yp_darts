@@ -30,7 +30,6 @@ export default function PlayersPage() {
 
   const anchor = useSelector((state) => state.players.contextMenuOpen);
 
-  // не работает закрытие по клику не по меню, разобраться
   const closeContextMenu = () => {
     dispatch(actions.setContextMenuOpen(null));
   };

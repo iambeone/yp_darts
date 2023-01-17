@@ -249,8 +249,6 @@ export const getPlayer: AppThunk<Promise<IApplicationActions>> =
 
 export const patchPlayer: AppThunk<Promise<IApplicationActions>> =
   (id: string, data: any) => (dispatch: AppDispatch) => {
-    console.log(id);
-    console.log(data);
     dispatch(patchPlayerRequest());
     return fetch(
       `${baseUrl}/participants/${id}`,

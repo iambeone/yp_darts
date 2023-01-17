@@ -1,10 +1,9 @@
-/* eslint-disable react/require-default-props */
 import React, { useState } from "react";
 import { useForm, useController } from "react-hook-form";
 import { Dayjs } from "dayjs";
 import ToggleTabs from "../ToggleTabs/ToggleTabs";
 import InputText from "../InputText/InputText";
-import DateTextField from "../DateTextField/DateTextField";
+import DateTextField from "../InputDate/InputDate";
 import {
   TogledBlock,
   OtherDocumentsBlock,
@@ -189,8 +188,6 @@ export default function DocumentsForm({
   };
 
   const onSubmit = (data: any) => {
-    // console.log(data);
-    // console.log(value);
     return { data, value };
   };
 

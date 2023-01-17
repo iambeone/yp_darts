@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from "react";
 import { useParams } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
@@ -6,7 +5,7 @@ import { Typography } from "@mui/material";
 import { Dayjs } from "dayjs";
 import InputText from "../InputText/InputText";
 import RadioOption from "../RadioOption/RadioOption";
-import DateTextField from "../DateTextField/DateTextField";
+import DateTextField from "../InputDate/InputDate";
 import {
   Form,
   Line,
@@ -101,7 +100,6 @@ export default function MainForm({
       dispatch(patchPlayer(id, data));
     }
     setMainFormData(data);
-    // console.log(data);
     return mainFormData;
   };
 

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useForm, Controller } from "react-hook-form";
 import { Dayjs } from "dayjs";
 import { sportsCategory, subjectsRF } from "../../utils/constants";
-import DateTextField from "../DateTextField/DateTextField";
+import DateTextField from "../InputDate/InputDate";
 import InputText from "../InputText/InputText";
 import RadioOptionHand from "../RadioOption/RadioOptionHand";
 import SelectOptions from "../SelectOption/SelectOption";
@@ -112,14 +112,9 @@ export default function GameInfoForm() {
     formState: { errors, isValid },
   } = useForm({ mode: "onBlur" });
 
-  console.log(gameInfoFormData);
-
-  // const dispatch = useDispatch();
-
   const url = window.location.pathname;
   const urlArray = url.split("/");
   const urlPath = urlArray[2];
-  // const { id } = useParams();
 
   const [isEdit, setIsEdit] = React.useState<boolean>(false);
 
@@ -133,6 +128,7 @@ export default function GameInfoForm() {
 
   const onSubmit = (data: any) => {
     setGameInfoFormData(data);
+    return gameInfoFormData;
   };
   return (
     <>

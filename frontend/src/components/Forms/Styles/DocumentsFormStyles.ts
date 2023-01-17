@@ -46,7 +46,6 @@ const IdentificationBlock = styled.div`
   overflow: hidden;
 
   @media (min-width: 834px) {
-    // margin: 25px 24px 0 24px;
     gap: 20px;
   }
 `;
