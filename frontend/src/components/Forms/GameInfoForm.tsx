@@ -389,7 +389,7 @@ export default function GameInfoForm({
                 sx={{
                   mr: 2.5,
                   width: 226,
-                  "@media(max-width: 500px)": {
+                  "@media(max-width: 750px)": {
                     width: 242,
                     mr: 0,
                   },
@@ -472,7 +472,7 @@ export default function GameInfoForm({
                 sx={{
                   mr: 2.5,
                   width: 226,
-                  "@media(max-width: 500px)": {
+                  "@media(max-width: 750px)": {
                     width: 242,
                     mr: 0,
                   },
