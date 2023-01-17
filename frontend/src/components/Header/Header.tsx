@@ -22,6 +22,7 @@ function Header() {
   const mobile = window.innerWidth <= 500;
   const location = useLocation();
   const matchPlayersTable = useMatch("/players/:pageNumber");
+  const matchPlayerInfo = useMatch("/player/:id");
 
   const headerToolbar = (path: string) => {
     if (
@@ -32,7 +33,7 @@ function Header() {
     ) {
       return <HeaderTypeOne />;
     }
-    if (path === "/profile") {
+    if (path === "/profile" || path === matchPlayerInfo?.pathname) {
       return <HeaderTypeTwo />;
     }
     return <HeaderTypeThree />;

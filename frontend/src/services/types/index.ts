@@ -34,6 +34,9 @@ export type Tplayers = {
   policyNumber?: number;
   startOfAction?: Date;
   endOfAction?: Date;
+  certificate?: number;
+  certStartOfAction?: Date;
+  certEndOfAction?: Date;
   weightOfPlayer?: number;
   heightOfPlayer?: number;
   clothingSize?: string;

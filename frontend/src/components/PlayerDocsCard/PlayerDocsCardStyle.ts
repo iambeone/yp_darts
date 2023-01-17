@@ -11,7 +11,6 @@ const CardWrapper = styled.div`
   align-items: flex-start;
   padding: 16px 24px 16px;
   gap: 12px;
-  margin: 0 0 0 40px;
 `;
 
 const RowsWrapper = styled.div`
@@ -19,6 +18,13 @@ const RowsWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 90%;
+`;
+
+const DocsRowsWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 20px;
 `;
 
 const PassportNumber = styled.span`
@@ -47,4 +53,11 @@ const DocsCardText = styled.p`
   color: rgba(0, 0, 0, 0.87);
   margin: 0;
 `;
-export { CardWrapper, PassportNumber, DocsSpan, DocsCardText, RowsWrapper };
+export {
+  CardWrapper,
+  PassportNumber,
+  DocsSpan,
+  DocsCardText,
+  RowsWrapper,
+  DocsRowsWrapper,
+};
