@@ -1,5 +1,5 @@
 import React from "react";
-import { Button as MuiButton } from "@mui/material";
+import { Button as MuiButton, Icon } from "@mui/material";
 import { ArrowForwardIos } from "@mui/icons-material";
 import TournamentAddIcon from "../../images/tournament-add.svg";
 import { StyledMuiIconButton, StyledIcon, TextButton } from "./ButtonStyles";
@@ -17,7 +17,7 @@ type TButton = {
   iconColor?: "blue" | "red";
   disabled?: boolean;
   icon?: string;
-  customIcon?: "tournament_add" | "forward_arrow";
+  customIcon?: "tournament_add" | "forward_arrow" | "edit";
   onClick: () => void;
 };
 
@@ -131,6 +131,8 @@ function Button({
         return <img src={TournamentAddIcon} alt="tournament-add-icon" />;
       case "forward_arrow":
         return <ArrowForwardIos sx={{ height: "12px" }} />;
+      case "edit":
+        return <Icon>edit</Icon>;
       default:
         return null;
     }

@@ -14,11 +14,11 @@ const Subtitle = styled.h5`
   }
   @media (max-width: 768px) {
     font-size: 16px;
-    margin: 0 16px 0 24px;
+    margin: 0 16px 0 0;
   }
   @media (max-width: 400px) {
     font-size: 16px;
-    margin: 0 0 0 16px;
+    margin: 0 0 0 0;
   }
 `;
 

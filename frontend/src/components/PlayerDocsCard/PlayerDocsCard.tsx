@@ -1,5 +1,6 @@
 import React from "react";
 import { dateFormatter } from "../../utils/helpers";
+import Notification from "../Notification/Notification";
 import PageSubtitle from "../PageSubtitle/PageSubtitle";
 import {
   CardWrapper,
@@ -7,6 +8,7 @@ import {
   DocsSpan,
   DocsCardText,
   RowsWrapper,
+  DocsRowsWrapper,
 } from "./PlayerDocsCardStyle";
 
 export default function PlayerDocsCard({ player }: any) {
@@ -32,6 +34,34 @@ export default function PlayerDocsCard({ player }: any) {
       .toString()
       .substr(6, 3)} ${num.toString().substr(9)}`;
   };
+
+  const expiryTimer = (end_date: string | null): string | undefined | null => {
+    const todayString = new Date().toISOString();
+    const today = new Date(todayString);
+    if (end_date !== null) {
+      const expiryDate = new Date(end_date);
+      const diff = Math.round((+today - +expiryDate) / (60 * 60 * 24 * 1000));
+
+      if (diff >= -90 && diff <= -60) {
+        return "Истекает через 3 месяца";
+      }
+      if (diff >= -60 && diff <= -30) {
+        return "Истекает через 2 месяца";
+      }
+      if (diff === -30) {
+        return "Истекает через 1 месяц";
+      }
+      if (diff > -30 && diff < 0) {
+        return "Истекает в течении месяца";
+      }
+      if (diff >= 0) {
+        return "Просрочен";
+      }
+      return "";
+    }
+    return null;
+  };
+
   return (
     <>
       <CardWrapper>
@@ -68,25 +98,32 @@ export default function PlayerDocsCard({ player }: any) {
       </CardWrapper>
       <CardWrapper>
         <PageSubtitle docs text="другие документы" />
-        <DocsSpan>
-          <PageSubtitle text="Медицинская страховка" />
-          <DocsCardText>
-            {player.policyNumber
-              ? policyNumberFormatter(player.policyNumber)
-              : "00 1111"}{" "}
-            (до {dateFormatter(player.endOfAction, true)})
-          </DocsCardText>
-        </DocsSpan>
-        {/* для сертификата РУСАДА нет полей (номер, дата выдачи, дата окончания) в форме и в сторе, доделать */}
-        {/* временный хардкод для верстки */}
-        <DocsSpan>
-          <PageSubtitle text="Сертификат РУСАДА" />
-          <DocsCardText>
-            {player.certificate ? player.certificate : "23423401788"} (до
-            01.01.2022)
-          </DocsCardText>
-        </DocsSpan>
-        {/* временный хардкод для верстки */}
+        <DocsRowsWrapper>
+          <DocsSpan>
+            <PageSubtitle text="Медицинская страховка" />
+            <DocsCardText>
+              {player.policyNumber
+                ? policyNumberFormatter(player.policyNumber)
+                : ""}{" "}
+              {player.endOfAction !== null
+                ? `(до ${dateFormatter(player.endOfAction, true)})`
+                : ""}
+            </DocsCardText>
+          </DocsSpan>
+          <Notification text={expiryTimer(player.endOfAction)} />
+        </DocsRowsWrapper>
+        <DocsRowsWrapper>
+          <DocsSpan>
+            <PageSubtitle text="Сертификат РУСАДА" />
+            <DocsCardText>
+              {player.certificate ? player.certificate : ""}{" "}
+              {player.certEndOfAction !== null
+                ? `(до ${dateFormatter(player.certEndOfAction, true)})`
+                : ""}
+            </DocsCardText>
+          </DocsSpan>
+          <Notification text={expiryTimer(player.certEndOfAction)} />
+        </DocsRowsWrapper>
         <RowsWrapper>
           <DocsSpan>
             <PageSubtitle text="СНИЛС" />
