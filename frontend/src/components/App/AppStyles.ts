@@ -25,6 +25,7 @@ const SectionItem = styled.div`
     grid-row: span 2;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     @media (max-width: 500px) {
       padding-bottom: 70px;
     }
