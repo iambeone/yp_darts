@@ -6,7 +6,7 @@ import TabMenu from "../../components/TabMenu/TabMenu";
 import { getPlayer } from "../../services/actions";
 
 export default function EditPlayerPage() {
-  const player = useSelector((state: any) => state.players.player);
+  const player = useSelector((state) => state.players.player);
   const playerFullName = `${player?.surname} ${player?.name} ${
     player?.patronymic ? player?.patronymic : ""
   }`;

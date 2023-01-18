@@ -6,8 +6,8 @@ export const encodeQueryString = (params: { [index: string]: string }) => {
   return query ? `?${query}` : "";
 };
 
-export const dateFormatter = (date: string, full: boolean) => {
-  const desiredDate = new Date(date);
+export const dateFormatter = (full: boolean, date?: string) => {
+  const desiredDate = new Date(date!!);
   const day = desiredDate.getDay();
   const month = desiredDate.getMonth();
   const year = desiredDate.getFullYear();

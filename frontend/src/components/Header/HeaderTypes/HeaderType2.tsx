@@ -26,14 +26,14 @@ function HeaderTypeTwo() {
   const confirmDeleteOpen = useSelector(
     (state) => state.players.confirmDeleteOpen,
   );
-  const currentPlayer = useSelector((state) => state.players.player.id);
+  const currentPlayer = useSelector((state) => state.players.player);
   const deleteTitle = "Вы уверены, что хотите удалить игрока?";
   const deleteText = "После удаления отменить действие невозможно.";
   const confirmDeleteTitle = "Игрок успешно удален";
   const anchor = useSelector((state) => state.players.contextMenuOpen);
 
   const openContextMenu = (evt: React.MouseEvent<HTMLButtonElement>) => {
-    const id = Number(currentPlayer);
+    const id = Number(currentPlayer?.id);
     dispatch(setContextMenuOpen(anchor ? null : evt.currentTarget));
     dispatch(setCurrentPlayerID(id));
   };
@@ -42,7 +42,7 @@ function HeaderTypeTwo() {
     dispatch(setContextMenuOpen(null));
   };
 
-  const addToTournament = (id: number) => {
+  const addToTournament = (id?: number) => {
     return id;
   };
 
@@ -50,7 +50,7 @@ function HeaderTypeTwo() {
     {
       icon: "person_add",
       value: "Добавить в турнир",
-      callback: () => addToTournament(currentPlayer),
+      callback: () => addToTournament(currentPlayer?.id),
     },
     {
       icon: "delete",
@@ -62,7 +62,7 @@ function HeaderTypeTwo() {
   ];
 
   const handleDeletePlayer = () => {
-    Promise.resolve(dispatch(deletePlayer(currentPlayer))).then(() => {
+    Promise.resolve(dispatch(deletePlayer(currentPlayer?.id))).then(() => {
       dispatch(getPlayers(""));
       dispatch(setAcceptDeleteOpen(false));
       dispatch(setConfirmDeleteOpen(true));

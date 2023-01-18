@@ -21,7 +21,6 @@ import { TPlayersActions } from "../actions/playersActions";
 import type { Tplayers, Tplayer } from "../types";
 
 export type TPlayersState = {
-  [x: string]: any;
   getAllRequest: boolean;
   getAllFailed: boolean;
   getAllSuccess: boolean;

@@ -71,7 +71,6 @@ function AdditionalForm({
   const url = window.location.pathname;
   const urlArray = url.split("/");
   const urlPath = urlArray[2];
-  // const { id } = useParams();
 
   const [file, setFile] = useState<File | null>(null);
   const [isEdit, setIsEdit] = React.useState<boolean>(false);
