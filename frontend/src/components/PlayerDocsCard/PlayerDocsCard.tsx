@@ -1,5 +1,6 @@
 import React from "react";
 import { dateFormatter } from "../../utils/helpers";
+import { useSelector } from "../../utils/hooks";
 import Notification from "../Notification/Notification";
 import PageSubtitle from "../PageSubtitle/PageSubtitle";
 import {
@@ -11,7 +12,9 @@ import {
   DocsRowsWrapper,
 } from "./PlayerDocsCardStyle";
 
-export default function PlayerDocsCard({ player }: any) {
+export default function PlayerDocsCard() {
+  const player = useSelector((state) => state.players.player);
+
   const passportNumberFormatter = (num: string) => {
     const re = /\B(?=(\d{6})+(?!\d{1}))/g;
     const formatted = num.replace(re, " ");
@@ -35,11 +38,11 @@ export default function PlayerDocsCard({ player }: any) {
       .substr(6, 3)} ${num.toString().substr(9)}`;
   };
 
-  const expiryTimer = (end_date: string | null): string | undefined | null => {
+  const expiryTimer = (end_date?: string | null): string | undefined | null => {
     const todayString = new Date().toISOString();
     const today = new Date(todayString);
     if (end_date !== null) {
-      const expiryDate = new Date(end_date);
+      const expiryDate = new Date(end_date!!);
       const diff = Math.round((+today - +expiryDate) / (60 * 60 * 24 * 1000));
 
       if (diff >= -90 && diff <= -60) {
@@ -67,30 +70,28 @@ export default function PlayerDocsCard({ player }: any) {
       <CardWrapper>
         <PageSubtitle docs text="паспорт РФ" />
         <PassportNumber>
-          {player.seriesAndNumber
-            ? passportNumberFormatter(player.seriesAndNumber)
+          {player?.seriesAndNumber
+            ? passportNumberFormatter(player?.seriesAndNumber.toString())
             : "0000 000000"}
         </PassportNumber>
         <DocsSpan>
           <PageSubtitle text="Выдан" />
-          <DocsCardText>
-            {player.issuedBy ? player.issuedBy : "ОВД по г. Москва"}
-          </DocsCardText>
+          <DocsCardText>{player?.issuedBy || "ОВД по г. Москва"}</DocsCardText>
         </DocsSpan>
         <RowsWrapper>
           <DocsSpan>
             <PageSubtitle text="Дата выдачи" />
             <DocsCardText>
-              {player.dateOfIssue
-                ? dateFormatter(player.dateOfIssue, true)
+              {player?.dateOfIssue
+                ? dateFormatter(true, player?.dateOfIssue.toString())
                 : "01.01.2111"}
             </DocsCardText>
           </DocsSpan>
           <DocsSpan>
             <PageSubtitle text="Код подразделения" />
             <DocsCardText>
-              {player.divisionCode
-                ? divisionsCodeFormatter(player.divisionCode)
+              {player?.divisionCode
+                ? divisionsCodeFormatter(player?.divisionCode.toString())
                 : "000-000"}
             </DocsCardText>
           </DocsSpan>
@@ -102,40 +103,43 @@ export default function PlayerDocsCard({ player }: any) {
           <DocsSpan>
             <PageSubtitle text="Медицинская страховка" />
             <DocsCardText>
-              {player.policyNumber
-                ? policyNumberFormatter(player.policyNumber)
+              {player?.policyNumber
+                ? policyNumberFormatter(player?.policyNumber.toString())
                 : ""}{" "}
-              {player.endOfAction !== null
-                ? `(до ${dateFormatter(player.endOfAction, true)})`
+              {player?.endOfAction !== null
+                ? `(до ${dateFormatter(true, player?.endOfAction?.toString())})`
                 : ""}
             </DocsCardText>
           </DocsSpan>
-          <Notification text={expiryTimer(player.endOfAction)} />
+          <Notification text={expiryTimer(player?.endOfAction?.toString())} />
         </DocsRowsWrapper>
         <DocsRowsWrapper>
           <DocsSpan>
             <PageSubtitle text="Сертификат РУСАДА" />
             <DocsCardText>
-              {player.certificate ? player.certificate : ""}{" "}
-              {player.certEndOfAction !== null
-                ? `(до ${dateFormatter(player.certEndOfAction, true)})`
+              {player?.certificate || ""}{" "}
+              {player?.certEndOfAction != null
+                ? `(до ${dateFormatter(
+                    true,
+                    player?.certEndOfAction?.toString(),
+                  )})`
                 : ""}
             </DocsCardText>
           </DocsSpan>
-          <Notification text={expiryTimer(player.certEndOfAction)} />
+          <Notification
+            text={expiryTimer(player?.certEndOfAction?.toString())}
+          />
         </DocsRowsWrapper>
         <RowsWrapper>
           <DocsSpan>
             <PageSubtitle text="СНИЛС" />
             <DocsCardText>
-              {player.snils ? snilsFormatter(player.snils) : "000-000-000 00"}
+              {player?.snils ? snilsFormatter(player?.snils) : "000-000-000 00"}
             </DocsCardText>
           </DocsSpan>
           <DocsSpan>
             <PageSubtitle text="ИНН" />
-            <DocsCardText>
-              {player.INN ? player.INN : "000000000000"}
-            </DocsCardText>
+            <DocsCardText>{player?.INN || "000000000000"}</DocsCardText>
           </DocsSpan>
         </RowsWrapper>
       </CardWrapper>

@@ -152,7 +152,7 @@ export default function DocumentsForm({
       },
     });
 
-  const onChange = (event: any) => {
+  const onChange = (event: Event & { target: HTMLInputElement }) => {
     switch (event.target.name) {
       case "snils":
         snils.onChange(event.target.value);

@@ -167,7 +167,7 @@ export const getPlayerRequest = (): TPlayersActions => ({
   type: GET_PLAYER_REQUEST,
 });
 
-export const getPlayerSuccess = (data: any): TPlayersActions => ({
+export const getPlayerSuccess = (data: Tplayer): TPlayersActions => ({
   type: GET_PLAYER_SUCCESS,
   payload: { data },
 });
