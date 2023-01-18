@@ -10,7 +10,6 @@ import {
   RowsWrapper,
   DocsRowsWrapper,
 } from "./PlayerDocsCardStyle";
-// import { Tplayers } from "../../services/types";
 
 export default function PlayerDocsCard({ player }: any) {
   const passportNumberFormatter = (num: string) => {

@@ -6,6 +6,9 @@ import {
   DELETE_PLAYER_REQUEST,
   DELETE_PLAYER_SUCCESS,
   DELETE_PLAYER_FAILED,
+  PATCH_PLAYER_REQUEST,
+  PATCH_PLAYER_SUCCESS,
+  PATCH_PLAYER_FAILED,
   GET_PLAYER_REQUEST,
   GET_PLAYER_SUCCESS,
   GET_PLAYER_FAILED,
@@ -15,7 +18,7 @@ import {
   SET_CONTEXT_MENU_OPEN,
 } from "../actions/actionsTypes";
 import { TPlayersActions } from "../actions/playersActions";
-import type { Tplayers } from "../types";
+import type { Tplayers, Tplayer } from "../types";
 
 export type TPlayersState = {
   [x: string]: any;
@@ -32,7 +35,10 @@ export type TPlayersState = {
   playerReq: boolean;
   playerSuccess: boolean;
   playerFailed: boolean;
-  player: any; // Tplayer
+  patchPlayerReq: boolean;
+  patchPlayerSuccess: boolean;
+  patchPlayerFailed: boolean;
+  player: Tplayer | null;
   acceptDeleteOpen: boolean;
   confirmDeleteOpen: boolean;
   contextMenuOpen: HTMLButtonElement | null;
@@ -52,7 +58,10 @@ const initialState = {
   playerReq: false,
   playerSuccess: false,
   playerFailed: false,
-  player: [],
+  patchPlayerReq: false,
+  patchPlayerSuccess: false,
+  patchPlayerFailed: false,
+  player: null,
   acceptDeleteOpen: false,
   confirmDeleteOpen: false,
   contextMenuOpen: null,
@@ -160,7 +169,36 @@ export const playersReducer = (
         playerFailed: true,
         playerReq: false,
         playerSuccess: false,
-        player: [],
+        player: null,
+      };
+    }
+
+    case PATCH_PLAYER_REQUEST: {
+      return {
+        ...state,
+        patchPlayerReq: true,
+        patchPlayerFailed: false,
+      };
+    }
+
+    case PATCH_PLAYER_SUCCESS: {
+      return {
+        ...state,
+        patchPlayerReq: false,
+        patchPlayerSuccess: true,
+        patchPlayerFailed: false,
+        player: action.payload.data,
+        currentPlayerId: action.payload.data.id,
+      };
+    }
+
+    case PATCH_PLAYER_FAILED: {
+      return {
+        ...state,
+        patchPlayerFailed: true,
+        patchPlayerReq: false,
+        patchPlayerSuccess: false,
+        player: null,
       };
     }
 

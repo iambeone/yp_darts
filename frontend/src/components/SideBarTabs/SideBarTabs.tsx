@@ -8,7 +8,7 @@ import {
   Group,
   Image,
   Title,
-} from "./TabsStyles";
+} from "./SideBarTabsStyles";
 
 type Ttab = {
   id: number;

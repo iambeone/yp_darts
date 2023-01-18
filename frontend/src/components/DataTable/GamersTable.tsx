@@ -143,5 +143,3 @@ export default function GamersTable({ data }: { data: Tplayers[] }) {
     </TableWithPagination>
   );
 }
-
-// https://github.com/ankitasingh170190/Pagination_Demo

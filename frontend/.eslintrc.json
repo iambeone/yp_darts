@@ -31,8 +31,8 @@
         "react/jsx-props-no-spreading": "off",
         "jsx-a11y/label-has-associated-control": ["error", { "assert": "either" } ],
         "default-param-last": "off",
-        "@typescript-eslint/default-param-last": "off"
+        "@typescript-eslint/default-param-last": "off", 
+        "react/require-default-props": "off",
+        "react/no-array-index-key": "off"
     }
 }
-
-//https://dev.to/suchintan/reacttypescripteslint-prettier-full-setup-p7j

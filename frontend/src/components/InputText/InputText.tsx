@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading, react/require-default-props */
 import React from "react";
 import styled from "styled-components";
 import { OutlinedInput, FormHelperText } from "@mui/material";

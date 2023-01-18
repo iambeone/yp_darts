@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "../../utils/hooks";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import { getPlayer } from "../../services/actions/playersActions";
@@ -18,24 +19,25 @@ import {
   ButtonContainer,
 } from "./PlayerInfoPageStyles";
 import PlayerDocsCard from "../../components/PlayerDocsCard/PlayerDocsCard";
-import { dateFormatter } from "../../utils/helpers";
-// import { Tplayers } from "../../services/types";
 
 export default function PlayerInfoPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const player = useSelector((state) => state.players.player);
-  const playerFullName = `${player.surname} ${player.name} ${
-    player.patronymic ? player.patronymic : ""
+  const playerFullName = `${player?.surname} ${player?.name} ${
+    player?.patronymic ? player?.patronymic : ""
   }`;
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    dispatch(getPlayer(id?.replace(":", "")));
+    dispatch(getPlayer(id));
   }, [id, dispatch]);
 
+  if (!player) {
+    return null;
+  }
+
   return (
-    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {player && (
         <InfoContainer>

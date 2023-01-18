@@ -34,7 +34,6 @@ function SearchBar(): ReactElement {
 
   useEffect(() => {
     dispatch(getPlayers(encodeQueryString({ gender, age, subjectRF })));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appliedFilters]);
 
   const counter = !!appliedFilters.length;

@@ -23,12 +23,12 @@ const Subtitle = styled.h5`
 `;
 
 type TPageSubtitle = {
-  text: string;
+  text?: string;
   docs?: boolean;
 };
 
 export default function PageSubtitle({ text, docs }: TPageSubtitle) {
-  return <Subtitle>{docs ? text.toUpperCase() : text}</Subtitle>;
+  return <Subtitle>{docs ? text?.toUpperCase() : text}</Subtitle>;
 }
 
 PageSubtitle.defaultProps = {
