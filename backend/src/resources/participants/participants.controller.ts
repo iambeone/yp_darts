@@ -12,6 +12,7 @@ import {
   FileTypeValidator,
   MaxFileSizeValidator,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { ParticipantsService } from './participants.service';
 import { CreateParticipantDto } from './dto/create-participant.dto';
@@ -52,17 +53,11 @@ export class ParticipantsController {
   }
 
   @UseGuards(JwtGuard)
-  @Post('search')
-  public find(
-    @Body() findParticipantDto: FindParticipantDto,
-  ): Promise<Participant[]> {
-    return this.participantsService.findByQuery(findParticipantDto);
-  }
-
-  @UseGuards(JwtGuard)
   @Get()
-  public findAll(): Promise<Participant[]> {
-    return this.participantsService.findAll();
+  public findAll(@Query() query: FindParticipantDto): Promise<Participant[]> {
+    if (Object.keys(query).length)
+      return this.participantsService.findByQuery(query);
+    return this.participantsService.findAllForTable();
   }
 
   @UseGuards(JwtGuard)

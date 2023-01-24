@@ -8,7 +8,7 @@ import {
   IsString,
   Length,
 } from 'class-validator';
-import { GenderEnum } from 'src/config/events.enum';
+import { GenderEnum, LeadHandEnum } from 'src/config/events.enum';
 
 export class CreateParticipantDto {
   @IsNotEmpty()
@@ -85,8 +85,8 @@ export class CreateParticipantDto {
   public nameOfTrainer?: string;
 
   @IsOptional()
-  @IsString()
-  public leadingHand?: string;
+  @IsEnum(LeadHandEnum)
+  public leadingHand?: LeadHandEnum;
 
   @IsOptional()
   @IsString()
@@ -115,6 +115,10 @@ export class CreateParticipantDto {
   @IsOptional()
   @IsInt()
   public heightOfPlayer?: number;
+
+  @IsOptional()
+  @IsString()
+  public clothingSize?: string;
 
   @IsOptional()
   @IsString()
@@ -163,7 +167,8 @@ export class CreateParticipantDto {
   "startOfAction": "2004-10-19",
   "endOfAction": "2004-10-19",
   "weightOfPlayer": 90,
-  "heightOfPlaye": 180,
+  "heightOfPlayer": 180,
+  "clothingSize": "M",
   "hobby": "dfsfdsfdsfds",
   "educationalInstitution": "dfsfdsfdsfds",
   "endOfEducation": "2004-10-19",
